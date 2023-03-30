@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native'
 import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import OnboardButton from '../../components/OnboardButton'
 import PageBackButton from '../../components/PageBackButton'
+import SocialButton from '../../components/SocialButton'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 
 const LoginScreen = () => {
@@ -12,7 +14,7 @@ const LoginScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigation = useNavigation();
-    const {login} = useContext(AuthContext);
+    const {login, google, apple} = useContext(AuthContext);
 
     useEffect(() => {
       Animated.timing(fadeAnim, {
@@ -65,13 +67,18 @@ const LoginScreen = () => {
                 />
             
             </View>
-            {/* <View style={styles.lineContainer}>
-          <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
+            <View style={styles.lineContainer}>
+          <View style={{flex: 1, height: 2, backgroundColor: '#505050'}} />
               <View>
-                <Text style={{width: 50, textAlign: 'center'}}>Or</Text>
+                <Text style={{width: 50, textAlign: 'center', fontFamily: 'Lato-Regular'}}>Or</Text>
               </View>
-           <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
-          </View> */}
+           <View style={{flex: 1, height: 2, backgroundColor: '#505050'}} />
+          </View>
+          <View style= {styles.socialContainer}>
+            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Google" social="google" onPress={() => google()}/>
+            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Apple" social="apple" onPress={() => apple()}/>
+          </View>
+          
             <OnboardButton buttonColor="#505050" textColor="#FFFFFF" text="SIGN IN" onPress={() => login(email, password)}/>
             
         </KeyboardAvoidingView>
@@ -103,6 +110,10 @@ const styles = StyleSheet.create({
         // marginTop: '35%'
       },
 
+      socialContainer: {
+        marginBottom: '15%'
+      },
+
       
       input: {
         backgroundColor: 'white',
@@ -125,6 +136,17 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Regular',
         color: '#505050',
         marginLeft: 0
+      },
+
+      lineContainer: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        // flex: 1,
+        width: '85%',
+        // marginTop: '5',
+        marginBottom: '10%',
+        opacity: 0.5,
+
       },
 
       backButtonContainer: {
