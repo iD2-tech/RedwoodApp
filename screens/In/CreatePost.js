@@ -3,7 +3,7 @@ import React from 'react'
 
 const CreatePost = () => {
   return (
-    <View>
+    <View style={{backgroundColor: 'white', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
       <Text>CreatePost</Text>
     </View>
   )

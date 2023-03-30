@@ -54,6 +54,8 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
 		<string>Questrial-Regular.ttf</string>
 		<string>Lato-Black.ttf</string>
 		<string>Lato-BlackItalic.ttf</string>

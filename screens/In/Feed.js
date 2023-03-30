@@ -8,7 +8,7 @@ const Feed = () => {
 
   const {logout} = useContext(AuthContext);
   return (
-    <View style = {{backgroundColor: 'white', height: '100%'}}>
+    <View style = {{backgroundColor: 'white', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
       <Text>{userId}</Text>
       <TouchableOpacity
         onPress = {() => logout()}
