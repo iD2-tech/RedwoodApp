@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        width: '75%'
+        width: '75%',
       },
 
       socialContainer: {
