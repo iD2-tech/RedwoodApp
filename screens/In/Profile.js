@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View , TouchableOpacity} from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { useNavigation } from '@react-navigation/native'
+import {firebase } from "@react-native-firebase/auth";
+import { AuthContext } from '../../navigation/AuthProvider';
 
 
 const Profile = ({route}) => {
+  var userId =firebase.auth().currentUser.email;
 
   const [verses, setVerses] = useState('');
   const [book, setBook] = useState('');
@@ -12,6 +15,7 @@ const Profile = ({route}) => {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const navigation= useNavigation();
+  const {logout} = useContext(AuthContext);
 
   
 
@@ -21,16 +25,14 @@ const Profile = ({route}) => {
 
 
   return (
-    <View style={styles.container}>
-
-      <View style={styles.innerContainer}>
-        
-        <Text>profile</Text>
-
-        
-      </View>
-
-    </View>
+  <View style = {{backgroundColor: 'white', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+    <Text>{userId}</Text>
+    <TouchableOpacity
+      onPress = {() => logout()}
+    >
+      <Text>Logout</Text>
+    </TouchableOpacity>
+  </View>
   )
 }
 
