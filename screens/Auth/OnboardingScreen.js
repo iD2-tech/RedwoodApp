@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, Animated } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image, Animated, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import React, {useEffect, useRef} from 'react'
 import OnboardButton from '../../components/OnboardButton'
+
+const { width, height } = Dimensions.get('window')
 
 const OnboardingScreen = () => {
 
@@ -53,15 +55,15 @@ export default OnboardingScreen
 const styles = StyleSheet.create({
 
   logoContainer: {
-    marginTop: '20%',
-    marginBottom: '40%',
+    marginTop: height * 0.1,
+    marginBottom: height * 0.165,
   },
 
   subText: {
     textAlign: 'center',
-    fontSize: 9,
-    width: '70%',
-    marginBottom: "5%",
+    fontSize: width * 0.023,
+    width: width * 0.7,
+    marginBottom: height * 0.025,
     lineHeight: 15,
     fontFamily: 'Lato-Regular',
     color: '#505050'
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
 
   logo: {
     resizeMode: 'contain',
-    width: 250,
-    height: 250,
+    width: width * 0.65,
+    height: height * 0.3,
   }
 })
