@@ -1,19 +1,109 @@
-import { StyleSheet, Text, View , TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View , TouchableOpacity, FlatList, Dimensions, ImageBackground} from 'react-native'
 import React, {useState, useEffect, useContext} from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {firebase } from "@react-native-firebase/auth";
 import { AuthContext } from '../../navigation/AuthProvider';
+import Feather from 'react-native-vector-icons/Feather'
+import EachJournal from '../../components/EachJournal';
+
+const { width, height } = Dimensions.get('window')
+
+
+const DATA = [
+  {
+    id: '1',
+    user: 'David Hyun',
+    date: '04/01/2023',
+    title: 'Calling from God',
+    verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
+    verse: 'Psalm 51:10-12',
+    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
+    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
+  },
+  {
+    id: '2',
+    user: 'Hanara Nam',
+    date: '04/02/2023',
+    title: 'Eye on Jesus',
+    verseText: 'Then Peter got down out of the boat, walked on the water and came toward Jesus. But when he saw the wind, he was afraid and, beginning to sink, cried out, "Lord, save me!',
+    verse: 'Matthew 14:29-30',
+    text: 'I realize the importance of starting the day off with God and spending time with him on the daily and keeping my eyes on him. When I begin lacking in my efforts to spend time with God, I find myself falling, living life with worldly vision, indulging in worldly pleasures. Live everyday with my eyes fixed on Jesus, because quite frankly, the world we live in is a storm in itself and once my eyes begin to be distracted with the situations and everything around me, I sink. Following Jesus requires complete focus on him.'
+  },
+  {
+    id: '3',
+    user: 'Collin Kim',
+    date: '04/03/2023',
+    title: 'Rejoice in the Lord!',
+    verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
+    verse: 'Philippians 4:4',
+    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
+    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
+  },
+  {
+    id: '4',
+    user: 'David Hyun',
+    date: '04/04/2023',
+    title: 'Calling from God',
+    verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
+    verse: 'Psalm 51:10-12',
+    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
+    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
+  },
+  {
+    id: '5',
+    user: 'Hanara Nam',
+    date: '04/05/2023',
+    title: 'Eye on Jesus',
+    verseText: 'Then Peter got down out of the boat, walked on the water and came toward Jesus. But when he saw the wind, he was afraid and, beginning to sink, cried out, "Lord, save me!',
+    verse: 'Matthew 14:29-30',
+    text: 'I realize the importance of starting the day off with God and spending time with him on the daily and keeping my eyes on him. When I begin lacking in my efforts to spend time with God, I find myself falling, living life with worldly vision, indulging in worldly pleasures. Live everyday with my eyes fixed on Jesus, because quite frankly, the world we live in is a storm in itself and once my eyes begin to be distracted with the situations and everything around me, I sink. Following Jesus requires complete focus on him.'
+  },
+  {
+    id: '6',
+    user: 'Collin Kim',
+    date: '04/06/2023',
+    title: 'Rejoice in the Lord!',
+    verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
+    verse: 'Philippians 4:4',
+    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
+    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
+  },
+  {
+    id: '7',
+    user: 'David Hyun',
+    date: '04/01/2023',
+    title: 'Calling from God',
+    verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
+    verse: 'Psalm 51:10-12',
+    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
+    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
+  },
+  {
+    id: '8',
+    user: 'Hanara Nam',
+    date: '04/01/2023',
+    title: 'Eye on Jesus',
+    verseText: 'Then Peter got down out of the boat, walked on the water and came toward Jesus. But when he saw the wind, he was afraid and, beginning to sink, cried out, "Lord, save me!',
+    verse: 'Matthew 14:29-30',
+    text: 'I realize the importance of starting the day off with God and spending time with him on the daily and keeping my eyes on him. When I begin lacking in my efforts to spend time with God, I find myself falling, living life with worldly vision, indulging in worldly pleasures. Live everyday with my eyes fixed on Jesus, because quite frankly, the world we live in is a storm in itself and once my eyes begin to be distracted with the situations and everything around me, I sink. Following Jesus requires complete focus on him.'
+  },
+  {
+    id: '9',
+    user: 'Collin Kim',
+    date: '04/01/2023',
+    title: 'Rejoice in the Lord!',
+    verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
+    verse: 'Philippians 4:4',
+    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
+    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
+  },
+
+
+]
 
 
 const Profile = ({route}) => {
   var userId =firebase.auth().currentUser.email;
-
-  const [verses, setVerses] = useState('');
-  const [book, setBook] = useState('');
-  const [chapter, setChapter] = useState('');
-  const [verseText, setVerseText] = useState('');
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
   const navigation= useNavigation();
   const {logout} = useContext(AuthContext);
 
@@ -25,14 +115,38 @@ const Profile = ({route}) => {
 
 
   return (
-  <View style = {{backgroundColor: 'white', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
-    <Text>{userId}</Text>
-    <TouchableOpacity
-      onPress = {() => logout()}
-    >
-      <Text>Logout</Text>
-    </TouchableOpacity>
+
+  <View style = {styles.container}>
+    <View style={styles.nameContainer}>
+      <View style={styles.nameTop}>
+        <Text style={styles.nameText}>David Hyun</Text>
+        <TouchableOpacity
+        onPress = {() => logout()}
+         >
+        <Feather name="settings" size={25} color={'black'}/>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.nameBot}>
+        <Text style={styles.userText}>@davyhyun</Text>
+      </View>
+    </View>
+
+    <View style={styles.listContainer}>
+      <FlatList
+          data={DATA}
+          renderItem={({item}) => 
+            <EachJournal user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text}/>
+          }
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+        />
+    </View>
+    
+
+    
+    
   </View>
+
   )
 }
 
@@ -47,18 +161,47 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  innerContainer: {
-    // backgroundColor: 'blue',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent:'center'
-
+  nameContainer: {
+    flexDirection: 'column',
+    width: '80%',
+    marginBottom: height * 0.05,
+    marginTop: height * 0.07
   },
 
-  text: {
+  nameTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: '1%',
+    alignItems: 'center'
+  },
+
+  nameBot: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: '100%'
+  },
+
+  nameText: {
+    // marginBottom: 30,
+    fontSize: 30,
+    fontWeight: '800',
     fontFamily: 'Lato-Regular',
-    fontWeight: 'bold',
-    fontSize: 40
+    color: '#505050',
+    // marginLeft: 0
+  },
+
+  userText: {
+    fontSize: 20,
+    fontWeight: '500',
+    fontFamily: 'Lato-Regular',
+    color: '#ABABAB',
+  },
+
+  listContainer: {
+    height: height * 0.60,
   }
+
+  
 
 })

@@ -8,7 +8,6 @@ const EachPost = (props) => {
 
   return (
     <View 
-        
         style={styles.container }
         >
       <Text style={styles.name}>{props.user}</Text>
@@ -25,8 +24,8 @@ export default EachPost
 
 const styles = StyleSheet.create({
     container: {
-        width: '90%',
-        marginBottom: '10%',
+        width: '80%',
+        marginBottom: '20%',
 
         // alignItems: 'center' 
     },

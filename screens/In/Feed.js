@@ -3,6 +3,9 @@ import React, {useContext} from 'react'
 import { AuthContext } from '../../navigation/AuthProvider';
 import {firebase } from "@react-native-firebase/auth";
 import EachPost from '../../components/EachPost';
+import MaskedView from '@react-native-community/masked-view';
+import LinearGradient from 'react-native-linear-gradient';
+
 
 const DATA = [
   {
@@ -73,20 +76,24 @@ const Feed = () => {
 
 
   return (
-    
       <ImageBackground source={require('../../tree.jpg')} resizeMode="cover" style={styles.image}>
-      <View style={styles.flatContainer}>
-        <FlatList 
+      
+      <MaskedView
+        style={styles.flatContainer}
+        maskElement=
+        {<LinearGradient style={{ flex: 1, }} colors={['transparent', 'white']} locations={[0, 0.3]}/>}
+      >
+        <FlatList
+          contentContainerStyle={{ paddingTop: 130}}
           data={DATA}
           renderItem={({item}) => 
             <EachPost user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text}/>
           }
           keyExtractor={item => item.id}
-          
           showsVerticalScrollIndicator={false}
         />
-      </View>
-      </ImageBackground>
+    </MaskedView>
+    </ImageBackground>
     
   )
 }
@@ -95,7 +102,7 @@ export default Feed
 
 const styles = StyleSheet.create({
   flatContainer: {
-    marginTop: '80%',
+    marginTop: '30%',
     marginLeft: '10%',
     justifyContent: 'center',
     alignContent: 'center'
@@ -103,6 +110,6 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
 })
