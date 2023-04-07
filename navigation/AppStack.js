@@ -2,15 +2,50 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import Feed from '../screens/In/Feed';
 import CreatePost from '../screens/In/CreatePost';
 import Friends from '../screens/In/Friends';
 import Profile from '../screens/In/Profile';
-import Feather from 'react-native-vector-icons/Feather'
+import Feather from 'react-native-vector-icons/Feather';
+import DisplayPost from '../screens/In/DisplayPost';
+import DisplayPostProfile from '../screens/In/DisplayPostProfile';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 // ios-add-circle-outline
+
+const FeedStack = ({navigation}) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Home"
+      component={Feed}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="DisplayPost"
+      component={DisplayPost}
+      options={{headerShown: false}}
+    />
+  </Stack.Navigator>
+);
+
+const ProfileStack = ({navigation}) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Profile"
+      component={Profile}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="DisplayPost"
+      component={DisplayPostProfile}
+      options={{headerShown: false}}
+    />
+  </Stack.Navigator>
+);
+
 
 const AppStack = () => {
   return (
@@ -25,7 +60,7 @@ const AppStack = () => {
      }}>
       <Tab.Screen
         name="Home"
-        component={Feed}   
+        component={FeedStack}   
         options ={{  headerShown:false, tabBarLabel: '', tabBarIcon: ({color, size}) => (
           <Feather name="home" size={size} color={color}/>
         ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray', }} 
@@ -43,7 +78,7 @@ const AppStack = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileStack}
         options ={{  headerShown:false, tabBarLabel: '', tabBarIcon: ({color, size}) => (
           <Feather name="book-open" size={size} color={color}/>
         ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',}}

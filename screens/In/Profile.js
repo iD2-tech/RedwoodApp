@@ -113,6 +113,18 @@ const Profile = ({route}) => {
     navigation.navigate("Post");
   }
 
+  const onItemPress = (item) => {
+    navigation.navigate("DisplayPost", {
+      date: item.date,
+      id: item.id,
+      text: item.text,
+      title: item.title,
+      user: item.user,
+      verse: item.verse,
+      verseText: item.verseText
+    });
+  }
+
 
   return (
 
@@ -123,7 +135,7 @@ const Profile = ({route}) => {
         <TouchableOpacity
         onPress = {() => logout()}
          >
-        <Feather name="settings" size={25} color={'black'}/>
+        <Feather name="log-out" size={25} color={'black'}/>
         </TouchableOpacity>
       </View>
       <View style={styles.nameBot}>
@@ -135,7 +147,9 @@ const Profile = ({route}) => {
       <FlatList
           data={DATA}
           renderItem={({item}) => 
+          <TouchableOpacity onPress={() => onItemPress(item)}>
             <EachJournal user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text}/>
+            </TouchableOpacity>
           }
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
