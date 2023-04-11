@@ -3,11 +3,16 @@ import React, { useState, useEffect } from 'react';
 import PageBackButton from '../../components/PageBackButton';
 import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import { useNavigation } from '@react-navigation/native'
+import { useRealm } from '../../database/RealmConfig';
+import { createRealmContext, useUser } from '@realm/react';
+import { Post } from '../../database/Models/Post';
 
 
 const CreatePost = () => {
 
-  const navigation= useNavigation();
+  const navigation = useNavigation();
+  const realm = useRealm();
+  const user = useUser();
 
   const [verses, setVerses] = useState('');
   const [book, setBook] = useState('');
@@ -16,25 +21,29 @@ const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
 
-  // useEffect(() => {
-  //   setVerses('');
-  //   setBook('');
-  //   setChapter('');
-  //   setVerse('');
-  // }, []);
-
   const fetchVerses = async () => {
     try {
-      const response = await fetch(`https://bible-api.com/${book}${chapter}:${verse}`);
-      const data = await response.json();
-      setVerses(data.text)
-        
-      navigation.navigate("Profile", {
-          title: title,
-          verseText: verses,
-          text: text
-      })
-      
+      await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setVerses(responseJson.text)
+
+          realm.write(() => {
+            realm.create('Post', Post.generate(title, book, chapter, verse, responseJson.text, text, user.id))
+          });
+          setTitle('');
+          setBook('');
+          setChapter('');
+          setVerse('');
+          setText('');
+          navigation.navigate("Profile", {
+            title: title,
+            verseText: verses,
+            text: text
+          })
+        });
+
+
     } catch (error) {
       console.error(error);
     }
@@ -43,12 +52,12 @@ const CreatePost = () => {
   const navAndSend = () => {
     fetchVerses();
   }
-  
+
 
   return (
     <DismissKeyBoard>
-    <View style={styles.container}>
-               {/* <TextInput 
+      <View style={styles.container}>
+        {/* <TextInput 
                     placeholder="book"
                     value={book}
                     onChangeText={text => {setBook(text)}}
@@ -75,77 +84,79 @@ const CreatePost = () => {
         </TouchableOpacity>
         <Text>{verses}</Text> */}
 
-      {/* <View style={styles.backButtonContainer}>
+        {/* <View style={styles.backButtonContainer}>
         <PageBackButton onPress={() => {}}/>
       </View> */}
 
-      <View style={styles.inputContainer}>
-              <TextInput 
-                    placeholder="Untitled"
-                    value={title}
-                    onChangeText={text => {setTitle(text)}}
-                    style={styles.title}
-                    
-                />
-                <View style = {styles.versesContainer}> 
-                <TextInput 
-                    placeholder="Book"
-                    value={book}
-                    onChangeText={text => {setBook(text)}}
-                    style={styles.bookInput}
-                    
-                />
-                 <TextInput 
-                    placeholder="Chapter"
-                    value={chapter}
-                    onChangeText={text => {setChapter(text)}}
-                    style={styles.chapterInput}
-                    
-                />
-                <Text style={{fontSize: 20, fontFamily: 'Lato-Bold',}}>:</Text>
-                 <TextInput 
-                    placeholder="Verse(s)"
-                    value={verse}
-                    onChangeText={text => {setVerse(text)}}
-                    style={styles.verseInput}
-                    
-                />
-                </View>
-            
-                <TextInput 
-                    placeholder="Type here..."
-                    multiline
-                    numberOfLines={4}
-                    value={text}
-                    onChangeText={text => {setText(text)}}
-                    style={styles.textInput}
-                    
-                />
-      </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Untitled"
+            value={title}
+            onChangeText={text => { setTitle(text) }}
+            style={styles.title}
 
-      <TouchableOpacity style={
-        {backgroundColor: '#E4E4E4',
+          />
+          <View style={styles.versesContainer}>
+            <TextInput
+              placeholder="Book"
+              value={book}
+              onChangeText={text => { setBook(text) }}
+              style={styles.bookInput}
+
+            />
+            <TextInput
+              placeholder="Chapter"
+              value={chapter}
+              onChangeText={text => { setChapter(text) }}
+              style={styles.chapterInput}
+
+            />
+            <Text style={{ fontSize: 20, fontFamily: 'Lato-Bold', }}>:</Text>
+            <TextInput
+              placeholder="Verse(s)"
+              value={verse}
+              onChangeText={text => { setVerse(text) }}
+              style={styles.verseInput}
+
+            />
+          </View>
+
+          <TextInput
+            placeholder="Type here..."
+            multiline
+            numberOfLines={4}
+            value={text}
+            onChangeText={text => { setText(text) }}
+            style={styles.textInput}
+
+          />
+        </View>
+
+        <TouchableOpacity style={
+          {
+            backgroundColor: '#E4E4E4',
             width: '75%',
             padding: 12,
             borderRadius: 10,
             alignItems: 'center',
-            
+
             // marginBottom: '3%',
-                
-        } 
-    }
-      onPress ={navAndSend}>
-        <Text style={
-            {color: "#ABABAB",
-            fontFamily: 'Lato-Bold',
-            fontSize: 18
+
+          }
+        }
+          onPress={navAndSend}>
+          <Text style={
+            {
+              color: "#ABABAB",
+              fontFamily: 'Lato-Bold',
+              fontSize: 18
             }
-        }>Post</Text>
-    </TouchableOpacity>
+          }>Post</Text>
+        </TouchableOpacity>
 
 
 
-    </View>
+      </View>
     </DismissKeyBoard>
   )
 }
@@ -182,7 +193,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato-Bold',
     marginBottom: '8%',
     color: '#505050'
-  //  justifyContent: 'center'
+    //  justifyContent: 'center'
   },
 
   bookInput: {

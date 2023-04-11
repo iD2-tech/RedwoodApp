@@ -2,10 +2,13 @@ import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
+import {useApp} from '@realm/react';
+import Realm from 'realm';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
+  const app = useApp();
   const [user, setUser] = useState(null);
 
   GoogleSignin.configure({
@@ -71,11 +74,18 @@ export const AuthProvider = ({children}) => {
         register: async (email, password, username) => {
           try {
 
-              await auth().createUserWithEmailAndPassword(email, password)
-              console.log(username);
-            
+              const user = await auth().createUserWithEmailAndPassword(email, password);
+              auth().currentUser.getIdToken().then(async function(token) {
+                const credentials = Realm.Credentials.jwt(token);
+                try {
+                  const user = await app.logIn(credentials);
+                  console.log("Successfully logged in", user.id);
+                } catch (err) {
+                  console.error("Failed to login", err.message);
+                }
+              })
           } catch (e) {
-            console.log(e);
+              console.log(e);
           }
         },
         logout: async () => {

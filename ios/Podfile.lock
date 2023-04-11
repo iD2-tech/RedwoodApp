@@ -538,6 +538,8 @@ PODS:
     - React-jsi (= 0.71.4)
     - React-logger (= 0.71.4)
     - React-perflogger (= 0.71.4)
+  - RealmJS (11.7.0):
+    - React
   - RNAppleAuthentication (2.2.2):
     - React-Core
   - RNCMaskedView (0.1.11):
@@ -655,6 +657,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RealmJS (from `../node_modules/realm`)
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
@@ -769,6 +772,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RealmJS:
+    :path: "../node_modules/realm"
   RNAppleAuthentication:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNCMaskedView:
@@ -853,6 +858,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: ad17efcfb2fa8f6bfd8ac0cf48d96668b8b28e0b
   React-runtimeexecutor: 8fa50b38df6b992c76537993a2b0553d3b088004
   ReactCommon: b49a4b00ca6d181ff74b17c12b2d59ac4add0bde
+  RealmJS: 10958b8a9d1f3a981c1b50bdc1da8396002e75a4
   RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNFBApp: b0f0c53ed8a00395ceb4863910a2c1ff6e24d9f6

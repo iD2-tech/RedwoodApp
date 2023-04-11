@@ -5,6 +5,8 @@ import {firebase } from "@react-native-firebase/auth";
 import { AuthContext } from '../../navigation/AuthProvider';
 import Feather from 'react-native-vector-icons/Feather'
 import EachJournal from '../../components/EachJournal';
+import { useQuery } from '../../database/RealmConfig';
+import Post from '../../database/Models/Post';
 
 const { width, height } = Dimensions.get('window')
 
@@ -107,6 +109,9 @@ const Profile = ({route}) => {
   const navigation= useNavigation();
   const {logout} = useContext(AuthContext);
 
+  const posts = useQuery(Post);
+  console.log(posts);
+
   
 
   const navToFeed = () => {
@@ -120,8 +125,8 @@ const Profile = ({route}) => {
       text: item.text,
       title: item.title,
       user: item.user,
-      verse: item.verse,
-      verseText: item.verseText
+      verse: item.book + " " + item.chapter + ":" + item.verse,
+      verseText: item.bibleVerses
     });
   }
 
@@ -145,10 +150,10 @@ const Profile = ({route}) => {
 
     <View style={styles.listContainer}>
       <FlatList
-          data={DATA}
+          data={posts}
           renderItem={({item}) => 
           <TouchableOpacity onPress={() => onItemPress(item)}>
-            <EachJournal user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text}/>
+            <EachJournal user={item.user} date={item.createdAt} title={item.title} verseText={item.bibleVerses} verse={item.book + " " + item.chapter + ":" + item.verse} text={item.text}/>
             </TouchableOpacity>
           }
           keyExtractor={item => item.id}

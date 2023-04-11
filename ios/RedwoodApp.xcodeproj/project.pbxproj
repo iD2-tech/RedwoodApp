@@ -16,6 +16,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1CF381F37022420DBBD3EB2C /* Questrial-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 353AA5FAE79548A091572953 /* Questrial-Regular.ttf */; };
 		394DF29CAFD54F208AF30676 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B121B418F9D46C79EC8E59A /* Lato-Black.ttf */; };
+		3E5A7B0929E28E070037BAF7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E5A7B0829E28E070037BAF7 /* GoogleService-Info.plist */; };
+		3E5A7B0B29E4803F0037BAF7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5A7B0A29E4803F0037BAF7 /* libz.tbd */; };
 		7699B88040F8A987B510C191 /* libPods-RedwoodApp-RedwoodAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-RedwoodApp-RedwoodAppTests.a */; };
 		7D3B2140EC37420A915A1933 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54FD8131EB524C64AB33277F /* Lato-BlackItalic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -23,7 +25,6 @@
 		B37EC9E5199B4A01804D0C8B /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DD6806E8417425C9E85C0F4 /* Lato-Bold.ttf */; };
 		BDCD258AB232432D90237F2D /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACEC82BE30AA4687A16A8001 /* Lato-ThinItalic.ttf */; };
 		C1746460BE894249B20E2182 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 483789DA18FB4CD38523E276 /* Lato-Thin.ttf */; };
-		C6400BB229D2BDAE001AEF23 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6400BB129D2BDAE001AEF23 /* GoogleService-Info.plist */; };
 		F0B0DFB9062E40658138E0EB /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE4F55B0C34A348932EFC5 /* Lato-Light.ttf */; };
 		F4367A0797D446999B9CB2AC /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 081DCA15CC424741A6AF021B /* Lato-Italic.ttf */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,8 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-RedwoodApp-RedwoodAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RedwoodApp-RedwoodAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		353AA5FAE79548A091572953 /* Questrial-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Questrial-Regular.ttf"; path = "../assets/fonts/Questrial-Regular.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-RedwoodApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedwoodApp.debug.xcconfig"; path = "Target Support Files/Pods-RedwoodApp/Pods-RedwoodApp.debug.xcconfig"; sourceTree = "<group>"; };
+		3E5A7B0829E28E070037BAF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3E5A7B0A29E4803F0037BAF7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		483789DA18FB4CD38523E276 /* Lato-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Thin.ttf"; path = "../assets/fonts/Lato-Thin.ttf"; sourceTree = "<group>"; };
 		4B121B418F9D46C79EC8E59A /* Lato-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Black.ttf"; path = "../assets/fonts/Lato-Black.ttf"; sourceTree = "<group>"; };
 		54FD8131EB524C64AB33277F /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-BlackItalic.ttf"; path = "../assets/fonts/Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
@@ -64,7 +67,6 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RedwoodApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-RedwoodApp-RedwoodAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedwoodApp-RedwoodAppTests.release.xcconfig"; path = "Target Support Files/Pods-RedwoodApp-RedwoodAppTests/Pods-RedwoodApp-RedwoodAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ACEC82BE30AA4687A16A8001 /* Lato-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-ThinItalic.ttf"; path = "../assets/fonts/Lato-ThinItalic.ttf"; sourceTree = "<group>"; };
-		C6400BB129D2BDAE001AEF23 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C6400BB329D62F13001AEF23 /* RedwoodApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = RedwoodApp.entitlements; path = RedwoodApp/RedwoodApp.entitlements; sourceTree = "<group>"; };
 		E4C5847492AE4BC48025C5CE /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-BoldItalic.ttf"; path = "../assets/fonts/Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
 		E60B4DF50C074AD2A1FBEB15 /* Lato-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Regular.ttf"; path = "../assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E5A7B0B29E4803F0037BAF7 /* libz.tbd in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-RedwoodApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,6 +128,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E5A7B0A29E4803F0037BAF7 /* libz.tbd */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-RedwoodApp.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-RedwoodApp-RedwoodAppTests.a */,
@@ -160,7 +164,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				C6400BB129D2BDAE001AEF23 /* GoogleService-Info.plist */,
+				3E5A7B0829E28E070037BAF7 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* RedwoodApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* RedwoodAppTests */,
@@ -291,7 +295,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				C6400BB229D2BDAE001AEF23 /* GoogleService-Info.plist in Resources */,
 				1CF381F37022420DBBD3EB2C /* Questrial-Regular.ttf in Resources */,
 				394DF29CAFD54F208AF30676 /* Lato-Black.ttf in Resources */,
 				7D3B2140EC37420A915A1933 /* Lato-BlackItalic.ttf in Resources */,
@@ -303,6 +306,7 @@
 				09B8B63F8E2C4A6598AA2E17 /* Lato-Regular.ttf in Resources */,
 				C1746460BE894249B20E2182 /* Lato-Thin.ttf in Resources */,
 				BDCD258AB232432D90237F2D /* Lato-ThinItalic.ttf in Resources */,
+				3E5A7B0929E28E070037BAF7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
