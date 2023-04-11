@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, Dimensions, TouchableOpacity, View, Image, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
 import React, {useState, useContext, useRef, useEffect} from 'react'
 import { AuthContext } from '../../navigation/AuthProvider'
 import { useNavigation } from '@react-navigation/native'
@@ -6,6 +6,7 @@ import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import OnboardButton from '../../components/OnboardButton'
 import PageBackButton from '../../components/PageBackButton'
 
+const { width, height } = Dimensions.get('window')
 
 const UsernameAdd = ({route}) => {
 
@@ -83,17 +84,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
       },
       inputContainer: {
-        width: '80%',
+        width: width * 0.8,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: '10%',
-        // marginTop: '2%'
+        marginBottom: height * 0.055,
       },
       letterContainer: {
         display: 'flex',
         justifyContent: 'flex-start',
-        width: '75%',
-        // marginTop: '35%'
+        width: width * 0.75,
       },
 
       
@@ -122,11 +121,11 @@ const styles = StyleSheet.create({
 
       backButtonContainer: {
         // backgroundColor: 'blue'
-        marginTop: '20%',
-        marginBottom: '10%',
+        marginTop: height * 0.08,
+        marginBottom: height * 0.05,
         display: 'flex',
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        width: '75%'
+        width: width * 0.78
       }
 })

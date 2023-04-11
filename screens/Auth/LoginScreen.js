@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, TouchableWithoutFeedback, Keyboard, Animated, Dimensions } from 'react-native'
 import React, {useState, useContext, useRef, useEffect} from 'react'
 import { AuthContext } from '../../navigation/AuthProvider'
 import { useNavigation } from '@react-navigation/native'
@@ -8,6 +8,7 @@ import PageBackButton from '../../components/PageBackButton'
 import SocialButton from '../../components/SocialButton'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
+const { width, height } = Dimensions.get('window')
 
 const LoginScreen = () => {
     const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
@@ -38,7 +39,7 @@ const LoginScreen = () => {
               backgroundColor: 'white',
               opacity: fadeAnim
             }}>
-        <KeyboardAvoidingView style={{width: '100%', alignItems: 'center',}}> 
+        <KeyboardAvoidingView style={{width: '100%', alignItems: 'center', }}> 
           <View style={styles.backButtonContainer}>
             <PageBackButton onPress={navBack}/> 
           </View>   
@@ -46,10 +47,11 @@ const LoginScreen = () => {
             <Text style={styles.su}>Sign In</Text>
           </View>
          
-
+            
             <View style={styles.inputContainer}>
-
+          
                 <TextInput 
+                
                     placeholder="email"
                     value={email}
                     onChangeText={text => {setEmail(text)}}
@@ -63,16 +65,16 @@ const LoginScreen = () => {
                     onChangeText={text => {setPassword(text)}}
                     style={styles.input}
                     secureTextEntry
+
                     
                 />
-            
             </View>
             <View style={styles.lineContainer}>
           <View style={{flex: 1, height: 2, backgroundColor: '#505050'}} />
               <View>
                 <Text style={{width: 50, textAlign: 'center', fontFamily: 'Lato-Regular'}}>Or</Text>
               </View>
-           <View style={{flex: 1, height: 2, backgroundColor: '#505050'}} />
+           <View style={{flex: 1, height: 2, backgroundColor: '#505050',}} />
           </View>
           <View style= {styles.socialContainer}>
             <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Google" social="google" onPress={() => google()}/>
@@ -80,7 +82,6 @@ const LoginScreen = () => {
           </View>
           
             <OnboardButton buttonColor="#505050" textColor="#FFFFFF" text="SIGN IN" onPress={() => login(email, password)}/>
-            
         </KeyboardAvoidingView>
         </Animated.View>
         </DismissKeyBoard>
@@ -97,31 +98,31 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
       },
       inputContainer: {
-        width: '80%',
+        width: width * 0.5,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: '10%',
-        marginTop: '5%'
+        marginBottom: height * 0.06,
+        marginTop: height * 0.1
       },
       letterContainer: {
         display: 'flex',
         justifyContent: 'flex-start',
-        width: '75%',
-        // marginTop: '35%'
+        width: width * 0.76,
+        marginBottom: height * 0.0005
       },
 
       socialContainer: {
-        marginBottom: '15%'
+        marginBottom: height * 0.05
       },
 
       
       input: {
         backgroundColor: 'white',
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
         paddingVertical: 10,      
-        marginTop: 5,
-        marginBottom: 10,
-        width: '95%',
+        marginTop: height * 0.005,
+        marginBottom: width * 0.01,
+        width: width * 0.77,
         borderStyle: 'solid',
         borderBottomColor: '#AAAAAA',
         borderBottomWidth: 1,
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Regular'
       },
       su: {
-        marginBottom: 30,
+        marginBottom: height * 0.01,
         fontSize: 30,
         fontWeight: '800',
         fontFamily: 'Lato-Regular',
@@ -141,21 +142,18 @@ const styles = StyleSheet.create({
       lineContainer: {
         flexDirection: 'row', 
         alignItems: 'center', 
-        // flex: 1,
-        width: '85%',
-        // marginTop: '5',
-        marginBottom: '10%',
+        width: width * 0.865,
+        marginBottom: height * 0.0575,
         opacity: 0.5,
 
       },
 
       backButtonContainer: {
-        // backgroundColor: 'blue'
-        marginTop: '20%',
-        marginBottom: '10%',
+        marginTop: height * 0.08,
+        marginBottom: height * 0.05,
         display: 'flex',
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        width: '75%'
+        width: width * 0.78
       }
 })
