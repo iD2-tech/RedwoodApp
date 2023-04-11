@@ -110,7 +110,6 @@ const Profile = ({route}) => {
   const {logout} = useContext(AuthContext);
 
   const posts = useQuery(Post);
-  console.log(posts);
 
   
 
