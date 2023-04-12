@@ -20,6 +20,7 @@ const CreatePost = () => {
   const [verse, setVerse] = useState('');
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+  
 
   const fetchVerses = async () => {
     try {
@@ -29,14 +30,14 @@ const CreatePost = () => {
           setVerses(responseJson.text)
 
           realm.write(() => {
-            realm.create('Post', Post.generate(title, book, chapter, verse, responseJson.text, text, user.id))
+            realm.create('Post', Post.generate(user.id, title, book, chapter, verse, responseJson.text, text, user.id))
           });
           setTitle('');
           setBook('');
           setChapter('');
           setVerse('');
           setText('');
-          navigation.navigate("Profile", {
+          navigation.navigate("ProfileStack", {
             title: title,
             verseText: verses,
             text: text
