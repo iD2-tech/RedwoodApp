@@ -116,12 +116,14 @@ const Profile = ({route}) => {
   console.log(app.currentUser);
   console.log(customData);
   const user = useUser();
-  console.log(user.accessToken);
+  console.log(user.id);
 
   const posts = useQuery(Post);
+  const usersPosts = posts.filtered(
+    `user == "${user.id}"`
+  )
 
   
-
   const navToFeed = () => {
     navigation.navigate("Post");
   }
@@ -144,7 +146,7 @@ const Profile = ({route}) => {
   <View style = {styles.container}>
     <View style={styles.nameContainer}>
       <View style={styles.nameTop}>
-        <Text style={styles.nameText}>David Hyun</Text>
+        <Text style={styles.nameText}>name coming...</Text>
         <TouchableOpacity
         onPress = {() => logout()}
          >
@@ -152,7 +154,7 @@ const Profile = ({route}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.nameBot}>
-        <Text style={styles.userText}>@davyhyun</Text>
+        <Text style={styles.userText}>@${user.id}</Text>
       </View>
     </View>
 

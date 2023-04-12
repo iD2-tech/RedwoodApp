@@ -3,6 +3,7 @@ import Realm from 'realm';
 
 export class Post extends Realm.Object {
     _id;
+    user;
     title;
     book;
     chapter;
@@ -14,9 +15,10 @@ export class Post extends Realm.Object {
     comments;
     createdAt;
 
-    static generate(title, book, chapter, verse, bibleVerses, text, username) {
+    static generate(user, title, book, chapter, verse, bibleVerses, text, username) {
         return {
             _id: new Realm.BSON.ObjectID(),
+            user,
             title,
             book,
             chapter,
@@ -34,6 +36,7 @@ export class Post extends Realm.Object {
         name: 'Post',
         primaryKey: '_id',
         properties: {
+            user: 'string',
             _id: 'objectId',
             title: 'string',
             book: 'string',
