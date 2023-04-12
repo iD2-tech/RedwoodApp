@@ -7,6 +7,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import EachJournal from '../../components/EachJournal';
 import { useQuery } from '../../database/RealmConfig';
 import Post from '../../database/Models/Post';
+import { useApp, useUser } from '@realm/react';
 
 const { width, height } = Dimensions.get('window')
 
@@ -108,6 +109,14 @@ const Profile = ({route}) => {
   var userId =firebase.auth().currentUser.email;
   const navigation= useNavigation();
   const {logout} = useContext(AuthContext);
+
+
+  const app = useApp();
+  const customData = app.currentUser.customData;
+  console.log(app.currentUser);
+  console.log(customData);
+  const user = useUser();
+  console.log(user.accessToken);
 
   const posts = useQuery(Post);
 
