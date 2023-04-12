@@ -23,7 +23,7 @@ const EachPost = (props) => {
       <Text style={styles.name}>{props.user}</Text>
       <Text style={styles.date}>{props.date}</Text>
       <Text style={styles.title}>{props.title}</Text>
-      <Text style={styles.verseText}>" {props.verseText} "</Text>
+      <Text style={styles.verseText}>{"\""+props.verseText.replace(/(\r\n|\n|\r)/gm, "")+"\""}</Text>
       <Text style={styles.verse}>{props.verse}</Text>
       <Text style={styles.text}
         onTextLayout={onTextLayout}
