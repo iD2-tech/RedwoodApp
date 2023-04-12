@@ -160,7 +160,7 @@ const Profile = ({route}) => {
 
     <View style={styles.listContainer}>
       <FlatList
-          data={posts}
+          data={usersPosts}
           renderItem={({item}) => 
           <TouchableOpacity onPress={() => onItemPress(item)}>
             <EachJournal user={item.user} date={item.createdAt} title={item.title} verseText={item.bibleVerses} verse={item.book + " " + item.chapter + ":" + item.verse} text={item.text}/>
