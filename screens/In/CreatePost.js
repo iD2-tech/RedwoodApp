@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
 
   filledButton: {
-    backgroundColor: '#505050',
+    backgroundColor: '#5C4033',
     width: '75%',
     padding: 12,
     borderRadius: 10,

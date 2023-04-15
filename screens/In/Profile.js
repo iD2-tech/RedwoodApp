@@ -150,7 +150,7 @@ const Profile = ({route}) => {
         <TouchableOpacity
         onPress = {() => logout()}
          >
-        <Feather name="log-out" size={25} color={'black'}/>
+        <Feather name="log-out" size={25} color={'#5C4033'}/>
         </TouchableOpacity>
       </View>
       <View style={styles.nameBot}>
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: '800',
     fontFamily: 'Lato-Regular',
-    color: '#505050',
+    color: '#5C4033',
     // marginLeft: 0
   },
 

@@ -42,8 +42,8 @@ const OnboardingScreen = () => {
       <Text style={styles.subText}>
         By clicking Log In or Sign Up, you agree to our Terms. Learn how we process your data in our Privacy Policy and Cookies Policy
       </Text>
-      <OnboardButton buttonColor="#505050" textColor="#FFFFFF" text="CREATE ACCOUNT" onPress={navToSignUp} />
-      <OnboardButton buttonColor="#FFFFFF" textColor="#505050" text="SIGN IN" onPress={navToLogin} />
+      <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="CREATE ACCOUNT" onPress={navToSignUp} />
+      <OnboardButton buttonColor="#FFFFFF" textColor="#5C4033" text="SIGN IN" onPress={navToLogin} />
 
     </Animated.View>
   )
