@@ -10,13 +10,14 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 
 
-const LoginScreen = () => {
+const SignupScreen = ({route}) => {
+    const {username, name} = route.params;
     const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const navigation = useNavigation();
-    const {google, apple} = useContext(AuthContext);
+    const {google, apple, register} = useContext(AuthContext);
 
     useEffect(() => {
       Animated.timing(fadeAnim, {
@@ -100,7 +101,7 @@ const LoginScreen = () => {
             <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Google" social="google" onPress={() => google()}/>
             <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Apple" social="apple" onPress={() => apple()}/>
           </View>
-            <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="CONTINUE" onPress={navNext}/>
+            <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="SIGN UP" onPress={() => register(email, password, name, username)}/>
             
         </KeyboardAvoidingView>
         </Animated.View>
@@ -108,7 +109,7 @@ const LoginScreen = () => {
     )
 }
 
-export default LoginScreen
+export default SignupScreen
 
 const styles = StyleSheet.create({
     container: {

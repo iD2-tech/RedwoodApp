@@ -24,7 +24,7 @@ const OnboardingScreen = () => {
   }
 
   const navToSignUp = () => {
-    navigation.navigate("Signup");
+    navigation.navigate("UsernameAdd");
   }
 
   return (
