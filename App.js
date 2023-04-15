@@ -9,7 +9,16 @@ const App = () => {
   return (
     <AppProvider id={'redwood-gdbtd'}>
       <UserProvider fallback={Providers}>
-        <RealmProvider>
+        <RealmProvider
+        sync={{
+          flexible: true,
+          onError: console.error,
+          initialSubscriptions: {
+            update(subs, realm) {
+              subs.add(realm.objects('Post'));
+            },
+          },
+        }}>
           <Providers />
         </RealmProvider>
       </UserProvider>
