@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, SafeAreaView, ImageBackground } from 'react-native'
-import React, { useContext } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, SafeAreaView, ImageBackground} from 'react-native'
+import React, {useContext} from 'react'
 import { AuthContext } from '../../navigation/AuthProvider';
-import { firebase } from "@react-native-firebase/auth";
+import {firebase } from "@react-native-firebase/auth";
 import EachPost from '../../components/EachPost';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
@@ -16,7 +16,7 @@ const DATA = [
     verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
     verse: 'Psalm 51:10-12',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
-      + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
+    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
   },
   {
     id: '2',
@@ -35,7 +35,7 @@ const DATA = [
     verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
     verse: 'Philippians 4:4',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
-      'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
+    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
   },
   {
     id: '4',
@@ -45,7 +45,7 @@ const DATA = [
     verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
     verse: 'Psalm 51:10-12',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
-      + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
+    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
   },
   {
     id: '5',
@@ -64,7 +64,7 @@ const DATA = [
     verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
     verse: 'Philippians 4:4',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
-      'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
+    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
   },
 
 
@@ -73,38 +73,28 @@ const DATA = [
 
 
 const Feed = () => {
-  const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 
   return (
-    <ImageBackground source={require('../../tree.jpg')} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={require('../../tree.jpg')} resizeMode="cover" style={styles.image}>
       
-
-      {/* <MaskedView
+      <MaskedView
         style={styles.flatContainer}
         maskElement=
-        {<LinearGradient style={{ flex: 1, }} colors={['transparent', 'white']} locations={[0, 0.3]} />}
+        {<LinearGradient style={{ flex: 1, }} colors={['transparent', 'white']} locations={[0, 0.3]}/>}
       >
         <FlatList
-          contentContainerStyle={{ paddingTop: 130 }}
-          data={posts}
-          renderItem={({ item }) =>
-            <EachPost
-              user={item.user}
-              date={months[item.createdAt.getMonth()] + "/" + item.createdAt.getDate() + "/" + item.createdAt.getFullYear()}
-              title={item.title}
-              verseText={item.bibleVerses}
-              verse={item.book + " " + item.chapter + ":" + item.verse}
-              text={item.text} />
+          contentContainerStyle={{ paddingTop: 130}}
+          data={DATA}
+          renderItem={({item}) => 
+            <EachPost user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text}/>
           }
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
         />
-      </MaskedView> */}
-
-      
+    </MaskedView>
     </ImageBackground>
-
+    
   )
 }
 
