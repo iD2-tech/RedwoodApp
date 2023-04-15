@@ -20,23 +20,34 @@ const CreatePost = () => {
   const [verse, setVerse] = useState('');
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+  const [btnColor, setBtnColor] = useState(false);
+
+  useEffect(() => {
+    if (title !== '' && book !== '' && chapter !== '' && verse !== '' && text !== '') {
+      setBtnColor(true);
+    } else {
+      setBtnColor(false);
+    }
+  }, [text])
+  
 
   const fetchVerses = async () => {
     try {
       await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
         .then((response) => response.json())
         .then((responseJson) => {
+          // console.log("\"" + responseJson.text.replace(/(\r\n|\n|\r)/gm, "").trim() + "\"");
           setVerses(responseJson.text)
 
           realm.write(() => {
-            realm.create('Post', Post.generate(title, book, chapter, verse, responseJson.text, text, user.id))
+            realm.create('Post', Post.generate(user.id, title, book, chapter, verse, responseJson.text, text, user.id))
           });
           setTitle('');
           setBook('');
           setChapter('');
           setVerse('');
           setText('');
-          navigation.navigate("Profile", {
+          navigation.navigate("ProfileStack", {
             title: title,
             verseText: verses,
             text: text
@@ -133,19 +144,15 @@ const CreatePost = () => {
         </View>
 
         <TouchableOpacity style={
-          {
-            backgroundColor: '#E4E4E4',
-            width: '75%',
-            padding: 12,
-            borderRadius: 10,
-            alignItems: 'center',
-
-            // marginBottom: '3%',
-
-          }
+          btnColor ? styles.filledButton : styles.normalButton
         }
           onPress={navAndSend}>
           <Text style={
+            btnColor ? {
+              color: "#FFFFFF",
+              fontFamily: 'Lato-Bold',
+              fontSize: 18
+            } :
             {
               color: "#ABABAB",
               fontFamily: 'Lato-Bold',
@@ -224,6 +231,22 @@ const styles = StyleSheet.create({
     marginBottom: '20%',
     color: '#505050',
   },
+
+  filledButton: {
+    backgroundColor: '#5C4033',
+    width: '75%',
+    padding: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+
+  normalButton: {
+    backgroundColor: '#E4E4E4',
+            width: '75%',
+            padding: 12,
+            borderRadius: 10,
+            alignItems: 'center',
+  }
 
   // postButton: {
 

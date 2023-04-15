@@ -22,10 +22,7 @@ const App = () => {
           <Providers />
         </RealmProvider>
       </UserProvider>
-
-
     </AppProvider>
-
   )
 }
 export default App;

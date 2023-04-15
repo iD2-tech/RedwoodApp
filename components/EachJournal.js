@@ -26,7 +26,7 @@ const EachJournal = (props) => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <Feather name="chevron-right" size={25} color="#505050" />
+                <Feather name="chevron-right" size={25} color="#5C4033" />
             </View>
         </View>
     )

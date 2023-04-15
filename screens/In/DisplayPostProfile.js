@@ -21,7 +21,7 @@ const DisplayPostProfile = ({route}) => {
       <Text style={styles.name}>{user}</Text>
       <Text style={styles.date}>{date}</Text>
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.verseText}>" {verseText} "</Text>
+      <Text style={styles.verseText}>{"\""+verseText.replace(/(\r\n|\n|\r)/gm, "")+"\""}</Text>
       <Text style={styles.verse}>{verse}</Text>
       <Text style={styles.text}>{text}</Text>
     </View>

@@ -8,6 +8,7 @@ import EachJournal from '../../components/EachJournal';
 import { useQuery, useRealm } from '../../database/RealmConfig';
 import { useApp, useUser } from '@realm/react';
 import Post from '../../database/Models/Post';
+import { useApp, useUser } from '@realm/react';
 
 
 const { width, height } = Dimensions.get('window')
@@ -121,7 +122,18 @@ const Profile = ({ route }) => {
   const realm = useRealm();
   const allSubscriptions = realm.subscriptions;
 
+
+  const app = useApp();
+  const customData = app.currentUser.customData;
+  console.log(app.currentUser);
+  console.log(customData);
+  const user = useUser();
+  console.log(user.id);
+
   const posts = useQuery(Post);
+  const usersPosts = posts.filtered(
+    `user == "${user.id}"`
+  )
 
   const usersPosts = posts.filtered(
     `username == "${user.id}"`
@@ -138,7 +150,6 @@ const Profile = ({ route }) => {
       console.log(allSubscriptions.length);
     })
   });
-
 
   const navToFeed = () => {
     navigation.navigate("Post");
@@ -159,27 +170,26 @@ const Profile = ({ route }) => {
 
   return (
 
-    <View style={styles.container}>
-      <View style={styles.nameContainer}>
-        <View style={styles.nameTop}>
-          <Text style={styles.nameText}>name coming...</Text>
-          <TouchableOpacity
-            onPress={() => logout()}
-          >
-            <Feather name="log-out" size={25} color={'black'} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.nameBot}>
-          <Text style={styles.userText}>@${user.id}</Text>
-        </View>
+  <View style = {styles.container}>
+    <View style={styles.nameContainer}>
+      <View style={styles.nameTop}>
+        <Text style={styles.nameText}>name coming...</Text>
+        <TouchableOpacity
+        onPress = {() => logout()}
+         >
+        <Feather name="log-out" size={25} color={'#5C4033'}/>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.nameBot}>
+        <Text style={styles.userText}>@${user.id}</Text>
       </View>
 
-      <View style={styles.listContainer}>
-        <FlatList
+    <View style={styles.listContainer}>
+      <FlatList
           data={usersPosts}
-          renderItem={({ item }) =>
-            <TouchableOpacity onPress={() => onItemPress(item)}>
-              <EachJournal user={item.user} date={item.createdAt} title={item.title} verseText={item.bibleVerses} verse={item.book + " " + item.chapter + ":" + item.verse} text={item.text} />
+          renderItem={({item}) => 
+          <TouchableOpacity onPress={() => onItemPress(item)}>
+            <EachJournal user={item.user} date={item.createdAt} title={item.title} verseText={item.bibleVerses} verse={item.book + " " + item.chapter + ":" + item.verse} text={item.text}/>
             </TouchableOpacity>
           }
           keyExtractor={item => item.id}
@@ -232,7 +242,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: '800',
     fontFamily: 'Lato-Regular',
-    color: '#505050',
+    color: '#5C4033',
     // marginLeft: 0
   },
 

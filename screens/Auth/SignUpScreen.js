@@ -90,17 +90,17 @@ const LoginScreen = () => {
             
             </View>
             <View style={styles.lineContainer}>
-              <View style={{flex: 1, height: 2, backgroundColor: '#505050'}} />
+              <View style={{flex: 1, height: 2, backgroundColor: '#5C4033'}} />
                   <View>
                     <Text style={{width: 50, textAlign: 'center', fontFamily: 'Lato-Regular'}}>Or</Text>
                   </View>
-              <View style={{flex: 1, height: 2, backgroundColor: '#505050'}} />
+              <View style={{flex: 1, height: 2, backgroundColor: '#5C4033'}} />
             </View>
           <View style= {styles.socialContainer}>
             <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Google" social="google" onPress={() => google()}/>
             <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Apple" social="apple" onPress={() => apple()}/>
           </View>
-            <OnboardButton buttonColor="#505050" textColor="#FFFFFF" text="CONTINUE" onPress={navNext}/>
+            <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="CONTINUE" onPress={navNext}/>
             
         </KeyboardAvoidingView>
         </Animated.View>
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '800',
         fontFamily: 'Lato-Regular',
-        color: '#505050',
+        color: '#5C4033',
         marginLeft: 0
       },
 

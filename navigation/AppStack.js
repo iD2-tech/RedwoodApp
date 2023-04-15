@@ -16,20 +16,6 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 // ios-add-circle-outline
 
-const FeedStack = ({navigation}) => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Home"
-      component={Feed}
-      options={{headerShown: false}}
-    />
-    <Stack.Screen
-      name="DisplayPost"
-      component={DisplayPost}
-      options={{headerShown: false}}
-    />
-  </Stack.Navigator>
-);
 
 const ProfileStack = ({navigation}) => (
   <Stack.Navigator>
@@ -60,7 +46,7 @@ const AppStack = () => {
      }}>
       <Tab.Screen
         name="Home"
-        component={FeedStack}   
+        component={Feed}   
         options ={{  headerShown:false, tabBarLabel: '', tabBarIcon: ({color, size}) => (
           <Feather name="home" size={size} color={color}/>
         ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray', }} 
@@ -77,7 +63,7 @@ const AppStack = () => {
         ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',}}
       />
       <Tab.Screen
-        name="Profile"
+        name="ProfileStack"
         component={ProfileStack}
         options ={{  headerShown:false, tabBarLabel: '', tabBarIcon: ({color, size}) => (
           <Feather name="book-open" size={size} color={color}/>

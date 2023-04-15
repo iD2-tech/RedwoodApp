@@ -8,7 +8,7 @@ FontAwesome.loadFont();
 const PageBackButton = (props) => {
   return (
     <TouchableOpacity  onPress ={() => {props.onPress()}}>
-        <FontAwesome name="angle-left" size={35} color="#505050"/>
+        <FontAwesome name="angle-left" size={35} color="#5C4033"/>
     </TouchableOpacity>
   )
 }
