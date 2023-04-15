@@ -36,7 +36,7 @@ export default EachJournal
 const styles = StyleSheet.create({
     container: {
         width: '95%',
-        marginBottom: '5%',
+        marginBottom: '3%',
         // height: 30,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
