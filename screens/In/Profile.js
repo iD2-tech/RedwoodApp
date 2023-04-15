@@ -8,7 +8,7 @@ import EachJournal from '../../components/EachJournal';
 import { useQuery, useRealm } from '../../database/RealmConfig';
 import { useApp, useUser } from '@realm/react';
 import Post from '../../database/Models/Post';
-import { useApp, useUser } from '@realm/react';
+
 
 
 const { width, height } = Dimensions.get('window')
@@ -122,22 +122,11 @@ const Profile = ({ route }) => {
   const realm = useRealm();
   const allSubscriptions = realm.subscriptions;
 
-
-  const app = useApp();
-  const customData = app.currentUser.customData;
-  console.log(app.currentUser);
-  console.log(customData);
-  const user = useUser();
-  console.log(user.id);
-
   const posts = useQuery(Post);
   const usersPosts = posts.filtered(
     `user == "${user.id}"`
   )
 
-  const usersPosts = posts.filtered(
-    `username == "${user.id}"`
-  )
 
   useEffect(() => {
     realm.subscriptions.update((mutableSubs, realm) => {
@@ -186,7 +175,7 @@ const Profile = ({ route }) => {
 
     <View style={styles.listContainer}>
       <FlatList
-          data={usersPosts}
+          data={allSubscriptions}
           renderItem={({item}) => 
           <TouchableOpacity onPress={() => onItemPress(item)}>
             <EachJournal user={item.user} date={item.createdAt} title={item.title} verseText={item.bibleVerses} verse={item.book + " " + item.chapter + ":" + item.verse} text={item.text}/>
@@ -196,10 +185,7 @@ const Profile = ({ route }) => {
           showsVerticalScrollIndicator={false}
         />
       </View>
-
-
-
-
+    </View>
     </View>
 
   )
