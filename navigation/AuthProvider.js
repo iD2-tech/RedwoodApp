@@ -78,7 +78,7 @@ export const AuthProvider = ({children}) => {
               auth().currentUser.getIdToken().then(async function(token) {
                 const credentials = Realm.Credentials.jwt(token);
                 try {
-                  const user = await app.logIn(credentials);
+                  const user = await app.logIn(credentials)
                   console.log("Successfully logged in", user.id);
                 } catch (err) {
                   console.error("Failed to login", err.message);
