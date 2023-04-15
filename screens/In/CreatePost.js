@@ -3,16 +3,10 @@ import React, { useState, useEffect } from 'react';
 import PageBackButton from '../../components/PageBackButton';
 import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import { useNavigation } from '@react-navigation/native'
-import { useRealm } from '../../database/RealmConfig';
-import { createRealmContext, useUser } from '@realm/react';
-import { Post } from '../../database/Models/Post';
-
 
 const CreatePost = () => {
 
   const navigation = useNavigation();
-  const realm = useRealm();
-  const user = useUser();
 
   const [verses, setVerses] = useState('');
   const [book, setBook] = useState('');
@@ -32,32 +26,35 @@ const CreatePost = () => {
   
 
   const fetchVerses = async () => {
-    try {
-      await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
-        .then((response) => response.json())
-        .then((responseJson) => {
-          // console.log("\"" + responseJson.text.replace(/(\r\n|\n|\r)/gm, "").trim() + "\"");
-          setVerses(responseJson.text)
+    // try {
+    //   await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
+    //     .then((response) => response.json())
+    //     .then((responseJson) => {
+    //       // console.log("\"" + responseJson.text.replace(/(\r\n|\n|\r)/gm, "").trim() + "\"");
+    //       setVerses(responseJson.text)
 
-          realm.write(() => {
-            realm.create('Post', Post.generate(user.id, title, book, chapter, verse, responseJson.text, text, user.id))
-          });
-          setTitle('');
-          setBook('');
-          setChapter('');
-          setVerse('');
-          setText('');
-          navigation.navigate("ProfileStack", {
-            title: title,
-            verseText: verses,
-            text: text
-          })
-        });
+    //       realm.write(() => {
+    //         realm.create('Post', Post.generate(user.id, title, book, chapter, verse, responseJson.text, text, user.id))
+    //       });
+    //       setTitle('');
+    //       setBook('');
+    //       setChapter('');
+    //       setVerse('');
+    //       setText('');
+          navigation.navigate("ProfileStack"
+          // , 
+          // {
+          //   title: title,
+          //   verseText: verses,
+          //   text: text
+          // }
+          )
+        // });
 
 
-    } catch (error) {
-      console.error(error);
-    }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   const navAndSend = () => {

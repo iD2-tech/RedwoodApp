@@ -5,8 +5,7 @@ import { firebase } from "@react-native-firebase/auth";
 import EachPost from '../../components/EachPost';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
-import { useQuery } from '../../database/RealmConfig';
-import Post from '../../database/Models/Post';
+
 
 const DATA = [
   {
@@ -74,7 +73,6 @@ const DATA = [
 
 
 const Feed = () => {
-  const posts = useQuery(Post);
   const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 

@@ -1,35 +1,34 @@
 import { StyleSheet, Text, View, Animated, Dimensions } from 'react-native'
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 
 
 const EachJournal = (props) => {
 
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
+  const dateArray = props.date.split("/");
+  const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 
-    return (
-        <View
-            style={styles.container}
-        >
-            <View style={styles.dateContainer}>
-                <Text style={styles.dateNum}>{props.date.getDate()}</Text>
-                <Text style={styles.dateVal}>{props.date.toLocaleString('default', { month: 'long' })}</Text>
-                <Text style={styles.dateVal}>{props.date.getFullYear()}</Text>
-            </View>
-
-            <View style={styles.textContainer}>
-                <Text style={styles.title}>{props.title}</Text>
-                <Text style={styles.verse}>{props.verse}</Text>
-            </View>
-
-            <View style={styles.buttonContainer}>
-                <Feather name="chevron-right" size={25} color="#5C4033" />
-            </View>
+  return (
+    <View 
+        style={styles.container}
+    >
+        <View style={styles.dateContainer}>
+            <Text style={styles.dateNum}>{dateArray[1]}</Text>
+            <Text style={styles.dateVal}>{monthNames[parseInt(dateArray[0] - 1)]}</Text>
+            <Text style={styles.dateVal}>{dateArray[2]}</Text>
         </View>
-    )
+
+        <View style={styles.textContainer}>
+            <Text style={styles.title}>{props.title}</Text>
+            <Text style={styles.verse}>{props.verse}</Text>
+        </View>
+
+        <View style={styles.buttonContainer}>
+            <Feather name="chevron-right" size={25} color="#505050"/>
+        </View>
+    </View>
+  )
 }
 
 export default EachJournal
@@ -103,30 +102,30 @@ const styles = StyleSheet.create({
     quote: {
         fontFamily: 'Lato-Bold',
         fontSize: 17,
-        color: '#505050',
+        color: '#505050', 
 
     },
 
     verseText: {
         fontFamily: 'Lato-Bold',
         fontSize: 14,
-        color: '#505050',
+        color: '#505050', 
         marginBottom: '3%'
     },
 
     verse: {
         fontFamily: 'Lato-Bold',
         fontSize: 14,
-        color: '#505050',
+        color: '#505050', 
         marginBottom: '5%',
     },
 
     text: {
         fontFamily: 'Lato-Regular',
         fontSize: 14,
-        color: '#505050',
+        color: '#505050', 
     }
 
-
+    
 
 })
