@@ -71,10 +71,13 @@ export const AuthProvider = ({children}) => {
             console.log(e);
           }
         },
-        register: async (email, password) => {
+        register: async (email, password, name, username) => {
           try {
-
+            
               const user = await auth().createUserWithEmailAndPassword(email, password);
+
+              console.log(name + " " + username);
+
               auth().currentUser.getIdToken().then(async function(token) {
                 const credentials = Realm.Credentials.jwt(token);
                 try {

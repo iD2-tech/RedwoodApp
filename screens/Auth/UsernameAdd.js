@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, TouchableWithoutFeedback, Keyboard, Animated } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, TouchableWithoutFeedback, Keyboard, Animated, Dimensions } from 'react-native'
 import React, {useState, useContext, useRef, useEffect} from 'react'
 import { AuthContext } from '../../navigation/AuthProvider'
 import { useNavigation } from '@react-navigation/native'
@@ -6,13 +6,14 @@ import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import OnboardButton from '../../components/OnboardButton'
 import PageBackButton from '../../components/PageBackButton'
 
+const { width, height } = Dimensions.get('window')
 
-const UsernameAdd = ({route}) => {
 
-    const {email, password} = route.params;
+const UsernameAdd = () => {
 
     const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
     const [username, setUsername] = useState('')
+    const [name, setName] = useState('')
     const navigation = useNavigation();
     const {register} = useContext(AuthContext);
 
@@ -25,9 +26,15 @@ const UsernameAdd = ({route}) => {
     }, [fadeAnim]);
 
     const navBack= () => {
-        navigation.navigate("Signup");
+        navigation.navigate("Onboarding");
     }
 
+    const navSignup = () => {
+      navigation.navigate("Signup", {
+        username: username,
+        name: name
+      })
+    }
 
     return (
       <DismissKeyBoard>
@@ -43,21 +50,31 @@ const UsernameAdd = ({route}) => {
             <PageBackButton onPress={navBack}/> 
           </View>   
           <View style={styles.letterContainer}>
-            <Text style={styles.su}>My username is</Text>
+            <Text style={styles.su}>My name is</Text>
           </View>
          
 
             <View style={styles.inputContainer}>
 
                 <TextInput 
-                    placeholder="username"
+                    placeholder="John Doe"
+                    value={name}
+                    onChangeText={text => {setName(text)}}
+                    style={styles.input}
+                />
+            </View>
+            <View style={styles.letterContainer}>
+                  <Text style={styles.su}>My username is</Text>
+                </View>
+                <View style={styles.inputContainer}>
+
+                <TextInput 
+                    placeholder="john_doe"
                     value={username}
                     onChangeText={text => {setUsername(text)}}
                     style={styles.input}
                 />
-            
-            
-            </View>
+                </View>
             {/* <View style={styles.lineContainer}>
           <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
               <View>
@@ -65,7 +82,7 @@ const UsernameAdd = ({route}) => {
               </View>
            <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
           </View> */}
-            <OnboardButton buttonColor="#505050" textColor="#FFFFFF" text="SIGN UP" onPress={() => register(email, password, username)}/>
+            <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="CONTINUE" onPress={navSignup}/>
             
         </KeyboardAvoidingView>
         </Animated.View>
@@ -113,7 +130,7 @@ const styles = StyleSheet.create({
       },
       su: {
         marginBottom: 30,
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: '800',
         fontFamily: 'Lato-Regular',
         color: '#505050',
