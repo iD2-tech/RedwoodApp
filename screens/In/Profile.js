@@ -132,7 +132,7 @@ const Profile = ({ route }) => {
         const {title, book, chapter, verse, verses, date, text} = doc.data();
         postsData.push({
           id: doc.id,
-          user: user.name,
+          user: user ? user.name : 'Loading...',
           title,
           date,
           verseText: verses,
