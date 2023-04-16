@@ -77,8 +77,10 @@ const Feed = () => {
 
   return (
       <ImageBackground source={require('../../tree.jpg')} resizeMode="cover" style={styles.image}>
-      
-      <MaskedView
+      <Text style={{alignSelf: 'center'}}>
+        coming soon...
+      </Text>
+      {/* <MaskedView
         style={styles.flatContainer}
         maskElement=
         {<LinearGradient style={{ flex: 1, }} colors={['transparent', 'white']} locations={[0, 0.3]}/>}
@@ -92,7 +94,7 @@ const Feed = () => {
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
         />
-    </MaskedView>
+    </MaskedView> */}
     </ImageBackground>
     
   )

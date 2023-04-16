@@ -125,14 +125,14 @@ const Profile = ({ route }) => {
       }
     });
     
-    const userPostsRef = firestore().collection('Posts').doc(userId).collection('userPosts');
+    const userPostsRef = firestore().collection('Posts').doc(userId).collection('userPosts').orderBy('date', 'desc');
     const unsubscribe2 = userPostsRef.onSnapshot((querySnapshot) => {
       const postsData = [];
       querySnapshot.forEach((doc) => {
         const {title, book, chapter, verse, verses, date, text} = doc.data();
         postsData.push({
           id: doc.id,
-          user: name,
+          user: user.name,
           title,
           date,
           verseText: verses,

@@ -95,12 +95,24 @@ export const AuthProvider = ({children}) => {
           }
         },
 
-        google: async () => {
-           onGoogleButtonPress().then(() => console.log('Signed in with Google!'))
+        google: async (name, username) => {
+           onGoogleButtonPress().then(() => 
+           firestore().collection('Users').doc(auth().currentUser.uid).set({
+            name: name,
+            username: username
+          }).then(() => {
+            console.log('User Added!');
+          }))
         },
 
-        apple: async () => {
-           onAppleButtonPress().then(() => console.log('Apple sign-in complete!'))
+        apple: async (name, username) => {
+           onAppleButtonPress().then(() => 
+           firestore().collection('Users').doc(auth().currentUser.uid).set({
+            name: name,
+            username: username
+          }).then(() => {
+            console.log('User Added!');
+          }))
         }
       }}>
       {children}

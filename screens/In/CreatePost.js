@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import PageBackButton from '../../components/PageBackButton';
 import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import { useNavigation } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore';
-import {firebase } from "@react-native-firebase/auth";
+import { firebase } from "@react-native-firebase/auth";
 
 const CreatePost = () => {
-  var userId =firebase.auth().currentUser.uid;
+  var userId = firebase.auth().currentUser.uid;
 
   const navigation = useNavigation();
 
@@ -26,7 +26,7 @@ const CreatePost = () => {
       setBtnColor(false);
     }
   }, [text])
-  
+
 
   const fetchVerses = async () => {
     var date = new Date().getDate();
@@ -38,30 +38,37 @@ const CreatePost = () => {
         .then((responseJson) => {
           console.log(userId)
           console.log("Test1")
-          // console.log("\"" + responseJson.text.replace(/(\r\n|\n|\r)/gm, "").trim() + "\"");
-          setVerses(responseJson.text);
-          console.log("Test2")
-          firestore().collection('Posts').doc(userId).collection('userPosts').add({
-            title: title,
-            book: book,
-            chapter: chapter,
-            verse: verse,
-            verses: verses,
-            text: text,
-            date: new Date(),
-          }).then((docRef) => {
-            console.log("added" + docRef)
-            setTitle('');
-            setBook('');
-            setChapter('');
-            setVerse('');
-            setText('');
-            navigation.navigate("ProfileStack")
-          }).catch((error) => {
-            console.log(error);
-          })
+          if (!responseJson) {
+            fetchVerses();
+            return;
+          } else {
+            // console.log("\"" + responseJson.text.replace(/(\r\n|\n|\r)/gm, "").trim() + "\"");
+            setVerses(responseJson.text);
+            console.log("Test2")
+            firestore().collection('Posts').doc(userId).collection('userPosts').add({
+              title: title,
+              book: book,
+              chapter: chapter,
+              verse: verse,
+              verses: responseJson.text,
+              text: text,
+              date: new Date(),
+            }).then((docRef) => {
+              console.log("added" + docRef)
+              setTitle('');
+              setBook('');
+              setChapter('');
+              setVerse('');
+              setText('');
+              navigation.navigate("ProfileStack")
+            }).catch((error) => {
+              console.log(error);
+            })
+          }
+
         });
     } catch (error) {
+      Alert.alert("Please enter valid bible verse(s)");
       console.error(error);
     }
   };
@@ -159,11 +166,11 @@ const CreatePost = () => {
               fontFamily: 'Lato-Bold',
               fontSize: 18
             } :
-            {
-              color: "#ABABAB",
-              fontFamily: 'Lato-Bold',
-              fontSize: 18
-            }
+              {
+                color: "#ABABAB",
+                fontFamily: 'Lato-Bold',
+                fontSize: 18
+              }
           }>Post</Text>
         </TouchableOpacity>
 
@@ -248,10 +255,10 @@ const styles = StyleSheet.create({
 
   normalButton: {
     backgroundColor: '#E4E4E4',
-            width: '75%',
-            padding: 12,
-            borderRadius: 10,
-            alignItems: 'center',
+    width: '75%',
+    padding: 12,
+    borderRadius: 10,
+    alignItems: 'center',
   }
 
   // postButton: {
