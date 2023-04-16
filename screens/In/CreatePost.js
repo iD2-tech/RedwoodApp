@@ -3,8 +3,11 @@ import React, { useState, useEffect } from 'react';
 import PageBackButton from '../../components/PageBackButton';
 import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import { useNavigation } from '@react-navigation/native'
+import firestore from '@react-native-firebase/firestore';
+import {firebase } from "@react-native-firebase/auth";
 
 const CreatePost = () => {
+  var userId =firebase.auth().currentUser.uid;
 
   const navigation = useNavigation();
 
@@ -26,35 +29,41 @@ const CreatePost = () => {
   
 
   const fetchVerses = async () => {
-    // try {
-    //   await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //       // console.log("\"" + responseJson.text.replace(/(\r\n|\n|\r)/gm, "").trim() + "\"");
-    //       setVerses(responseJson.text)
-
-    //       realm.write(() => {
-    //         realm.create('Post', Post.generate(user.id, title, book, chapter, verse, responseJson.text, text, user.id))
-    //       });
-    //       setTitle('');
-    //       setBook('');
-    //       setChapter('');
-    //       setVerse('');
-    //       setText('');
-          navigation.navigate("ProfileStack"
-          // , 
-          // {
-          //   title: title,
-          //   verseText: verses,
-          //   text: text
-          // }
-          )
-        // });
-
-
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    try {
+      await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(userId)
+          console.log("Test1")
+          // console.log("\"" + responseJson.text.replace(/(\r\n|\n|\r)/gm, "").trim() + "\"");
+          setVerses(responseJson.text);
+          console.log("Test2")
+          firestore().collection('Posts').doc(userId).collection('userPosts').add({
+            title: title,
+            book: book,
+            chapter: chapter,
+            verse: verse,
+            verses: verses,
+            text: text,
+            date: new Date(),
+          }).then((docRef) => {
+            console.log("added" + docRef)
+            setTitle('');
+            setBook('');
+            setChapter('');
+            setVerse('');
+            setText('');
+            navigation.navigate("ProfileStack")
+          }).catch((error) => {
+            console.log(error);
+          })
+        });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const navAndSend = () => {

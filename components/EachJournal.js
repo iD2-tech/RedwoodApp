@@ -5,18 +5,18 @@ import Feather from 'react-native-vector-icons/Feather'
 
 const EachJournal = (props) => {
 
-  const dateArray = props.date.split("/");
-  const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+//   const dateArray = props.date.split("/");
+//   const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-
+ 
   return (
     <View 
         style={styles.container}
     >
         <View style={styles.dateContainer}>
-            <Text style={styles.dateNum}>{dateArray[1]}</Text>
-            <Text style={styles.dateVal}>{monthNames[parseInt(dateArray[0] - 1)]}</Text>
-            <Text style={styles.dateVal}>{dateArray[2]}</Text>
+            <Text style={styles.dateNum}>{}</Text>
+            <Text style={styles.dateVal}>{}</Text>
+            <Text style={styles.dateVal}>{}</Text>
         </View>
 
         <View style={styles.textContainer}>

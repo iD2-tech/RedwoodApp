@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View , TouchableOpacity, FlatList, Dimensions, ImageBackground} from 'react-native'
-import React, {useState, useEffect, useContext} from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import {firebase } from "@react-native-firebase/auth";
+import { firebase } from "@react-native-firebase/auth";
 import { AuthContext } from '../../navigation/AuthProvider';
 import Feather from 'react-native-vector-icons/Feather'
 import EachJournal from '../../components/EachJournal';
+import firestore from '@react-native-firebase/firestore';
 
 const { width, height } = Dimensions.get('window')
 
@@ -18,7 +19,7 @@ const DATA = [
     verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
     verse: 'Psalm 51:10-12',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
-    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
+      + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
   },
   {
     id: '2',
@@ -37,7 +38,7 @@ const DATA = [
     verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
     verse: 'Philippians 4:4',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
-    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
+      'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
   },
   {
     id: '4',
@@ -47,7 +48,7 @@ const DATA = [
     verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
     verse: 'Psalm 51:10-12',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
-    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
+      + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
   },
   {
     id: '5',
@@ -66,7 +67,7 @@ const DATA = [
     verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
     verse: 'Philippians 4:4',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
-    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
+      'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
   },
   {
     id: '7',
@@ -76,7 +77,7 @@ const DATA = [
     verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
     verse: 'Psalm 51:10-12',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
-    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
+      + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
   },
   {
     id: '8',
@@ -95,19 +96,58 @@ const DATA = [
     verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
     verse: 'Philippians 4:4',
     text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
-    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
+      'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
   },
 
 
 ]
 
 
-const Profile = ({route}) => {
-  var userId =firebase.auth().currentUser.email;
-  const navigation= useNavigation();
-  const {logout} = useContext(AuthContext);
+const Profile = ({ route }) => {
+  var userId = firebase.auth().currentUser.uid;
+  const navigation = useNavigation();
+  const { logout } = useContext(AuthContext);
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [posts, setPosts] = useState([]);
 
-  
+  const [user, setUser] = useState(null);
+
+
+
+  useEffect(() => {
+    const userId = firebase.auth().currentUser.uid;
+    const userRef = firebase.firestore().collection('Users').doc(userId);
+    const unsubscribe1 = userRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        const { name, username } = doc.data();
+        setUser({ name, username });
+      }
+    });
+    
+    const userPostsRef = firestore().collection('Posts').doc(userId).collection('userPosts');
+    const unsubscribe2 = userPostsRef.onSnapshot((querySnapshot) => {
+      const postsData = [];
+      querySnapshot.forEach((doc) => {
+        const {title, book, chapter, verse, verses, date, text} = doc.data();
+        postsData.push({
+          id: doc.id,
+          user: name,
+          title,
+          date,
+          verseText: verses,
+          verse: book + " " + chapter + ":" + verse,
+          text: text
+        })
+      })
+      setPosts(postsData);
+    })
+    return () => unsubscribe2();
+    
+  }, [])
+
+
+
 
   const navToFeed = () => {
     navigation.navigate("Post");
@@ -128,38 +168,40 @@ const Profile = ({route}) => {
 
   return (
 
-  <View style = {styles.container}>
-    <View style={styles.nameContainer}>
-      <View style={styles.nameTop}>
-        <Text style={styles.nameText}>David Hyun</Text>
-        <TouchableOpacity
-        onPress = {() => logout()}
-         >
-        <Feather name="log-out" size={25} color={'black'}/>
-        </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.nameContainer}>
+        <View style={styles.nameTop}>
+          <Text style={styles.nameText}>
+            {user ? user.name : 'Loading...'}
+          </Text>
+          <TouchableOpacity
+            onPress={() => logout()}
+          >
+            <Feather name="log-out" size={25} color={'black'} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.nameBot}>
+          <Text style={styles.userText}>{user ? `@${user.username}` : 'Loading...'}</Text>
+        </View>
       </View>
-      <View style={styles.nameBot}>
-        <Text style={styles.userText}>@davyhyun</Text>
-      </View>
-    </View>
 
-    <View style={styles.listContainer}>
-      <FlatList
-          data={DATA}
-          renderItem={({item}) => 
-          <TouchableOpacity onPress={() => onItemPress(item)}>
-            <EachJournal user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text}/>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={posts}
+          renderItem={({ item }) =>
+            <TouchableOpacity onPress={() => onItemPress(item)}>
+              <EachJournal user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
             </TouchableOpacity>
           }
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
         />
-    </View>
-    
+      </View>
 
-    
-    
-  </View>
+
+
+
+    </View>
 
   )
 }
@@ -216,6 +258,6 @@ const styles = StyleSheet.create({
     height: height * 0.60,
   }
 
-  
+
 
 })

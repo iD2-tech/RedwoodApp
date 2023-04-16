@@ -2,6 +2,7 @@ import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
+import firestore from '@react-native-firebase/firestore';
 
 export const AuthContext = createContext();
 
@@ -74,6 +75,13 @@ export const AuthProvider = ({children}) => {
               const user = await auth().createUserWithEmailAndPassword(email, password);
 
               console.log(name + " " + username);
+
+              firestore().collection('Users').doc(auth().currentUser.uid).set({
+                name: name,
+                username: username
+              }).then(() => {
+                console.log('User Added!');
+              })
 
             } catch (e) {
               console.log(e);
