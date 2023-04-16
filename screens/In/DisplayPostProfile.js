@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Animated, Dimensions, ImageBackground, Alert } from 'react-native'
+import { StyleSheet, Text, View, Animated, Dimensions, ImageBackground, Alert, Scrollview } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import PageBackButton from '../../components/PageBackButton'
 import { useNavigation } from '@react-navigation/native'
@@ -6,6 +6,9 @@ import Feather from 'react-native-vector-icons/Feather'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
+import { ScrollView } from 'react-native-gesture-handler'
+
+const { width, height } = Dimensions.get('window')
 
 const DisplayPostProfile = ({route}) => {
     const userId = firebase.auth().currentUser.uid;
@@ -51,10 +54,13 @@ const DisplayPostProfile = ({route}) => {
 
   return (
     <ImageBackground source={require('../../tree.jpg')} resizeMode="cover" style={styles.image}>
+    <View style={styles.backButtonContainer}>
+        <PageBackButton onPress={navBack}/>
+      </View>
+      <ScrollView>
     <View 
         style={styles.container}
         >
-     <PageBackButton onPress={navBack}/>
      <View style={{
         flexDirection: 'row',
         width: '100%',
@@ -75,6 +81,7 @@ const DisplayPostProfile = ({route}) => {
       <Text style={styles.verse}>{verse}</Text>
       <Text style={styles.text}>{text}</Text>
     </View>
+    </ScrollView>
     </ImageBackground>
   )
 }
@@ -83,12 +90,11 @@ export default DisplayPostProfile
 
 const styles = StyleSheet.create({
     container: {
-        width: '80%',
+        width: width * 0.8,
         // marginBottom: '20%',
         justifyContent: 'center',
-        marginLeft: '5%',
-        marginTop: '20%',
-        
+        marginLeft: width * 0.05,
+        marginTop: width * 0.1,
 
         // alignItems: 'center' 
     },
@@ -97,19 +103,21 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Bold',
         fontSize: 16.5,
         color: '#505050',
+        marginBottom: height * 0.005,
+        marginTop: height * 0.06
     },
     date: {
         fontFamily: 'Lato-Regular',
         fontSize: 10,
         color: '#505050',
-        marginBottom: '5%'
+        marginBottom: height * 0.02
     },
 
     title: {
         fontFamily: 'Lato-Bold',
         fontSize: 23,
         color: '#505050',
-        marginBottom: '5%'
+        marginBottom: height * 0.022
     },
 
     quote: {
@@ -123,7 +131,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Bold',
         fontSize: 14,
         color: '#505050', 
-        marginBottom: '3%'
+        marginBottom: height * 0.022
     },
 
     verse: {
@@ -131,20 +139,26 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#505050', 
         textAlign: 'right',
-        marginBottom: '5%',
+        marginBottom: height * 0.021,
+        marginRight: width * 0.03
     },
 
     text: {
         fontFamily: 'Lato-Regular',
         fontSize: 14,
         color: '#505050', 
+        marginRight: width * 0.015,
     },
     image: {
         flex: 1,
         justifyContent: 'center',
         backgroundColor: 'white',
-      },
-
-    
-
+    },
+    backButtonContainer: {
+        marginTop: height * 0.11,
+        display: 'flex',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        marginLeft: width * 0.05
+    }
 })

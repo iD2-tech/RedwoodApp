@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import PageBackButton from '../../components/PageBackButton';
 import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import { useNavigation } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
+
+const { width, height } = Dimensions.get('window')
 
 const CreatePost = () => {
   var userId = firebase.auth().currentUser.uid;
@@ -191,74 +193,72 @@ const styles = StyleSheet.create({
 
   backButtonContainer: {
     justifyContent: 'flex-start',
-    width: '85%',
+    width: width * 0.85,
     marginTop: '8%'
   },
 
   inputContainer: {
     justifyContent: 'center',
-    width: '70%',
-    marginTop: '20%',
+    width: width * 0.7,
+    marginTop: height * 0.05,
   },
 
   versesContainer: {
-    // alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginBottom: '15%',
+    marginBottom: height * 0.025,
   },
 
   title: {
     fontSize: 27,
     fontFamily: 'Lato-Bold',
-    marginBottom: '8%',
+    marginBottom: height * 0.023,
     color: '#505050'
-    //  justifyContent: 'center'
   },
 
   bookInput: {
     fontSize: 20,
     fontFamily: 'Lato-Bold',
-    marginRight: '10%',
+    marginRight: width * 0.07,
     color: '#505050'
   },
 
   chapterInput: {
     fontSize: 20,
     fontFamily: 'Lato-Bold',
-    marginRight: '5%',
+    marginRight: width * 0.04,
     color: '#505050'
   },
 
   verseInput: {
     fontSize: 20,
     fontFamily: 'Lato-Bold',
-    marginLeft: '5%',
+    marginLeft: width * 0.04,
     color: '#505050'
   },
 
   textInput: {
     fontSize: 15,
     fontFamily: 'Lato-Bold',
-    height: 400,
-    marginBottom: '20%',
+    height: height * 0.45,
+    marginBottom: height * 0.065,
     color: '#505050',
   },
 
   filledButton: {
     backgroundColor: '#5C4033',
-    width: '75%',
+    width: width * 0.75,
     padding: 12,
     borderRadius: 10,
     alignItems: 'center',
   },
 
   normalButton: {
-    backgroundColor: '#E4E4E4',
-    width: '75%',
-    padding: 12,
-    borderRadius: 10,
-    alignItems: 'center',
+    backgroundColor: '#E4E4E4', 
+            width: width * 0.75,
+            padding: 12,
+            borderRadius: 10,
+            alignItems: 'center',
   }
 
   // postButton: {

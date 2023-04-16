@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, SafeAreaView, ImageBackground} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, FlatList, SafeAreaView, ImageBackground} from 'react-native'
 import React, {useContext} from 'react'
 import { AuthContext } from '../../navigation/AuthProvider';
 import {firebase } from "@react-native-firebase/auth";
@@ -6,6 +6,7 @@ import EachPost from '../../components/EachPost';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 
+const { width, height } = Dimensions.get('window')
 
 const DATA = [
   {
@@ -83,10 +84,10 @@ const Feed = () => {
       {/* <MaskedView
         style={styles.flatContainer}
         maskElement=
-        {<LinearGradient style={{ flex: 1, }} colors={['transparent', 'white']} locations={[0, 0.3]}/>}
+        {<LinearGradient style={{ flex: 1, }} colors={['transparent', 'white']} locations={[0, 0.22]}/>}
       >
         <FlatList
-          contentContainerStyle={{ paddingTop: 130}}
+          contentContainerStyle={{ paddingTop: height * 0.15}}
           data={DATA}
           renderItem={({item}) => 
             <EachPost user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text}/>
@@ -104,8 +105,8 @@ export default Feed
 
 const styles = StyleSheet.create({
   flatContainer: {
-    marginTop: '30%',
-    marginLeft: '10%',
+    marginTop: height * 0.12,
+    marginLeft: width * 0.095,
     justifyContent: 'center',
     alignContent: 'center'
   },

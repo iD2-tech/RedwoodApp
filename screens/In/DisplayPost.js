@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Animated, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Animated, Dimensions} from 'react-native'
 import React, {useState} from 'react'
 import PageBackButton from '../../components/PageBackButton'
 import { useNavigation } from '@react-navigation/native'
 
+const { width, height } = Dimensions.get('window')
 
 const DisplayPost = (props) => {
     const navigation = useNavigation();
@@ -30,8 +31,8 @@ export default DisplayPost
 
 const styles = StyleSheet.create({
     container: {
-        width: '80%',
-        marginBottom: '20%',
+        width: width * 0.8,
+        marginBottom: width * 0.2,
 
         // alignItems: 'center' 
     },
