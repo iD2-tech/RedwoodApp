@@ -63,14 +63,14 @@ const DisplayPostProfile = ({route}) => {
         >
      <View style={{
         flexDirection: 'row',
-        width: '100%',
+        width: width*0.05,
         justifyContent: 'space-between',
         alignContent:'center',
         alignItems: 'center',
-        marginBottom: '1%',
-        marginTop: '10%'
+        marginBottom: height*0.05,
+        marginTop: height*0.1
      }}>
-        <Text style={styles.name}>{user}</Text>
+
         <TouchableOpacity onPress={deletePost}>
             <Feather name={"trash-2"} size={20} color="#505050"/>
         </TouchableOpacity>
