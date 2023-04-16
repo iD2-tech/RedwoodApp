@@ -60,7 +60,7 @@ const CreatePost = () => {
               setChapter('');
               setVerse('');
               setText('');
-              navigation.navigate("ProfileStack")
+              navigation.navigate("Profile")
             }).catch((error) => {
               console.log(error);
             })
