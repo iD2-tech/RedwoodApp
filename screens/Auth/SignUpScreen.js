@@ -98,8 +98,8 @@ const SignupScreen = ({route}) => {
               <View style={{flex: 1, height: 2, backgroundColor: '#5C4033'}} />
             </View>
           <View style= {styles.socialContainer}>
-            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Google" social="google" onPress={() => google()}/>
-            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Apple" social="apple" onPress={() => apple()}/>
+            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Google" social="google" onPress={() => google(name, username)}/>
+            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Apple" social="apple" onPress={() => apple(name, username)}/>
           </View>
             <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="SIGN UP" onPress={() => register(email, password, name, username)}/>
             

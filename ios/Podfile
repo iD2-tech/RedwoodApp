@@ -13,7 +13,6 @@ prepare_react_native_project!
 #   dependencies: {
 #     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
 # ```
-pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
 
 linkage = ENV['USE_FRAMEWORKS']
@@ -30,7 +29,10 @@ target 'RedwoodApp' do
   
   pod 'Firebase', :modular_headers => true
   pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+pod 'RNFBFirestore', :path => '../node_modules/@react-native-firebase/firestore'
   $RNFirebaseAsStaticFramework = true
 
   use_react_native!(

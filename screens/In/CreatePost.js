@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import PageBackButton from '../../components/PageBackButton';
 import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import { useNavigation } from '@react-navigation/native'
+import firestore from '@react-native-firebase/firestore';
+import { firebase } from "@react-native-firebase/auth";
 
 const { width, height } = Dimensions.get('window')
 
 const CreatePost = () => {
+  var userId = firebase.auth().currentUser.uid;
 
   const navigation = useNavigation();
 
@@ -25,38 +28,51 @@ const CreatePost = () => {
       setBtnColor(false);
     }
   }, [text])
-  
+
 
   const fetchVerses = async () => {
-    // try {
-    //   await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //       // console.log("\"" + responseJson.text.replace(/(\r\n|\n|\r)/gm, "").trim() + "\"");
-    //       setVerses(responseJson.text)
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    try {
+      await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(userId)
+          console.log("Test1")
+          if (!responseJson) {
+            fetchVerses();
+            return;
+          } else {
+            // console.log("\"" + responseJson.text.replace(/(\r\n|\n|\r)/gm, "").trim() + "\"");
+            setVerses(responseJson.text);
+            console.log("Test2")
+            firestore().collection('Posts').doc(userId).collection('userPosts').add({
+              title: title,
+              book: book,
+              chapter: chapter,
+              verse: verse,
+              verses: responseJson.text,
+              text: text,
+              date: new Date(),
+            }).then((docRef) => {
+              console.log("added" + docRef)
+              setTitle('');
+              setBook('');
+              setChapter('');
+              setVerse('');
+              setText('');
+              navigation.navigate("Profile")
+            }).catch((error) => {
+              console.log(error);
+            })
+          }
 
-    //       realm.write(() => {
-    //         realm.create('Post', Post.generate(user.id, title, book, chapter, verse, responseJson.text, text, user.id))
-    //       });
-    //       setTitle('');
-    //       setBook('');
-    //       setChapter('');
-    //       setVerse('');
-    //       setText('');
-          navigation.navigate("ProfileStack"
-          // , 
-          // {
-          //   title: title,
-          //   verseText: verses,
-          //   text: text
-          // }
-          )
-        // });
-
-
-    // } catch (error) {
-    //   console.error(error);
-    // }
+        });
+    } catch (error) {
+      Alert.alert("Please enter valid bible verse(s)");
+      console.error(error);
+    }
   };
 
   const navAndSend = () => {
@@ -152,11 +168,11 @@ const CreatePost = () => {
               fontFamily: 'Lato-Bold',
               fontSize: 18
             } :
-            {
-              color: "#ABABAB",
-              fontFamily: 'Lato-Bold',
-              fontSize: 18
-            }
+              {
+                color: "#ABABAB",
+                fontFamily: 'Lato-Bold',
+                fontSize: 18
+              }
           }>Post</Text>
         </TouchableOpacity>
 
@@ -238,7 +254,7 @@ const styles = StyleSheet.create({
   },
 
   normalButton: {
-    backgroundColor: '#E4E4E4',
+    backgroundColor: '#E4E4E4', 
             width: width * 0.75,
             padding: 12,
             borderRadius: 10,
