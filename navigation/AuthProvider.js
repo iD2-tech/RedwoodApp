@@ -2,6 +2,7 @@ import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
+import firestore from '@react-native-firebase/firestore';
 
 export const AuthContext = createContext();
 
@@ -75,6 +76,13 @@ export const AuthProvider = ({children}) => {
 
               console.log(name + " " + username);
 
+              firestore().collection('Users').doc(auth().currentUser.uid).set({
+                name: name,
+                username: username
+              }).then(() => {
+                console.log('User Added!');
+              })
+
             } catch (e) {
               console.log(e);
           }
@@ -87,12 +95,24 @@ export const AuthProvider = ({children}) => {
           }
         },
 
-        google: async () => {
-           onGoogleButtonPress().then(() => console.log('Signed in with Google!'))
+        google: async (name, username) => {
+           onGoogleButtonPress().then(() => 
+           firestore().collection('Users').doc(auth().currentUser.uid).set({
+            name: name,
+            username: username
+          }).then(() => {
+            console.log('User Added!');
+          }))
         },
 
-        apple: async () => {
-           onAppleButtonPress().then(() => console.log('Apple sign-in complete!'))
+        apple: async (name, username) => {
+           onAppleButtonPress().then(() => 
+           firestore().collection('Users').doc(auth().currentUser.uid).set({
+            name: name,
+            username: username
+          }).then(() => {
+            console.log('User Added!');
+          }))
         }
       }}>
       {children}
