@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Animated, Dimensions } from 'react-native'
 import React, {useState} from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 
-
+const { width, height } = Dimensions.get('window')
 const EachJournal = (props) => {
 
 //   const dateArray = props.date.split("/");
@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 15,
         borderColor: "#E4E4E4",
-        borderRadius: 15
+        borderRadius: 15,
+        marginLeft: width * 0.02
     },
 
     textContainer: {

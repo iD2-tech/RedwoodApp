@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { firebase } from "@react-native-firebase/auth";
@@ -6,6 +6,9 @@ import { AuthContext } from '../../navigation/AuthProvider';
 import Feather from 'react-native-vector-icons/Feather'
 import EachJournal from '../../components/EachJournal';
 import firestore from '@react-native-firebase/firestore';
+import { RectButton } from 'react-native-gesture-handler';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import SwipeableRow from '../../components/SwipeableRow';
 
 const { width, height } = Dimensions.get('window')
 
@@ -146,24 +149,10 @@ const Profile = ({ route }) => {
     
   }, [])
 
-
-
-
   const navToFeed = () => {
     navigation.navigate("Post");
   }
 
-  const onItemPress = (item) => {
-    navigation.navigate("DisplayPost", {
-      date: item.date,
-      id: item.id,
-      text: item.text,
-      title: item.title,
-      user: item.user,
-      verse: item.verse,
-      verseText: item.verseText
-    });
-  }
 
 
   return (
@@ -189,9 +178,7 @@ const Profile = ({ route }) => {
         <FlatList
           data={posts}
           renderItem={({ item }) =>
-            <TouchableOpacity onPress={() => onItemPress(item)}>
-              <EachJournal user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
-            </TouchableOpacity>
+            <SwipeableRow item={item}/>
           }
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
@@ -256,6 +243,10 @@ const styles = StyleSheet.create({
 
   listContainer: {
     height: height * 0.60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+    // backgroundColor: 'black'
   }
 
 
