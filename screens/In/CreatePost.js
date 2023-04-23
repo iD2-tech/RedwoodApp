@@ -84,6 +84,7 @@ const CreatePost = () => {
               setVerse('');
               setText('');
               setVerseText('');
+              setShowVerse(false);
               navigation.navigate("ProfileStack")
             }).catch((error) => {
               console.log(error);
@@ -126,12 +127,7 @@ const CreatePost = () => {
   }
 
   const getVerses = async () => {
-    if (verse == '' || book == '' || chapter == '') {
-
-    } else {
-
-
-
+    if (verse != '' && book != '' && chapter != '') {
       try {
         await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
           .then((response) => response.json())
@@ -139,6 +135,7 @@ const CreatePost = () => {
             setVerseText(responseJson.text);
             if (!responseJson.text) {
               Alert.alert("Please enter valid bible verse(s)");
+              setShowVerse(false);
             } else {
               ref_input4.current.focus()
             }
