@@ -5,10 +5,9 @@ import DismissKeyBoard from '../../components/DissmisskeyBoard'
 import { useNavigation } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
-import { FlatList } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import { bookNames } from '../../assets/bibleBookNames';
 import { makeMutable } from 'react-native-reanimated';
-import { opacity } from 'react-native-redash';
 
 // on submitediting for verses box, trigger request to get verse and handle accordingly
 
@@ -33,6 +32,11 @@ const CreatePost = () => {
   const ref_input2 = useRef();
   const ref_input3 = useRef();
   const ref_input4 = useRef();
+  const [bookAutofill, setBookAutofill] = useState('');
+  const [chapterEntered, setChapterEntered] = useState(false);
+  const [showVerse, setShowVerse] = useState(false);
+  const [verseText, setVerseText] = useState('');
+
 
 
   useEffect(() => {
@@ -44,7 +48,6 @@ const CreatePost = () => {
     if (!data) {
       setData(bookNames);
     }
-    
 
   }, [text])
 
@@ -80,6 +83,7 @@ const CreatePost = () => {
               setChapter('');
               setVerse('');
               setText('');
+              setVerseText('');
               navigation.navigate("ProfileStack")
             }).catch((error) => {
               console.log(error);
@@ -94,34 +98,59 @@ const CreatePost = () => {
   };
 
   const navAndSend = () => {
+
     fetchVerses();
   }
-  
+
   const bookSelected = (name) => {
     setShowBookDropdown(false);
     setBook(name);
     ref_input2.current.focus()
   }
 
-  const renderItem = ({ item }) => {
-    if (item.name.toUpperCase().includes(book.toUpperCase())) {
-      return (<View style={styles.item}>
-        <TouchableOpacity style={styles.itemText} onPress={() => bookSelected(item.name)}>
-          <Text>{item.name}</Text>
-        </TouchableOpacity>
-      </View>
-      );
-
-    }
-  }
-
-  const bookToChapter = () => {
-    for(let i = 0; i < bookNames.length; i++) {
-      if(bookNames[i].name.toUpperCase().includes(book.toUpperCase())) {
-        bookSelected(bookNames[i].name);
+  const autofillBook = (text) => {
+    for (let i = 0; i < bookNames.length; i++) {
+      if (bookNames[i].name.toUpperCase().includes(text.toUpperCase())) {
+        setBookAutofill(bookNames[i].name);
         break;
       }
     }
+  }
+
+  const adjustBookNameSize = (text) => {
+    if (text === "") {
+      setChapterEntered(false);
+    } else {
+      setChapterEntered(true);
+    }
+  }
+
+  const getVerses = async () => {
+    if (verse == '' || book == '' || chapter == '') {
+
+    } else {
+
+
+
+      try {
+        await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            setVerseText(responseJson.text);
+            if (!responseJson.text) {
+              Alert.alert("Please enter valid bible verse(s)");
+            } else {
+              ref_input4.current.focus()
+            }
+          });
+      } catch (error) {
+        Alert.alert("Please enter valid bible verse(s)");
+        console.error(error);
+      }
+    }
+
+
+
   }
 
   return (
@@ -143,41 +172,38 @@ const CreatePost = () => {
           <View style={styles.versesContainer}>
 
             {/* holds the book and book dropdown */}
-            <View style={styles.bookContainer}>
+            <View style={chapterEntered ? styles.bookContainerLong : styles.bookContainerShort}>
 
               <TextInput
                 placeholder="Book"
                 value={book}
-                onChangeText={text => { setBook(text) }}
+                onChangeText={text => { setBook(text); autofillBook(text); }}
                 style={styles.bookInput}
                 maxLength={15}
                 onFocus={() => setShowBookDropdown(true)}
                 onBlur={() => setShowBookDropdown(false)}
                 returnKeyType='next'
-                onSubmitEditing={bookToChapter}
+                onSubmitEditing={() => bookSelected(bookAutofill)}
                 ref={ref_input1}
                 autoCorrect='false'
                 autoComplete='off'
               />
 
               {showBookDropdown ?
-                <FlatList
-                  data={data}
-                  renderItem={renderItem}
-                  keyExtractor={item => item.id}
-                  style={styles.bookDropDown}
-                  showsVerticalScrollIndicator={false}
-                  keyboardShouldPersistTaps={'handled'}
-
-                />
+                <View style={styles.item}>
+                  <TouchableOpacity style={styles.itemText} onPress={() => bookSelected(bookAutofill)}>
+                    <Text>{bookAutofill}</Text>
+                  </TouchableOpacity>
+                </View>
                 : <></>}
 
             </View>
 
             <TextInput
               placeholder="Chapter"
+              textAlign='right'
               value={chapter}
-              onChangeText={text => { setChapter(text); }}
+              onChangeText={text => { setChapter(text); adjustBookNameSize(text); }}
               style={styles.chapterInput}
               keyboardType='numbers-and-punctuation'
               returnKeyType='next'
@@ -185,7 +211,7 @@ const CreatePost = () => {
               onSubmitEditing={() => ref_input3.current.focus()}
             />
 
-            <Text style={{ fontSize: 20, fontFamily: 'Lato-Bold', }}>:</Text>
+            <Text style={styles.semiColon}>:</Text>
 
             <TextInput
               placeholder="Verse(s)"
@@ -193,11 +219,33 @@ const CreatePost = () => {
               onChangeText={text => { setVerse(text); }}
               style={styles.verseInput}
               keyboardType='numbers-and-punctuation'
-              returnKeyType='go'
+              returnKeyType='next'
               ref={ref_input3}
-              onSubmitEditing={() => ref_input4.current.focus()}
+              onBlur={() => getVerses()}
             />
           </View>
+
+          <TouchableOpacity
+            style={styles.showVerseButton}
+            onPress={() => { setShowVerse(!showVerse); getVerses() }}>
+            <Text style={styles.showVerseText}>
+              {showVerse ? "hide verse" : "show verse"}
+            </Text>
+          </TouchableOpacity>
+
+          {showVerse ?
+            <View style={styles.verseTextContainer}>
+              <ScrollView>
+                <View>
+                  <Text>{verseText}</Text>
+                </View>
+              </ScrollView>
+
+
+            </View>
+            :
+            <></>
+          }
 
           <TextInput
             placeholder="Reflection..."
@@ -205,7 +253,7 @@ const CreatePost = () => {
             numberOfLines={4}
             value={text}
             onChangeText={text => { setText(text) }}
-            style={styles.textInput}
+            style={showVerse ? styles.textInputShort : styles.textInputTall}
             returnKeyType='done'
             ref={ref_input4}
             blurOnSubmit
@@ -282,21 +330,40 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato-Bold',
     marginRight: width * 0.04,
     color: '#505050',
-    marginLeft: width * 0.25,
+    marginLeft: width * 0.3,
+    position: 'absolute',
+    width: width * 0.19,
+  },
+
+  semiColon: {
+    fontSize: 20,
+    fontFamily: 'Lato-Bold',
+    marginLeft: width * 0.50,
+    opacity: 0.3,
   },
 
   verseInput: {
     fontSize: 20,
     fontFamily: 'Lato-Bold',
-    marginLeft: width * 0.04,
+    marginLeft: width * 0.523,
     color: '#505050',
+    position: 'absolute'
   },
 
-  textInput: {
+  textInputTall: {
     fontSize: 15,
     fontFamily: 'Lato-Bold',
     height: height * 0.45,
     marginBottom: height * 0.065,
+    color: '#505050',
+  },
+
+  textInputShort: {
+    fontSize: 15,
+    fontFamily: 'Lato-Bold',
+    height: height * 0.425,
+    top: height * 0.08,
+    marginBottom: height * 0.09,
     color: '#505050',
   },
 
@@ -316,33 +383,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  bookContainer: {
+  bookContainerShort: {
     flexDirection: 'column',
     position: 'absolute',
     width: width * 0.25,
-
   },
 
-  bookDropDown: {
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '100%',
-    width: width * 0.28,
+  bookContainerLong: {
+    flexDirection: 'column',
     position: 'absolute',
-    marginTop: height * 0.03,
-    borderRadius: 2,
-
-
+    width: width * 0.5,
   },
 
   item: {
     // backgroundColor: '#F8F8F8',
-    paddingTop: height * 0.005,
+    paddingTop: height * 0.001,
+    marginLeft: width * 0.002,
     opacity: 1
   },
 
   itemText: {
     opacity: 0.3,
+  },
+
+  showVerseButton: {
+    top: height * -0.02,
+    alignSelf: 'flex-end',
+  },
+
+  showVerseText: {
+    textDecorationLine: 'underline',
+    opacity: 0.3,
+  },
+
+  verseTextContainer: {
+    position: 'absolute',
+    top: height * 0.12,
+    height: height * 0.08,
+    width: '100%',
+    flex: 1,
   }
 })
