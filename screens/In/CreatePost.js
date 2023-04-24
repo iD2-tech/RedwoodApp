@@ -9,8 +9,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { bookNames } from '../../assets/bibleBookNames';
 import { makeMutable } from 'react-native-reanimated';
 
-// on submitediting for verses box, trigger request to get verse and handle accordingly
-
 const { width, height } = Dimensions.get('window')
 
 
@@ -76,6 +74,7 @@ const CreatePost = () => {
               verses: responseJson.text,
               text: text,
               date: new Date(),
+              pinned: '0'
             }).then((docRef) => {
               console.log("added" + docRef)
               setTitle('');
@@ -218,7 +217,7 @@ const CreatePost = () => {
               keyboardType='numbers-and-punctuation'
               returnKeyType='next'
               ref={ref_input3}
-              onBlur={() => getVerses()}
+              onSubmitEditing={() => getVerses()}
             />
           </View>
 
@@ -234,7 +233,7 @@ const CreatePost = () => {
             <View style={styles.verseTextContainer}>
               <ScrollView>
                 <View>
-                  <Text>{verseText}</Text>
+                  <Text style={{fontFamily: 'Lato-Regular',}}>{verseText}</Text>
                 </View>
               </ScrollView>
 
@@ -255,6 +254,7 @@ const CreatePost = () => {
             ref={ref_input4}
             blurOnSubmit
             onSubmitEditing={() => Keyboard.dismiss}
+            onFocus={() => getVerses()}
           />
         </View>
 
