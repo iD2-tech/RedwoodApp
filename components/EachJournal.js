@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Animated, Dimensions } from 'react-native'
 import React, {useState} from 'react'
 import Feather from 'react-native-vector-icons/Feather'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 const { width, height } = Dimensions.get('window')
 const EachJournal = (props) => {
@@ -23,7 +24,19 @@ const EachJournal = (props) => {
         </View>
 
         <View style={styles.textContainer}>
-            <Text style={styles.title}>{props.title}</Text>
+                {
+                    (props.pinned === "1") ? 
+                        <View style={{
+                            flexDirection: 'row'
+                        }}>
+                            <FontAwesome name="thumb-tack" size={15} color="black"/>
+                            <Text style={styles.titlePinned}>{props.title}</Text>
+                        </View>
+                    :
+
+                    <Text style={styles.title}>{props.title}</Text>
+                }
+
             <Text style={styles.verse}>{props.verse}</Text>
         </View>
 
@@ -101,6 +114,14 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'black',
         marginBottom: '5%'
+    },
+
+    titlePinned: {
+        fontFamily: 'Lato-Bold',
+        fontSize: 18,
+        color: 'black',
+        marginBottom: '5%',
+        marginLeft: width * 0.02
     },
 
     quote: {

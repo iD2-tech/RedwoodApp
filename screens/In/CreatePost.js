@@ -55,6 +55,7 @@ const CreatePost = () => {
               verses: responseJson.text,
               text: text,
               date: new Date(),
+              pinned: '0',
             }).then((docRef) => {
               console.log("added" + docRef)
               setTitle('');
