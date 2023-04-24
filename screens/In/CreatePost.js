@@ -181,7 +181,7 @@ const CreatePost = () => {
                 returnKeyType='next'
                 onSubmitEditing={() => bookSelected(bookAutofill)}
                 ref={ref_input1}
-                autoCorrect='false'
+                autoCorrect={false}
                 autoComplete='off'
               />
 
