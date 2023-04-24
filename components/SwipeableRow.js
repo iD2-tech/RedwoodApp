@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert } from 'react-native'
-import React, { useState, useEffect, useContext } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, ActivityIndicator } from 'react-native'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { useNavigation } from '@react-navigation/native';
@@ -8,18 +8,29 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
+import { close } from 'react-native-redash';
 
 const { width, height } = Dimensions.get('window')
 
 const SwipeableRow = (props) => {
+
+  const swipeableRefs = useRef([]);
+  
     var userId = firebase.auth().currentUser.uid;
 
     const navigation = useNavigation();
 
-    const deleteOP = (item) => {
-        firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).delete().then(() => {
-            Alert.alert('POST DELETED!')
-        })
+    const closeSwipeable = (id) => {
+      const swipeableRef = swipeableRefs.current[id];
+      if (swipeableRef) {
+        swipeableRef.close();
+      }
+    }
+
+    const deleteOP = (item) => { 
+     firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).delete().then(() => {
+       Alert.alert('POST DELETED!')
+     })     
     }
 
     const deletePost = (item) => {
@@ -36,6 +47,22 @@ const SwipeableRow = (props) => {
         ])
     }
 
+    const pinItem = (item) => {
+      firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).update({
+        pinned: "1"
+      }).then(() => {
+        Alert.alert("ITEM PINNED!");
+      })
+    }
+
+    const unpinItem = (item) => {
+      firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).update({
+        pinned: "0"
+      }).then(() => {
+        Alert.alert("ITEM UNPINNED!");
+      })
+    }
+
     renderRightAction = (
         text,
         color,
@@ -43,37 +70,63 @@ const SwipeableRow = (props) => {
         progress,
         item
       ) => {
-
         const trans = progress.interpolate({
           inputRange: [0, 1],
           outputRange: [x, 0],
         });
 
         const pressHandler = () => {
+          closeSwipeable(item.id);
             if (text === "Pin") {
-              Alert.alert("Pin");
+              // Alert.alert("Pin");
+              if (item.pinned === '1') {
+                unpinItem(item);
+              } else {
+                pinItem(item);  
+              
+              }
 
             } else {
-              deletePost(item);          
+              deletePost(item);    
             }
           };
 
         return (
-          <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+       
+            (item.pinned === '1') ? 
+            <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
             { (text === "Pin") ? 
             
             <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-                <FontAwesome name="thumb-tack" size={35} color="black"/>
-                <Text style={styles.swipeText}>PIN</Text>
+                <FontAwesome name="thumb-tack" size={25} color="black"/>
+                <Text style={styles.swipeText}>UNPIN</Text>
             </RectButton>
             : 
             <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-                <Feather name="trash-2" size={35} color="black"/>
+                <Feather name="trash-2" size={25} color="black"/>
                 <Text style={styles.swipeText}>DELETE</Text>
             </RectButton>
             }
             
           </Animated.View>
+            : 
+            <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+            { (text === "Pin") ? 
+            
+            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
+                <FontAwesome name="thumb-tack" size={25} color="black"/>
+                <Text style={styles.swipeText}>PIN</Text>
+            </RectButton>
+            : 
+            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
+                <Feather name="trash-2" size={25} color="black"/>
+                <Text style={styles.swipeText}>DELETE</Text>
+            </RectButton>
+            }
+            
+          </Animated.View>
+            
+     
         );
       };
     
@@ -103,15 +156,20 @@ const SwipeableRow = (props) => {
           verseText: item.verseText
         });
       }
+
+      
       
     return (
-        <Swipeable
+      <Swipeable
+        ref={(ref) => swipeableRefs.current[props.item.id] = ref}
+        key={props.item.id}
         friction={2}
         enableTrackpadTwoFingerGesture
         rightThreshold={40}
         renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, props.item)}>
-          <TouchableOpacity onPress={() => onItemPress(props.item)}>
-            <EachJournal user={props.item.user} date={props.item.date} title={props.item.title} verseText={props.item.verseText} verse={props.item.verse} text={props.item.text} />
+          <TouchableOpacity onPress={() => 
+            onItemPress(props.item)}>
+            <EachJournal user={props.item.user} date={props.item.date} title={props.item.title} verseText={props.item.verseText} verse={props.item.verse} text={props.item.text} pinned={props.item.pinned}/>
           </TouchableOpacity>
         </Swipeable>
     )
@@ -128,7 +186,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width * 0.22,
     borderWidth: 1,
-    // padding: 15,
     height: height * 0.107,
     borderColor: "#E4E4E4",
     borderRadius: 15
