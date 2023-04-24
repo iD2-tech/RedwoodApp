@@ -14,18 +14,15 @@ const { width, height } = Dimensions.get('window')
 
 const SwipeableRow = (props) => {
 
-  const swipeableRefs = useRef([]);
+    const swipeableRef = useRef(null);
   
     var userId = firebase.auth().currentUser.uid;
 
     const navigation = useNavigation();
 
-    const closeSwipeable = (id) => {
-      const swipeableRef = swipeableRefs.current[id];
-      if (swipeableRef) {
-        swipeableRef.close();
-      }
-    }
+    // const closeSwipeable = (swipeableRef) => {
+    //   swipeableRef.current.close()
+    // }
 
     const deleteOP = (item) => { 
      firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).delete().then(() => {
@@ -51,7 +48,7 @@ const SwipeableRow = (props) => {
       firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).update({
         pinned: "1"
       }).then(() => {
-        Alert.alert("ITEM PINNED!");
+        swipeableRef.current.close();
       })
     }
 
@@ -59,7 +56,7 @@ const SwipeableRow = (props) => {
       firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).update({
         pinned: "0"
       }).then(() => {
-        Alert.alert("ITEM UNPINNED!");
+        swipeableRef.current.close();
       })
     }
 
@@ -68,7 +65,8 @@ const SwipeableRow = (props) => {
         color,
         x,
         progress,
-        item
+        item,
+        swipeableRef
       ) => {
         const trans = progress.interpolate({
           inputRange: [0, 1],
@@ -76,7 +74,7 @@ const SwipeableRow = (props) => {
         });
 
         const pressHandler = () => {
-          closeSwipeable(item.id);
+
             if (text === "Pin") {
               // Alert.alert("Pin");
               if (item.pinned === '1') {
@@ -89,6 +87,7 @@ const SwipeableRow = (props) => {
             } else {
               deletePost(item);    
             }
+            swipeableRef.current.close();
           };
 
         return (
@@ -133,15 +132,16 @@ const SwipeableRow = (props) => {
       renderRightActions = (
         progress,
         _dragAnimatedValue,
-        item
+        item,
+        swipeableRef
       ) => (
         <View
           style={{
             width: 192,
             flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
           }}>
-          {renderRightAction('Pin', '#C8C7CD', 192, progress, item)}
-          {renderRightAction('Delete', '#ffab00', 128, progress, item)}
+          {renderRightAction('Pin', '#C8C7CD', 192, progress, item, swipeableRef)}
+          {renderRightAction('Delete', '#ffab00', 128, progress, item, swipeableRef)}
         </View>
       );
 
@@ -161,12 +161,12 @@ const SwipeableRow = (props) => {
       
     return (
       <Swipeable
-        ref={(ref) => swipeableRefs.current[props.item.id] = ref}
+        ref={swipeableRef}
         key={props.item.id}
         friction={2}
         enableTrackpadTwoFingerGesture
         rightThreshold={40}
-        renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, props.item)}>
+        renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, props.item, swipeableRef)}>
           <TouchableOpacity onPress={() => 
             onItemPress(props.item)}>
             <EachJournal user={props.item.user} date={props.item.date} title={props.item.title} verseText={props.item.verseText} verse={props.item.verse} text={props.item.text} pinned={props.item.pinned}/>
