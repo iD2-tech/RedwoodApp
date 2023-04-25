@@ -14,165 +14,165 @@ const { width, height } = Dimensions.get('window')
 
 const SwipeableRow = (props) => {
 
-  const swipeableRefs = useRef([]);
+    const swipeableRef = useRef(null);
+  
+    var userId = firebase.auth().currentUser.uid;
 
-  var userId = firebase.auth().currentUser.uid;
+    const navigation = useNavigation();
 
-  const navigation = useNavigation();
+    // const closeSwipeable = (swipeableRef) => {
+    //   swipeableRef.current.close()
+    // }
 
-  const closeSwipeable = (id) => {
-    const swipeableRef = swipeableRefs.current[id];
-    if (swipeableRef) {
-      swipeableRef.close();
+    const deleteOP = (item) => { 
+     firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).delete().then(() => {
+       Alert.alert('POST DELETED!')
+     })     
     }
-  }
 
-  const deleteOP = (item) => {
-    firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).delete().then(() => {
-      Alert.alert('POST DELETED!')
-    })
-  }
+    const deletePost = (item) => {
+        Alert.alert('DELETING POST', 'Are you sure?', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('canceled'),
+                style: 'cancel'
+            },
+            {
+                text: 'Ok',
+                onPress: () => deleteOP(item),
+            }
+        ])
+    }
 
-  const deletePost = (item) => {
-    Alert.alert('DELETING POST', 'Are you sure?', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('canceled'),
-        style: 'cancel'
-      },
-      {
-        text: 'Ok',
-        onPress: () => deleteOP(item),
+    const pinItem = (item) => {
+      firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).update({
+        pinned: "1"
+      }).then(() => {
+        swipeableRef.current.close();
+      })
+    }
+
+    const unpinItem = (item) => {
+      firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).update({
+        pinned: "0"
+      }).then(() => {
+        swipeableRef.current.close();
+      })
+    }
+
+    renderRightAction = (
+        text,
+        color,
+        x,
+        progress,
+        item,
+        swipeableRef
+      ) => {
+        const trans = progress.interpolate({
+          inputRange: [0, 1],
+          outputRange: [x, 0],
+        });
+
+        const pressHandler = () => {
+
+            if (text === "Pin") {
+              // Alert.alert("Pin");
+              if (item.pinned === '1') {
+                unpinItem(item);
+              } else {
+                pinItem(item);  
+              
+              }
+
+            } else {
+              deletePost(item);    
+            }
+            swipeableRef.current.close();
+          };
+
+        return (
+       
+            (item.pinned === '1') ? 
+            <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+            { (text === "Pin") ? 
+            
+            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
+                <FontAwesome name="thumb-tack" size={25} color="black"/>
+                <Text style={styles.swipeText}>UNPIN</Text>
+            </RectButton>
+            : 
+            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
+                <Feather name="trash-2" size={25} color="black"/>
+                <Text style={styles.swipeText}>DELETE</Text>
+            </RectButton>
+            }
+            
+          </Animated.View>
+            : 
+            <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+            { (text === "Pin") ? 
+            
+            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
+                <FontAwesome name="thumb-tack" size={25} color="black"/>
+                <Text style={styles.swipeText}>PIN</Text>
+            </RectButton>
+            : 
+            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
+                <Feather name="trash-2" size={25} color="black"/>
+                <Text style={styles.swipeText}>DELETE</Text>
+            </RectButton>
+            }
+            
+          </Animated.View>
+            
+     
+        );
+      };
+    
+      renderRightActions = (
+        progress,
+        _dragAnimatedValue,
+        item,
+        swipeableRef
+      ) => (
+        <View
+          style={{
+            width: 192,
+            flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+          }}>
+          {renderRightAction('Pin', '#C8C7CD', 192, progress, item, swipeableRef)}
+          {renderRightAction('Delete', '#ffab00', 128, progress, item, swipeableRef)}
+        </View>
+      );
+
+      const onItemPress = (item) => {
+        navigation.navigate("DisplayPost", {
+          date: item.date,
+          id: item.id,
+          text: item.text,
+          title: item.title,
+          user: item.user,
+          verse: item.verse,
+          verseText: item.verseText
+        });
       }
-    ])
-  }
 
-  const pinItem = (item) => {
-    firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).update({
-      pinned: "1"
-    }).then(() => {
-      Alert.alert("ITEM PINNED!");
-    })
-  }
-
-  const unpinItem = (item) => {
-    firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).update({
-      pinned: "0"
-    }).then(() => {
-      Alert.alert("ITEM UNPINNED!");
-    })
-  }
-
-  renderRightAction = (
-    text,
-    color,
-    x,
-    progress,
-    item
-  ) => {
-    const trans = progress.interpolate({
-      inputRange: [0, 1],
-      outputRange: [x, 0],
-    });
-
-    const pressHandler = () => {
-      closeSwipeable(item.id);
-      if (text === "Pin") {
-        // Alert.alert("Pin");
-        if (item.pinned === '1') {
-          unpinItem(item);
-        } else {
-          pinItem(item);
-
-        }
-
-      } else {
-        deletePost(item);
-      }
-    };
-
+      
+      
     return (
-
-      (item.pinned === '1') ?
-        <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
-          {(text === "Pin") ?
-
-            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-              <FontAwesome name="thumb-tack" size={25} color="black" />
-              <Text style={styles.swipeText}>UNPIN</Text>
-            </RectButton>
-            :
-            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-              <Feather name="trash-2" size={25} color="black" />
-              <Text style={styles.swipeText}>DELETE</Text>
-            </RectButton>
-          }
-
-        </Animated.View>
-        :
-        <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
-          {(text === "Pin") ?
-
-            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-              <FontAwesome name="thumb-tack" size={25} color="black" />
-              <Text style={styles.swipeText}>PIN</Text>
-            </RectButton>
-            :
-            <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-              <Feather name="trash-2" size={25} color="black" />
-              <Text style={styles.swipeText}>DELETE</Text>
-            </RectButton>
-          }
-
-        </Animated.View>
-
-
-    );
-  };
-
-  renderRightActions = (
-    progress,
-    _dragAnimatedValue,
-    item
-  ) => (
-    <View
-      style={{
-        width: 192,
-        flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-      }}>
-      {renderRightAction('Pin', '#C8C7CD', 192, progress, item)}
-      {renderRightAction('Delete', '#ffab00', 128, progress, item)}
-    </View>
-  );
-
-  const onItemPress = (item) => {
-    navigation.navigate("DisplayPost", {
-      date: item.date,
-      id: item.id,
-      text: item.text,
-      title: item.title,
-      user: item.user,
-      verse: item.verse,
-      verseText: item.verseText
-    });
-  }
-
-
-
-  return (
-    <Swipeable
-      ref={(ref) => swipeableRefs.current[props.item.id] = ref}
-      key={props.item.id}
-      friction={2}
-      enableTrackpadTwoFingerGesture
-      rightThreshold={40}
-      renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, props.item)}>
-      <TouchableOpacity onPress={() =>
-        onItemPress(props.item)}>
-        <EachJournal user={props.item.user} date={props.item.date} title={props.item.title} verseText={props.item.verseText} verse={props.item.verse} text={props.item.text} pinned={props.item.pinned} />
-      </TouchableOpacity>
-    </Swipeable>
-  )
+      <Swipeable
+        ref={swipeableRef}
+        key={props.item.id}
+        friction={2}
+        enableTrackpadTwoFingerGesture
+        rightThreshold={40}
+        renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, props.item, swipeableRef)}>
+          <TouchableOpacity onPress={() => 
+            onItemPress(props.item)}>
+            <EachJournal user={props.item.user} date={props.item.date} title={props.item.title} verseText={props.item.verseText} verse={props.item.verse} text={props.item.text} pinned={props.item.pinned}/>
+          </TouchableOpacity>
+        </Swipeable>
+    )
 }
 
 export default SwipeableRow
@@ -180,7 +180,7 @@ export default SwipeableRow
 const styles = StyleSheet.create({
 
 
-  swipeContainer: {
+ swipeContainer: {
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
@@ -189,12 +189,12 @@ const styles = StyleSheet.create({
     height: height * 0.107,
     borderColor: "#E4E4E4",
     borderRadius: 15
-  },
+ },
 
-  swipeText: {
+ swipeText: {
     fontFamily: 'Lato-Bold',
-    fontSize: 12,
-    color: '#505050',
-    marginTop: height * 0.01
-  }
+        fontSize: 12,
+        color: '#505050',
+        marginTop: height * 0.01
+ }
 });
