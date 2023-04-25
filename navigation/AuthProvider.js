@@ -1,4 +1,5 @@
 import React, {createContext, useState} from 'react';
+import {Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
@@ -66,6 +67,7 @@ export const AuthProvider = ({children}) => {
           try {
             await auth().signInWithEmailAndPassword(email, password);
           } catch (e) {
+            Alert.alert("Incorrect username/password combination");
             console.log(e);
           }
         },
@@ -84,6 +86,7 @@ export const AuthProvider = ({children}) => {
               })
 
             } catch (e) {
+              Alert.alert("Email address is already in use");
               console.log(e);
           }
         },

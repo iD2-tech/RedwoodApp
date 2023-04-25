@@ -110,7 +110,7 @@ const CreatePost = () => {
 
   const autofillBook = (text) => {
     for (let i = 0; i < bookNames.length; i++) {
-      if (bookNames[i].name.toUpperCase().includes(text.toUpperCase())) {
+      if (bookNames[i].name.toUpperCase().startsWith(text.toUpperCase())) {
         setBookAutofill(bookNames[i].name);
         break;
       }
@@ -144,9 +144,6 @@ const CreatePost = () => {
         console.error(error);
       }
     }
-
-
-
   }
 
   return (
@@ -181,7 +178,7 @@ const CreatePost = () => {
                 returnKeyType='next'
                 onSubmitEditing={() => bookSelected(bookAutofill)}
                 ref={ref_input1}
-                autoCorrect='false'
+                autoCorrect={false}
                 autoComplete='off'
               />
 
@@ -400,7 +397,8 @@ const styles = StyleSheet.create({
   },
 
   itemText: {
-    opacity: 0.3,
+    opacity: 0.5,
+
   },
 
   showVerseButton: {
@@ -409,6 +407,7 @@ const styles = StyleSheet.create({
   },
 
   showVerseText: {
+    fontFamily: 'Lato-Bold',
     textDecorationLine: 'underline',
     opacity: 0.3,
   },

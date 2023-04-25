@@ -15,7 +15,7 @@ import RadioGroup from 'react-native-radio-buttons-group';
 const { width, height } = Dimensions.get('window')
 
 const Profile = ({ route }) => {
-  var userId = firebase.auth().currentUser.uid; 
+  var userId = firebase.auth().currentUser.uid;
 
   const navigation = useNavigation();
   const { logout } = useContext(AuthContext);
@@ -32,56 +32,56 @@ const Profile = ({ route }) => {
 
   const [radioButtons, setRadioButtons] = useState([
     {
-        id: '1', // acts as primary key, should be unique and non-empty string
-        label: 'Search by Title',
-        value: 'title'
+      id: '1', // acts as primary key, should be unique and non-empty string
+      label: 'Search by Title',
+      value: 'title'
     },
     {
-        id: '2',
-        label: 'Search by Date',
-        value: 'date' 
+      id: '2',
+      label: 'Search by Date',
+      value: 'date'
     },
     {
       id: '3',
       label: 'Search by Bible Verse',
-      value: 'bible' 
+      value: 'bible'
     }
-]);
- 
+  ]);
+
 
   useEffect(() => {
 
     const userId = firebase.auth().currentUser.uid;
     const userRef = firebase.firestore().collection('Users').doc(userId);
-    const unsubscribe1 = userRef.onSnapshot((doc) => { 
+    const unsubscribe1 = userRef.onSnapshot((doc) => {
       if (doc.exists) {
         const { name, username } = doc.data();
         setUser({ name, username });
       }
     });
 
-      const postCollection = firestore().collection('Posts').doc(userId).collection('userPosts');
-      const postQuery = postCollection.orderBy('pinned', 'desc').orderBy('date', 'desc');
-      const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
-          const postsData = [];
-          querySnapshot.forEach((doc) => {   
-            const {title, book, chapter, verse, verses, date, text, pinned} = doc.data(); 
-            postsData.push({
-              id: doc.id,
-              user: user ? user.name : 'Loading...', 
-              title,
-              date,
-              verseText: verses,
-              verse: book + " " + chapter + ":" + verse,
-              text: text,
-              pinned: pinned
-            })
-          }) 
+    const postCollection = firestore().collection('Posts').doc(userId).collection('userPosts');
+    const postQuery = postCollection.orderBy('pinned', 'desc').orderBy('date', 'desc');
+    const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
+      const postsData = [];
+      querySnapshot.forEach((doc) => {
+        const { title, book, chapter, verse, verses, date, text, pinned } = doc.data();
+        postsData.push({
+          id: doc.id,
+          user: user ? user.name : 'Loading...',
+          title,
+          date,
+          verseText: verses,
+          verse: book + " " + chapter + ":" + verse,
+          text: text,
+          pinned: pinned
+        })
+      })
 
-        setPosts(postsData);  
-        setFiltered(postsData);
-      })  
-      return () => unsubscribe();  
+      setPosts(postsData);
+      setFiltered(postsData);
+    })
+    return () => unsubscribe();
   }, []);
 
 
@@ -111,22 +111,22 @@ const Profile = ({ route }) => {
           const dateString = date + " " + month + " " + year;
 
           const itemData = item.date
-          ? dateString.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-        } else if (selected === 'bible') { 
+            ? dateString.toUpperCase()
+            : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+        } else if (selected === 'bible') {
           const itemData = item.verse
-          ? item.verse.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
+            ? item.verse.toUpperCase()
+            : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
         } else {
           const itemData = item.title
-          ? item.title.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
+            ? item.title.toUpperCase()
+            : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
         }
       });
       setFiltered(newData);
@@ -148,39 +148,40 @@ const Profile = ({ route }) => {
     let selectedButton = radioButtons.find(e => e.selected == true);
     selectedButton = selectedButton ? selectedButton.value : radioButtons[0].label;
     setSelected(selectedButton);
-    setIsModalVisible(() => 
-    !isModalVisible
-    )}
+    setIsModalVisible(() =>
+      !isModalVisible
+    )
+  }
 
-    // if (loading) {
-    //   return (
-    //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    //       <ActivityIndicator size="large" color="#0000ff" />
-    //     </View>
-    //   );
-    // }
+  // if (loading) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+  //       <ActivityIndicator size="large" color="#0000ff" />
+  //     </View>
+  //   );
+  // }
 
   return (
-     
 
-      <View style={styles.container}>
-    <View style={styles.nameContainer}>
-      <View style={styles.nameTop}>
-        <Text style={styles.nameText}>
-          {user ? user.name : 'Loading...'}
-        </Text>
-        <TouchableOpacity
-          onPress={() => logout()}
-        >
-          <Feather name="log-out" size={25} color={'black'} />
-        </TouchableOpacity>
+
+    <View style={styles.container}>
+      <View style={styles.nameContainer}>
+        <View style={styles.nameTop}>
+          <Text style={styles.nameText}>
+            {user ? user.name : 'Loading...'}
+          </Text>
+          <TouchableOpacity
+            onPress={() => logout()}
+          >
+            <Feather name="log-out" size={25} color={'black'} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.nameBot}>
+          <Text style={styles.userText}>{user ? `@${user.username}` : 'Loading...'}</Text>
+        </View>
       </View>
-      <View style={styles.nameBot}>
-        <Text style={styles.userText}>{user ? `@${user.username}` : 'Loading...'}</Text>
-      </View>
-    </View>
-    <View style={styles.searchContainer}>
-      <TextInput
+      <View style={styles.searchContainer}>
+        <TextInput
           style={styles.textInputStyle}
           onChangeText={(text) => searchFilterFunction(text)}
           value={search}
@@ -190,43 +191,45 @@ const Profile = ({ route }) => {
         <TouchableOpacity onPress={handleModal}>
           <Feather name="menu" size={25} color={'black'} />
         </TouchableOpacity>
-    </View>
-    <View style={styles.listContainer}>
-      <FlatList
-        data={filtered}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) =>
-          <SwipeableRow item={item}/>
-        }
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
-
-    <Modal 
-    isVisible={isModalVisible}
-    >
-      <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: 'white', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={styles.filterText}>Filter</Text>
-    
-        <RadioGroup 
-          radioButtons={radioButtons} 
-          onPress={onPressRadioButton} 
-          containerStyle={styles.buttons}
-        />
-
-
-        <TouchableOpacity  onPress={handleModal} style={styles.filterButton}>
-          <Text style={{color: "#505050",
-          fontFamily: 'Lato-Regular',
-          fontWeight:'500'}}>OK</Text>
-        </TouchableOpacity>
       </View>
-    </Modal>
-  </View>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={filtered}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({ item }) =>
+            <SwipeableRow item={item} />
+          }
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+
+      <Modal
+        isVisible={isModalVisible}
+      >
+        <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: 'white', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={styles.filterText}>Filter</Text>
+
+          <RadioGroup
+            radioButtons={radioButtons}
+            onPress={onPressRadioButton}
+            containerStyle={styles.buttons}
+          />
+
+
+          <TouchableOpacity onPress={handleModal} style={styles.filterButton}>
+            <Text style={{
+              color: "#505050",
+              fontFamily: 'Lato-Regular',
+              fontWeight: '500'
+            }}>OK</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+    </View>
 
 
   )
-  
+
 }
 
 export default Profile
@@ -305,24 +308,24 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     fontSize: 12,
     fontFamily: 'Lato-Regular'
-  //   shadowColor: '#000',
-  //       shadowOffset: { width: 1, height: 1 },
-  //       shadowOpacity:  0.4,
-  //       shadowRadius: 3,
-  //       elevation: 5,
+    //   shadowColor: '#000',
+    //       shadowOffset: { width: 1, height: 1 },
+    //       shadowOpacity:  0.4,
+    //       shadowRadius: 3,
+    //       elevation: 5,
 
   },
 
   filterButton: {
     width: width * 0.5,
-            padding: width * 0.02,
-            borderRadius: 40,
-            alignItems: 'center',
-            // marginBottom: height * 0.01,
-            borderColor: '#E4E4E4',
-            borderWidth: 1,
-            backgroundColor: '#E4E4E4',
-            marginTop: height * 0.05
+    padding: width * 0.02,
+    borderRadius: 40,
+    alignItems: 'center',
+    // marginBottom: height * 0.01,
+    borderColor: '#E4E4E4',
+    borderWidth: 1,
+    backgroundColor: '#E4E4E4',
+    marginTop: height * 0.05
   },
 
   filterText: {
