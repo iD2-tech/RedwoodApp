@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Animated, Dimensions } from 'react-native'
 import React, {useState} from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const { width, height } = Dimensions.get('window')
 const EachJournal = (props) => {
@@ -13,6 +14,7 @@ const EachJournal = (props) => {
  const date = dateObj.getDate();
  const month = monthNames[dateObj.getMonth()];
  const year = dateObj.getFullYear();
+
   return (
     <View 
         style={styles.container}
