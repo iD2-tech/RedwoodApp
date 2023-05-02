@@ -8,6 +8,7 @@ import { firebase } from "@react-native-firebase/auth";
 import { ScrollView } from 'react-native-gesture-handler';
 import { bookNames } from '../../assets/bibleBookNames';
 import { makeMutable } from 'react-native-reanimated';
+import Feather from 'react-native-vector-icons/Feather';
 
 const { width, height } = Dimensions.get('window')
 
@@ -34,11 +35,13 @@ const CreatePost = () => {
   const [chapterEntered, setChapterEntered] = useState(false);
   const [showVerse, setShowVerse] = useState(false);
   const [verseText, setVerseText] = useState('');
+  const [invalidVerse, setInvalidVerse] = useState(false);
+  const [nonEmpty, setNonEmpty] = useState(false);
 
 
-
+  // updates the status of if entry is postable or not
   useEffect(() => {
-    if (title !== '' && book !== '' && chapter !== '' && verse !== '' && text !== '') {
+    if (title !== '' && book !== '' && chapter !== '' && verse !== '' && text !== '' && !invalidVerse) {
       setBtnColor(true);
     } else {
       setBtnColor(false);
@@ -47,9 +50,10 @@ const CreatePost = () => {
       setData(bookNames);
     }
 
-  }, [text])
+  }, [text, invalidVerse, verse, chapter, book, title])
 
 
+  // sends post info to next page
   const fetchVerses = async () => {
     var date = new Date().getDate();
     var month = new Date().getMonth() + 1;
@@ -97,17 +101,19 @@ const CreatePost = () => {
     }
   };
 
+  // navigate to next page
   const navAndSend = () => {
-
     fetchVerses();
   }
 
+  // function for if user accepts autofill
   const bookSelected = (name) => {
     setShowBookDropdown(false);
     setBook(name);
     ref_input2.current.focus()
   }
 
+  // sets the autofill-ed book name
   const autofillBook = (text) => {
     for (let i = 0; i < bookNames.length; i++) {
       if (bookNames[i].name.toUpperCase().startsWith(text.toUpperCase())) {
@@ -117,6 +123,7 @@ const CreatePost = () => {
     }
   }
 
+  // grows/truncates book name section if chapter is/isn't entered
   const adjustBookNameSize = (text) => {
     if (text === "") {
       setChapterEntered(false);
@@ -125,24 +132,60 @@ const CreatePost = () => {
     }
   }
 
+  // gets verses on book being updated
   const getVerses = async () => {
-    if (verse != '' && book != '' && chapter != '') {
+    if (verse != '' && bookAutofill != '' && chapter != '' && !isNaN(chapter)) {
       try {
-        await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
+        await fetch(`https://bible-api.com/${bookAutofill}${chapter}:${verse}`)
           .then((response) => response.json())
           .then((responseJson) => {
-            setVerseText(responseJson.text);
+
             if (!responseJson.text) {
-              Alert.alert("Please enter valid bible verse(s)");
-              setShowVerse(false);
+              setInvalidVerse(true);
             } else {
-              ref_input4.current.focus()
+              setVerseText(responseJson.text);
+              setInvalidVerse(false);
+              // ref_input4.current.focus()
+            }
+          });
+
+      } catch (error) {
+        Alert.alert("Please enter valid bible verse(s)");
+        console.error(error);
+      }
+    }
+  }
+
+  // gets verses from chapter or verse
+  const getVersesFromNumber = async (number, indicator) => {
+    let chapterRet;
+    let verseRet;
+    if (indicator == 0) {
+      chapterRet = number;
+      verseRet = verse;
+    } else {
+      chapterRet = chapter;
+      verseRet = number;
+    }
+    if (chapterRet != '' && verseRet != '' && !isNaN(chapterRet)) {
+      try {
+        await fetch(`https://bible-api.com/${bookAutofill}${chapterRet}:${verseRet}`)
+          .then((response) => response.json())
+          .then((responseJson) => {
+
+            if (!responseJson.text) {
+              setInvalidVerse(true);
+            } else {
+              setVerseText(responseJson.text);
+              setInvalidVerse(false);
             }
           });
       } catch (error) {
         Alert.alert("Please enter valid bible verse(s)");
         console.error(error);
       }
+    } else if (isNaN(chapterRet) || chapterRet == '' || verseRet == '') {
+      setInvalidVerse(true);
     }
   }
 
@@ -155,7 +198,7 @@ const CreatePost = () => {
           <TextInput
             placeholder="Title"
             value={title}
-            onChangeText={text => { setTitle(text) }}
+            onChangeText={text => { setTitle(text); }}
             style={styles.title}
             returnKeyType='next'
             onSubmitEditing={() => ref_input1.current.focus()}
@@ -167,16 +210,18 @@ const CreatePost = () => {
             {/* holds the book and book dropdown */}
             <View style={chapterEntered ? styles.bookContainerLong : styles.bookContainerShort}>
 
+              {invalidVerse ? <Feather name="alert-circle" size={20} color="red" style={styles.alert}/> : <></>}
+
               <TextInput
                 placeholder="Book"
                 value={book}
                 onChangeText={text => { setBook(text); autofillBook(text); }}
-                style={styles.bookInput}
+                style={invalidVerse ? styles.bookInputInvalid : styles.bookInputValid}
                 maxLength={15}
                 onFocus={() => setShowBookDropdown(true)}
                 onBlur={() => setShowBookDropdown(false)}
                 returnKeyType='next'
-                onSubmitEditing={() => bookSelected(bookAutofill)}
+                onSubmitEditing={(text) => { bookSelected(bookAutofill); getVerses(); }}
                 ref={ref_input1}
                 autoCorrect={false}
                 autoComplete='off'
@@ -184,7 +229,7 @@ const CreatePost = () => {
 
               {showBookDropdown ?
                 <View style={styles.item}>
-                  <TouchableOpacity style={styles.itemText} onPress={() => bookSelected(bookAutofill)}>
+                  <TouchableOpacity style={styles.itemText} onPress={() => { bookSelected(bookAutofill); getVerses(); }}>
                     <Text>{bookAutofill}</Text>
                   </TouchableOpacity>
                 </View>
@@ -196,8 +241,8 @@ const CreatePost = () => {
               placeholder="Chapter"
               textAlign='right'
               value={chapter}
-              onChangeText={text => { setChapter(text); adjustBookNameSize(text); }}
-              style={styles.chapterInput}
+              onChangeText={text => { setChapter(text); adjustBookNameSize(text); getVersesFromNumber(text, 0); }}
+              style={invalidVerse ? styles.chapterInputInvalid : styles.chapterInputValid}
               keyboardType='numbers-and-punctuation'
               returnKeyType='next'
               ref={ref_input2}
@@ -209,28 +254,30 @@ const CreatePost = () => {
             <TextInput
               placeholder="Verse(s)"
               value={verse}
-              onChangeText={text => { setVerse(text); }}
-              style={styles.verseInput}
+              onChangeText={text => { setVerse(text); getVersesFromNumber(text, 1); }}
+              style={invalidVerse ? styles.verseInputInvalid : styles.verseInputValid}
               keyboardType='numbers-and-punctuation'
               returnKeyType='next'
               ref={ref_input3}
-              onSubmitEditing={() => getVerses()}
+              onSubmitEditing={(text) => getVerses().then(() => { ref_input4.current.focus() })}
             />
+
+            <TouchableOpacity
+              style={styles.showVerseButton}
+              onPress={() => { setShowVerse(!showVerse); getVerses() }}>
+              <Text style={styles.showVerseText}>
+                {showVerse ? "ʌ" : "v"}
+              </Text>
+            </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
-            style={styles.showVerseButton}
-            onPress={() => { setShowVerse(!showVerse); getVerses() }}>
-            <Text style={styles.showVerseText}>
-              {showVerse ? "hide verse" : "show verse"}
-            </Text>
-          </TouchableOpacity>
+
 
           {showVerse ?
             <View style={styles.verseTextContainer}>
               <ScrollView>
                 <View>
-                  <Text style={{fontFamily: 'Lato-Regular',}}>{verseText}</Text>
+                  <Text style={{ fontFamily: 'Lato-Regular', }}>{verseText}</Text>
                 </View>
               </ScrollView>
 
@@ -258,6 +305,7 @@ const CreatePost = () => {
         <TouchableOpacity style={
           btnColor ? styles.filledButton : styles.normalButton
         }
+          disabled={btnColor ? false : true}
           onPress={navAndSend}>
           <Text style={
             btnColor ? {
@@ -313,17 +361,33 @@ const styles = StyleSheet.create({
     color: '#505050'
   },
 
-  bookInput: {
+  bookInputValid: {
     fontSize: 20,
     fontFamily: 'Lato-Bold',
     color: '#505050',
   },
 
-  chapterInput: {
+  bookInputInvalid: {
+    fontSize: 20,
+    fontFamily: 'Lato-Bold',
+    color: 'red',
+  },
+
+  chapterInputValid: {
     fontSize: 20,
     fontFamily: 'Lato-Bold',
     marginRight: width * 0.04,
     color: '#505050',
+    marginLeft: width * 0.3,
+    position: 'absolute',
+    width: width * 0.19,
+  },
+
+  chapterInputInvalid: {
+    fontSize: 20,
+    fontFamily: 'Lato-Bold',
+    marginRight: width * 0.04,
+    color: 'red',
     marginLeft: width * 0.3,
     position: 'absolute',
     width: width * 0.19,
@@ -336,7 +400,7 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
 
-  verseInput: {
+  verseInputValid: {
     fontSize: 20,
     fontFamily: 'Lato-Bold',
     marginLeft: width * 0.523,
@@ -344,20 +408,28 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
 
+  verseInputInvalid: {
+    fontSize: 20,
+    fontFamily: 'Lato-Bold',
+    marginLeft: width * 0.523,
+    color: 'red',
+    position: 'absolute'
+  },
+
   textInputTall: {
     fontSize: 15,
     fontFamily: 'Lato-Bold',
-    height: height * 0.45,
-    marginBottom: height * 0.065,
+    height: height * 0.5,
+    marginBottom: height * 0.015,
     color: '#505050',
   },
 
   textInputShort: {
     fontSize: 15,
     fontFamily: 'Lato-Bold',
-    height: height * 0.425,
-    top: height * 0.08,
-    marginBottom: height * 0.09,
+    height: height * 0.40,
+    top: height * 0.1,
+    marginBottom: height * 0.115,
     color: '#505050',
   },
 
@@ -391,7 +463,6 @@ const styles = StyleSheet.create({
 
   item: {
     // backgroundColor: '#F8F8F8',
-    paddingTop: height * 0.001,
     marginLeft: width * 0.002,
     opacity: 1
   },
@@ -402,13 +473,14 @@ const styles = StyleSheet.create({
   },
 
   showVerseButton: {
-    top: height * -0.02,
     alignSelf: 'flex-end',
+    marginLeft: width * 0.2
+
   },
 
   showVerseText: {
     fontFamily: 'Lato-Bold',
-    textDecorationLine: 'underline',
+    fontSize: 20,
     opacity: 0.3,
   },
 
@@ -418,5 +490,10 @@ const styles = StyleSheet.create({
     height: height * 0.08,
     width: '100%',
     flex: 1,
+  },
+
+  alert: {
+    position: 'absolute',
+    left: width * -0.08,
   }
 })

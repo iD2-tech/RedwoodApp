@@ -122,6 +122,7 @@ const DisplayPostProfile = ({ route }) => {
                         setInvalidVerse(true);
                     } else {
                         setEditedVerseText(responseJson.text);
+                        setInvalidVerse(false);
                     }
                 });
         } catch (error) {
