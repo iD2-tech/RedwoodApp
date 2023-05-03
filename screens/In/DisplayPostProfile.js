@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Animated, Dimensions, ImageBackground, Alert, Scrollview, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Animated, Dimensions, ImageBackground, Alert, Scrollview, TextInput, TouchableOpacity, Keyboard } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react';
 import PageBackButton from '../../components/PageBackButton';
 import { useNavigation } from '@react-navigation/native';
@@ -20,13 +20,21 @@ const DisplayPostProfile = ({ route }) => {
     const [editedTitle, setEditedTitle] = useState(title);
     const [editedText, setEditedText] = useState(text);
     const [editMode, setEditMode] = useState();
-    const [editedBook, setEditedBook] = useState(verse.split(" ")[0])
-    const [editedChapter, setEditedChapter] = useState(verse.split(" ")[1].split(":")[0]);
-    const [editedVerse, setEditedVerse] = useState(verse.split(" ")[1].split(":")[1]);
+    let arr = verse.split(":")[0].split(" ");
+    const [editedChapter, setEditedChapter] = useState(arr.pop());
+    const [editedBook, setEditedBook] = useState(arr.toString().replaceAll(",", " "))
+    const [editedVerse, setEditedVerse] = useState(verse.split(":")[1]);
     const [editedVerseText, setEditedVerseText] = useState(verseText);
     const [bookAutofill, setBookAutofill] = useState();
     const [showBookAutofill, setShowBookAutofill] = useState(false);
     const [invalidVerse, setInvalidVerse] = useState(false);
+    const scrollViewRef = useRef();
+
+    useEffect(() => {
+        setTimeout(() => {
+            scrollViewRef.current?.flashScrollIndicators();
+        }, 500);
+    }, []);
 
     var dateObj = new Date(date.seconds * 1000);
     var dateNum = dateObj.getDate();
@@ -42,7 +50,7 @@ const DisplayPostProfile = ({ route }) => {
 
     // back button
     const navBack = () => {
-        if(!invalidVerse) {
+        if (!invalidVerse) {
             firestore().collection('Posts').doc(userId).collection('userPosts').doc(id).update({
                 title: editedTitle,
                 book: editedBook,
@@ -56,8 +64,8 @@ const DisplayPostProfile = ({ route }) => {
         } else {
             Alert.alert("Please enter a valid verse");
         }
-        
-        
+
+
     }
 
     // deletes the post from firestore
@@ -84,6 +92,7 @@ const DisplayPostProfile = ({ route }) => {
 
     // allows/disallows editing
     const editButtonPressed = () => {
+        console.log(editMode);
         if (!editMode) {
             try {
                 ref_input1.current.focus();
@@ -93,7 +102,7 @@ const DisplayPostProfile = ({ route }) => {
             }
             setEditMode(!editMode);
         } else {
-            if(!invalidVerse) {
+            if (!invalidVerse) {
                 firestore().collection('Posts').doc(userId).collection('userPosts').doc(id).update({
                     title: editedTitle,
                     book: editedBook,
@@ -106,30 +115,35 @@ const DisplayPostProfile = ({ route }) => {
             } else {
                 Alert.alert("Please enter a valid verse");
             }
-            
+
         }
-        
+
     }
 
     // gets verses each time verse input is changed
     const getVerses = async () => {
-        try {
-            await fetch(`https://bible-api.com/${bookAutofill}${editedChapter}:${editedVerse}`)
-                .then((response) => response.json())
-                .then((responseJson) => {
-
-                    if (!responseJson.text) {
-                        setInvalidVerse(true);
-                    } else {
-                        setEditedVerseText(responseJson.text);
-                    }
-                });
-        } catch (error) {
-            Alert.alert("Please enter valid bible verse(s)");
-            console.error(error);
+        if (bookAutofill != '' && editedChapter != '' && editedVerse != '' && !isNaN(editedChapter)) {
+            try {
+                await fetch(`https://bible-api.com/${bookAutofill}${editedChapter}:${editedVerse}`)
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+    
+                        if (!responseJson.text) {
+                            setInvalidVerse(true);
+                        } else {
+                            setEditedVerseText(responseJson.text);
+                            setInvalidVerse(false);
+                        }
+                    });
+            } catch (error) {
+                Alert.alert("Please enter valid bible verse(s)");
+                console.error(error);
+            }
         }
+        
     }
 
+    // gets verses from chapter or verse
     const getVersesFromNumber = async (number, indicator) => {
         let chapter;
         let verse;
@@ -141,7 +155,7 @@ const DisplayPostProfile = ({ route }) => {
             verse = number;
         }
         console.log(editedBook)
-        if (chapter != '' && verse != '') {
+        if (chapter != '' && verse != '' && !isNaN(chapter)) {
             try {
                 await fetch(`https://bible-api.com/${editedBook}${chapter}:${verse}`)
                     .then((response) => response.json())
@@ -159,9 +173,12 @@ const DisplayPostProfile = ({ route }) => {
                 Alert.alert("Please enter valid bible verse(s)");
                 console.error(error);
             }
+        } else if (isNaN(chapter) || chapter == '' || verse == '') {
+            setInvalidVerse(true);
         }
     }
 
+    // autofills the book
     const autofillBook = (text) => {
         for (let i = 0; i < bookNames.length; i++) {
             if (bookNames[i].name.toUpperCase().startsWith(text.toUpperCase())) {
@@ -171,21 +188,32 @@ const DisplayPostProfile = ({ route }) => {
         }
     }
 
+    // sets the autofilled book
     const setAutofilledBook = () => {
         setEditedBook(bookAutofill);
         setShowBookAutofill(false);
     }
 
+    const EditablePage = () => {
+        return (
+            <View>
+
+            </View>
+        )
+    }
+
+
+
     return (
         <DismissKeyBoard>
             <ImageBackground source={require('../../tree.jpg')} resizeMode="cover" style={styles.image}>
+                {/* back button */}
                 <View style={styles.backButtonContainer}>
                     <PageBackButton onPress={navBack} />
                 </View>
 
-                <View
-                    style={styles.container}
-                >
+                {/*
+                <View style={styles.container}>
                     <View style={{
                         flexDirection: 'row',
                         width: width * 0.05,
@@ -308,6 +336,102 @@ const DisplayPostProfile = ({ route }) => {
 
                 </View>
 
+                */}
+                {/* screen container */}
+                <View style={styles.container}>
+                    <Text style={styles.date}>{dateString}</Text>
+
+                    <View>
+
+                        <View style={styles.titleInputContainer}>
+                            <TextInput
+                                style={styles.title}
+                                value={editedTitle}
+                                onChangeText={text => setEditedTitle(text)}
+                                onFocus={() => setEditMode(true)}
+                                onBlur={() => setEditMode(false)}
+                            />
+                            <TouchableOpacity onPress={() => editButtonPressed()} style={styles.editButton}>
+                                {editMode ?
+                                    <Feather name="save" size={20} color="#505050" />
+                                    :
+                                    <Feather name={"edit"} size={20} color="#505050" />}
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.editVerseContainer}>
+                            <View>
+                                <View style={{flexDirection: 'column'}}>
+
+                                
+                                <TextInput
+                                    value={editedBook}
+                                    onChangeText={text => { setEditedBook(text); autofillBook(text) }}
+                                    style={styles.editableBook}
+                                    returnKeyType='done'
+                                    onSubmitEditing={() => setAutofilledBook()}
+                                    onBlur={() => { setAutofilledBook(); getVerses(); setEditMode(false); }}
+                                    onFocus={() => setShowBookAutofill(true)}
+                                />
+                                {showBookAutofill ?
+                                    <TouchableOpacity style={styles.bookAutofill} onPress={() => setAutofilledBook()}>
+                                        <Text style={styles.bookAutofillText}>{bookAutofill}</Text>
+                                    </TouchableOpacity>
+                                    :
+                                    <></>
+                                }
+                                </View>
+                            </View>
+                            <Text> </Text>
+                            <TextInput
+                                value={editedChapter}
+                                onChangeText={text => { setEditedChapter(text); getVersesFromNumber(text, 0) }}
+                                style={styles.editableChapter}
+                            />
+                            <Text style={styles.colon}>:</Text>
+                            <TextInput
+                                value={editedVerse}
+                                onChangeText={text => { setEditedVerse(text); getVersesFromNumber(text, 1) }}
+                                style={styles.editableVerse}
+                            />
+                        </View>
+                        {invalidVerse ?
+                            <Text style={styles.invalidVerse}>invalid verse</Text>
+                            :
+                            <></>
+                        }
+
+                        <View style={styles.verseTextContainer}>
+                            <ScrollView persistentScrollbar={true} ref={scrollViewRef}>
+                                <Text style={styles.verseText}>{"\"" + editedVerseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
+                            </ScrollView>
+                        </View>
+
+
+                        <View style={{
+                            height: height * 0.2,
+                            borderColor: '#D3D3D3',
+                            // paddingLeft: width * 0.02
+
+                        }}>
+                            {/* <ScrollView> */}
+                            <TextInput
+                                style={styles.text}
+                                value={editedText}
+                                onChangeText={text => setEditedText(text)}
+                                ref={ref_input1}
+                                multiline
+                                returnKeyType='done'
+                                onBlur={() => setEditMode(false)}
+                                onFocus={() => setEditMode(true)}
+                                blurOnSubmit
+                            />
+                            {/* </ScrollView> */}
+
+                        </View>
+                    </View>
+                </View>
+
             </ImageBackground>
         </DismissKeyBoard>
     )
@@ -318,25 +442,26 @@ export default DisplayPostProfile
 const styles = StyleSheet.create({
     container: {
         width: width * 0.8,
-        // marginBottom: '20%',
         justifyContent: 'center',
         marginLeft: width * 0.05,
-        marginTop: height * 0.05,
-
-        // alignItems: 'center' 
+        height: height * 0.6,
+        // borderWidth: 1,
     },
 
-    name: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 16.5,
-        color: '#505050',
-        marginBottom: height * 0.005,
-        marginTop: height * 0.06
+    editButton: {
+        alignContent: 'center',
+        alignSelf: 'center',
     },
+
     date: {
         fontFamily: 'Lato-Regular',
-        fontSize: 10,
+        fontSize: 15,
         color: '#505050',
+        fontWeight: 'bold',
+    },
+
+    verseTextContainer: {
+        height: height * 0.12,
         marginBottom: height * 0.02
     },
 
@@ -344,7 +469,14 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Bold',
         fontSize: 23,
         color: '#505050',
+        width: width * 0.65
 
+    },
+
+    colon: {
+        alignSelf: 'center',
+        fontWeight: 800,
+        fontSize: 15
     },
 
     editLabel: {
@@ -355,10 +487,11 @@ const styles = StyleSheet.create({
 
     titleInputContainer: {
         color: '#505050',
-        borderBottomWidth: 1,
-        borderBottomColor: '#D3D3D3',
-        width: width * 0.7,
+        width: width * 0.75,
         marginBottom: height * 0.022,
+        marginTop: height * 0.01,
+
+        flexDirection: 'row',
     },
 
     titleContainer: {
@@ -390,34 +523,48 @@ const styles = StyleSheet.create({
 
     editVerseContainer: {
         flexDirection: 'row',
-        marginBottom: height * 0.021,
+        marginBottom: height * 0.012,
         marginRight: width * 0.03,
-        alignSelf: 'flex-end'
+        width: width * 0.8,
+        height: height * 0.05,
+
     },
 
     editableBook: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 14,
+        fontFamily: 'Lato-Regular',
+        fontSize: 20,
         color: '#505050',
-        borderBottomWidth: 1,
-        borderBottomColor: '#D3D3D3',
-        minWidth: width * 0.08,
+
+        width: width * 0.5,
+        height: height * 0.05,
+    },
+
+    editableChapter: {
+        fontFamily: 'Lato-Regular',
+        fontSize: 20,
+        color: '#505050',
+
+        width: width * 0.08,
+        marginRight: width * 0.02,
         textAlign: 'right',
     },
 
-    editableNumber: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 14,
+    editableVerse: {
+        fontFamily: 'Lato-Regular',
+        fontSize: 20,
         color: '#505050',
-        borderBottomWidth: 1,
-        borderBottomColor: '#D3D3D3',
+
+        width: width * 0.15,
+        marginLeft: width * 0.02
     },
 
     text: {
         fontFamily: 'Lato-Regular',
         fontSize: 14,
         color: '#505050',
-        marginRight: width * 0.015,
+        // marginRight: width * 0.015,
+        width: width * 0.7,
+        height: height * 0.2,
     },
 
     textInput: {
@@ -434,24 +581,24 @@ const styles = StyleSheet.create({
     },
 
     backButtonContainer: {
-        display: 'flex',
-        justifyContent: 'flex-start',
-        flexDirection: 'row',
         marginLeft: width * 0.05,
+        width: width * 0.05,
+        marginTop: height * 0.06,
     },
 
     bookAutofill: {
         position: 'absolute',
         width: width * 0.3,
-        alignSelf: 'flex-end',
-        marginTop: height * 0.02,
+        alignSelf: 'flex-start',
+        marginTop: height * 0.035,
+        
     },
 
     bookAutofillText: {
         fontFamily: 'Lato-Regular',
         fontSize: 14,
-        color: '#D3D3D3',
-        textAlign: 'right',
+        color: '#808080',
+        textAlign: 'left',
     },
 
     invalidVerse: {
