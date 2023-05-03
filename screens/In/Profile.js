@@ -14,7 +14,7 @@ import RadioGroup from 'react-native-radio-buttons-group';
 
 const { width, height } = Dimensions.get('window')
 
-const Profile = ({ route }) => {
+const Profile = ( {route} ) => {
   var userId = firebase.auth().currentUser.uid;
 
   const navigation = useNavigation();
@@ -49,8 +49,10 @@ const Profile = ({ route }) => {
   ]);
 
 
+  
   useEffect(() => {
-
+    // const {name, username} = route.params;
+    // setUser({name,username})
     const userId = firebase.auth().currentUser.uid;
     const userRef = firebase.firestore().collection('Users').doc(userId);
     const unsubscribe1 = userRef.onSnapshot((doc) => {

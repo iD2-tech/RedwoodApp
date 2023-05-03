@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -12,28 +12,32 @@ import Feather from 'react-native-vector-icons/Feather';
 import DisplayPost from '../screens/In/DisplayPost';
 import DisplayPostProfile from '../screens/In/DisplayPostProfile';
 
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 // ios-add-circle-outline
 
 
-const ProfileStack = ({navigation}) => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Profile"
-      component={Profile}
-      options={{headerShown: false}}
-    />
-    <Stack.Screen
-      name="DisplayPost"
-      component={DisplayPostProfile}
-      options={{headerShown: false}}
-    />
-  </Stack.Navigator>
-);
+
 
 
 const AppStack = () => {
+
+  const ProfileStack = ({navigation}) => (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="DisplayPost"
+        component={DisplayPostProfile}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+
   return (
     <Tab.Navigator
     
@@ -50,6 +54,13 @@ const AppStack = () => {
         options ={{  headerShown:false, tabBarLabel: '', tabBarIcon: ({color, size}) => (
           <Feather name="home" size={size} color={color}/>
         ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray', }} 
+      />
+      <Tab.Screen
+        name="Friends"
+        component={Friends}
+        options ={{  headerShown:false, tabBarLabel: '', tabBarIcon: ({color, size}) => (
+          <Feather name="users" size={size} color={color}/>
+        ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',}}
       />
       {/* <Tab.Screen
         name="Friends"
