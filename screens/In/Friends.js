@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, FlatList, Dimensions, TextInput, Alert } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Dimensions, TextInput, Alert, LogBox } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
 import OnboardingScreen from '../Auth/OnboardingScreen';
+
+LogBox.ignoreAllLogs();
 
 
 friendsdata = [
@@ -41,6 +43,9 @@ const Friends = ({route}) => {
   const [friendData, setFriendsData] = useState([]);
   const [friends, setFriends] = useState([]);
   const [counter, setCounter] = useState(0);
+  const [unique, setUnique] = useState(false);
+  const [requestUser, setRequestUser] = useState([]);
+  // const [requestSent, setRequestSent] = useState([]);
 
   useEffect(() => {
     console.log('useEffect run')
@@ -70,13 +75,17 @@ const Friends = ({route}) => {
     const requestQuery = friendCollection.where('target', '==', userId).where('status', '==', '0');
     const unsubscribe = requestQuery.onSnapshot((querySnapshot) => {
       const requestArr = [];
+      const requestUsers = new Set();
       querySnapshot.forEach((doc) => {
         requestArr.push({
           username: doc.data().sourceUsername,
           id: doc.data().source,
           docID: doc.id
         })
+
+        requestUsers.add(doc.data().sourceUsername);
       })
+      setRequestUser(requestUsers);
       setRequestData(requestArr);
     })
     return () => unsubscribe();
@@ -88,19 +97,19 @@ const Friends = ({route}) => {
     const friend1Query = friendCollection.where('relationship', 'array-contains', user.username);
     const unsubscribe = friend1Query.onSnapshot((querySnapshot) => {
       const friendArr = [];
-      const friendArr2 = [];
+      const friendSet = new Set();
       querySnapshot.forEach((doc) => {
           relationshipArr = doc.data().relationship;
           if (relationshipArr[0] === user.username) {
             friendArr.push({username: relationshipArr[1], id: doc.id + "1"});
-            friendArr2.push(relationshipArr[1]);
+            friendSet.add(relationshipArr[1]);
           } else {
             friendArr.push({username: relationshipArr[0], id: doc.id + "0"});
-            friendArr2.push(relationshipArr[0]);
+            friendSet.add(relationshipArr[0]);
           }
       })
       setFriendsData(friendArr);
-      setFriends(friendArr2);
+      setFriends(friendSet);
     })
     return () => unsubscribe();
   } else {
@@ -108,27 +117,57 @@ const Friends = ({route}) => {
   }
   }
 
-  const sendRequest = () => {
-    if (friends.includes(username)) {
+  const sendRequest = async () => {
+    if (friends.has(username)) {
       Alert.alert('Already friends!');
       return;
     }
-    var userId = firebase.auth().currentUser.uid;
-    const postCollection = firestore().collection('Users')
-    const postQuery = postCollection.where('username','==', username)
-    const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
-      var id;
-      querySnapshot.forEach((doc) => {
-        id = doc.id
-        })
 
-        firestore().collection('FriendRequests').add({
-          source: userId + '',
-          sourceUsername: user.username+"",
-          target: id+ '',
-          targetUsername: username+ '',
-          status: '0'
-        })
+    if (username.toLowerCase() === user.username.toLowerCase()) {
+      Alert.alert('Thats me!');
+      return;
+    }
+
+    if (requestUser.has(username)) {
+      Alert.alert('Cant request someone that requested you!');
+      return;
+    }
+
+
+    var unique = true;
+    await firestore()
+      .collection('Users')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          if (documentSnapshot.data().username.toUpperCase() == username.toUpperCase()) {
+
+            unique = false;
+          }
+        });
+      }).then(() => {
+        if(!unique) {
+          var userId = firebase.auth().currentUser.uid;
+          const postCollection = firestore().collection('Users')
+          const postQuery = postCollection.where('username','==', username)
+          const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
+            var id;
+            querySnapshot.forEach((doc) => {
+              id = doc.id
+              })
+      
+              firestore().collection('FriendRequests').doc(userId+''+id).set({
+                source: userId + '',
+                sourceUsername: user.username+"",
+                target: id+ '',
+                targetUsername: username+ '',
+                status: '0'
+              })
+            })
+
+        } else {
+          Alert.alert('User does not exist')
+        }
       })
     }
 
@@ -140,15 +179,25 @@ const Friends = ({route}) => {
       firestore().collection('Friends').add({
         relationship: friendArray
       })
-      firestore().collection('FriendRequests').doc(item.docID).update({
-        status: '1',
+      firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
+        console.log(item);
+        // const reqSet = requestSent;
+        // const index = reqSet.indexOf(username);
+        // reqSet.splice(index, 1);
+        // setRequestSent(reqSet);
+        console.log('deleted');
       })
     }
 
     const reject = (item) => {
-      // firestore().collection('Friends').doc(item.docID).delete().then(() => {
-      //   console.log('deleted');
-      // })
+      firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
+        console.log(item);
+        // const reqSet = requestSent;
+        // const index = reqSet.indexOf(username);
+        // reqSet.splice(index, 1);
+        // setRequestSent(reqSet);
+        console.log('deleted');
+      })
     }
 
 
