@@ -155,6 +155,10 @@ const Profile = ( {route} ) => {
     )
   }
 
+  const navToFriends = () => {
+    navigation.navigate("FriendStack")
+  }
+
   // if (loading) {
   //   return (
   //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -169,6 +173,7 @@ const Profile = ( {route} ) => {
     <View style={styles.container}>
       <View style={styles.nameContainer}>
         <View style={styles.nameTop}>
+        <TouchableOpacity onPress={navToFriends}><Feather name="users" size={25} color={'black'} /></TouchableOpacity>
           <Text style={styles.nameText}>
             {user ? user.name : 'Loading...'}
           </Text>
@@ -248,8 +253,8 @@ const styles = StyleSheet.create({
   nameContainer: {
     flexDirection: 'column',
     width: '80%',
-    marginBottom: height * 0.05,
-    marginTop: height * 0.1
+    marginBottom: height * 0.04,
+    marginTop: height * 0.06
   },
 
   nameTop: {
@@ -262,7 +267,7 @@ const styles = StyleSheet.create({
 
   nameBot: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     width: '100%'
   },
 

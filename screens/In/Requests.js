@@ -1,58 +1,20 @@
-import { StyleSheet, Text, View, FlatList, Dimensions, TextInput, Alert, LogBox } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TextInput,FlatList, Alert } from 'react-native'
 import React, {useState, useEffect} from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
-import OnboardingScreen from '../Auth/OnboardingScreen';
 import Feather from 'react-native-vector-icons/Feather'
+import EachRequest from '../../components/EachRequest';
 import { useNavigation } from '@react-navigation/native';
-import EachFriend from '../../components/EachFriend';
-
-LogBox.ignoreAllLogs();
-
-
-friendsdata = [
-  {
-    id: '1',
-    username: 'ckim'
-  },
-  {
-    id: '2',
-    username: 'jxhanara'
-  },
-]
-
-// requestsdata = [
-//   {
-//     id: '1',
-//     username: 'nicolejoe'
-//   },
-//   {
-//     id: '2',
-//     username: 'johnslee'
-//   },
-//   {
-//     id: '3',
-//     username: 'irisgkim'
-//   },
-// ]
 const { width, height } = Dimensions.get('window')
-const Friends = ({route}) => {
+const Requests = () => {
 
   const navigation = useNavigation();
-
-  const [username, setUsername] = useState('');
-  const [requests, setRequests] = useState([]);
   const [user, setUser] = useState(null);
-  const [requestData, setRequestData] = useState([]);
-  const [friendData, setFriendsData] = useState([]);
-  const [friends, setFriends] = useState([]);
-  const [counter, setCounter] = useState(0);
-  const [unique, setUnique] = useState(false);
   const [requestUser, setRequestUser] = useState([]);
-  // const [requestSent, setRequestSent] = useState([]);
-
-  const [search, setSearch] = useState('');
+  const [requestData, setRequestData] = useState([]);
+  const [friendData, setFriendsData] = useState([]); 
+  const [username, setUsername] = useState('');
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     setUserInfo();
@@ -73,6 +35,33 @@ const Friends = ({route}) => {
     });
 
     return () => unsubscribe1();
+  }
+
+  const friendsRender = () => {
+    if (user != null) {
+    const friendCollection = firestore().collection('Friends');
+    const friend1Query = friendCollection.where('relationship', 'array-contains', user.username);
+    const unsubscribe = friend1Query.onSnapshot((querySnapshot) => {
+      const friendArr = [];
+      const friendSet = new Set();
+      querySnapshot.forEach((doc) => {
+          relationshipArr = doc.data().relationship;
+          nameArr = doc.data().names;
+          if (relationshipArr[0] === user.username) {
+            friendArr.push({username: relationshipArr[1], name: nameArr[1], id: doc.id + "1"});
+            friendSet.add(relationshipArr[1]);
+          } else {
+            friendArr.push({username: relationshipArr[0],  name: nameArr[0], id: doc.id + "0"});
+            friendSet.add(relationshipArr[0]);
+          }
+      })
+      setFriendsData(friendArr);
+      setFriends(friendSet);
+    })
+    return () => unsubscribe();
+  } else {
+    console.log('hi')
+  }
   }
 
   const requestRender = () => {
@@ -96,33 +85,6 @@ const Friends = ({route}) => {
       setRequestData(requestArr);
     })
     return () => unsubscribe();
-  }
-
-  const friendsRender = () => {
-    if (user != null) {
-    const friendCollection = firestore().collection('Friends');
-    const friend1Query = friendCollection.where('relationship', 'array-contains', user.username);
-    const unsubscribe = friend1Query.onSnapshot((querySnapshot) => {
-      const friendArr = [];
-      const friendSet = new Set();
-      querySnapshot.forEach((doc) => {
-          relationshipArr = doc.data().relationship;
-          nameArr = doc.data().names;
-          if (relationshipArr[0] === user.username) {
-            friendArr.push({username: relationshipArr[1], name: nameArr[1], id: doc.id});
-            friendSet.add(relationshipArr[1]);
-          } else {
-            friendArr.push({username: relationshipArr[0],  name: nameArr[0], id: doc.id});
-            friendSet.add(relationshipArr[0]);
-          }
-      })
-      setFriendsData(friendArr);
-      setFriends(friendSet);
-    })
-    return () => unsubscribe();
-  } else {
-    console.log('hi')
-  }
   }
 
   const sendRequest = async () => {
@@ -175,7 +137,7 @@ const Friends = ({route}) => {
                 targetName: name+'',
                 status: '0'
               })
-            })
+            }) 
 
         } else {
           Alert.alert('User does not exist!')
@@ -183,17 +145,43 @@ const Friends = ({route}) => {
       })
     }
 
+    const accept = (item) => { 
+      const userId = firebase.auth().currentUser.uid;
+      const friendArray = [];
+      const nameArray = [];
+      friendArray.push(item.username);
+      nameArray.push(item.name);
+      friendArray.push(user.username);
+      nameArray.push(user.name);
+      firestore().collection('Friends').add({
+        relationship: friendArray,
+        names: nameArray,
+      })
+      firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
+        console.log(item);
+        // const reqSet = requestSent;
+        // const index = reqSet.indexOf(username);
+        // reqSet.splice(index, 1);
+        // setRequestSent(reqSet);
+        console.log('deleted');
+      })
+    }
+
+    const reject = (item) => {
+      firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
+        console.log(item);
+        // const reqSet = requestSent;
+        // const index = reqSet.indexOf(username);
+        // reqSet.splice(index, 1);
+        // setRequestSent(reqSet);
+        console.log('deleted');
+      })
+    }
+
     const navBack = () => {
       navigation.navigate('Profile');
     }
 
-    const deleteFriend = (item) => {
-      firestore().collection('Friends').doc(item.id).delete().then(() => {
-        console.log("Friend removed")
-      })
-    }
-
-  
 
   return (
     <View style={styles.container}>
@@ -216,19 +204,18 @@ const Friends = ({route}) => {
       ><Text style={{fontFamily: 'Lato-Regular', color: 'white', fontSize: 13}}>SEND</Text>
       </TouchableOpacity>
       </View>
-
       <View style={styles.myFriends}>
         <View>
           <Text style={{fontFamily: 'Lato-Bold', color: '#505050'}}>
-            MY FRIENDS
+            FRIEND REQUESTS
           </Text>
         </View>
-        <View style={{height: height * 0.57}}>
+        <View style={{height: height * 0.57,}}>
         <FlatList
-          data={friendData}
+          data={requestData}
           // keyExtractor={item => item.id}
           renderItem={({ item }) =>
-            <EachFriend name={item.name} username={item.username} onPress={() => deleteFriend(item)}/>
+            <EachRequest name={item.name} username={item.username} item={item} currUser={user} onAccept={() => accept(item)} onReject={() => reject(item)}/>
           }
           showsVerticalScrollIndicator={false}
         />
@@ -238,54 +225,54 @@ const Friends = ({route}) => {
   )
 }
 
-export default Friends
+export default Requests
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'flex-start',
-      backgroundColor: 'white',
-      alignItems: 'center',
-      flexDirection:'column',
-      // alignContent: 'center'
-    },
 
-    searchContainer: {
-      height: height * 0.06,
-      width: width * 0.70,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: height * 0.013,
-      overflow: 'hidden',
-      // borderWidth: 1,
-      backgroundColor:'#F4F4F4',
-      padding:15,
-      borderRadius: 10
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    flexDirection:'column',
+    // alignContent: 'center'
+  },
 
-    backContainer: {
-      justifyContent:'flex-end',
-      width: width * 0.89,
-      marginBottom: height * 0.02,
-      flexDirection: 'row',
-      marginTop: height * 0.08
-    },
+  searchContainer: {
+    height: height * 0.06,
+    width: width * 0.70,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: height * 0.013,
+    overflow: 'hidden',
+    // borderWidth: 1,
+    backgroundColor:'#F4F4F4',
+    padding:15,
+    borderRadius: 10
+  },
 
-    myFriends: {
-      width: width * 0.88,
-      marginTop: height * 0.01
-    }
+  backContainer: {
+    justifyContent:'flex-end',
+    width: width * 0.89,
+    marginBottom: height * 0.02,
+    flexDirection: 'row',
+    marginTop: height * 0.08
+  },
 
-    // friendsContainer: {
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
-    //   flexDirection: 'column',
-    // },
+  myFriends: {
+    width: width * 0.88,
+    marginTop: height * 0.01
+  }
 
-    // text: {
-    //   fontFamily: 'Lato-Bold',
-    //   fontSize: 20
-    // }
+  // friendsContainer: {
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   flexDirection: 'column',
+  // },
 
+  // text: {
+  //   fontFamily: 'Lato-Bold',
+  //   fontSize: 20
+  // }
 })
