@@ -110,10 +110,10 @@ const Friends = ({route}) => {
           relationshipArr = doc.data().relationship;
           nameArr = doc.data().names;
           if (relationshipArr[0] === user.username) {
-            friendArr.push({username: relationshipArr[1], name: nameArr[1], id: doc.id + "1"});
+            friendArr.push({username: relationshipArr[1], name: nameArr[1], id: doc.id});
             friendSet.add(relationshipArr[1]);
           } else {
-            friendArr.push({username: relationshipArr[0],  name: nameArr[0], id: doc.id + "0"});
+            friendArr.push({username: relationshipArr[0],  name: nameArr[0], id: doc.id});
             friendSet.add(relationshipArr[0]);
           }
       })
@@ -220,6 +220,11 @@ const Friends = ({route}) => {
       navigation.navigate('Profile');
     }
 
+    const deleteFriend = (item) => {
+      firestore().collection('Friends').doc(item.id).delete().then(() => {
+        console.log("Friend removed")
+      })
+    }
 
   
 
@@ -256,7 +261,7 @@ const Friends = ({route}) => {
           data={friendData}
           // keyExtractor={item => item.id}
           renderItem={({ item }) =>
-            <EachFriend name={item.name} username={item.username}/>
+            <EachFriend name={item.name} username={item.username} onPress={() => deleteFriend(item)}/>
           }
           showsVerticalScrollIndicator={false}
         />
