@@ -11,7 +11,6 @@ import Feed from '../screens/In/Feed';
 import CreatePost from '../screens/In/CreatePost';
 import Friends from '../screens/In/Friends';
 import Profile from '../screens/In/Profile';
-import FriendsStack from '../screens/In/FriendStack';
 import Requests from '../screens/In/Requests';
 import Feather from 'react-native-vector-icons/Feather';
 import DisplayPost from '../screens/In/DisplayPost';
@@ -55,8 +54,8 @@ return (
     <Tab.Navigator
       tabBar={props => <TabBar {...props} />}
     >
-      <Tab.Screen name="Friends" component={Friends} options ={{headerShown:false}} initialParams={{ icon: 'home' }} />
-      <Tab.Screen name="Requests" component={FriendsStack}  options ={{headerShown:false,}} initialParams={{ icon: 'home' }}/>
+      <Tab.Screen name="Friends" component={Friends} options ={{headerShown:false, gestureDirection: "horizontal-inverted"}}  />
+      <Tab.Screen name="Requests" component={Requests}  options ={{headerShown:false, gestureDirection: "horizontal-inverted"}} />
     </Tab.Navigator>
 )
   }

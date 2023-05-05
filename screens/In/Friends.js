@@ -4,6 +4,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
 import OnboardingScreen from '../Auth/OnboardingScreen';
+import Feather from 'react-native-vector-icons/Feather'
+import { useNavigation } from '@react-navigation/native';
+import EachFriend from '../../components/EachFriend';
 
 LogBox.ignoreAllLogs();
 
@@ -36,6 +39,8 @@ friendsdata = [
 const { width, height } = Dimensions.get('window')
 const Friends = ({route}) => {
 
+  const navigation = useNavigation();
+
   const [username, setUsername] = useState('');
   const [requests, setRequests] = useState([]);
   const [user, setUser] = useState(null);
@@ -46,6 +51,8 @@ const Friends = ({route}) => {
   const [unique, setUnique] = useState(false);
   const [requestUser, setRequestUser] = useState([]);
   // const [requestSent, setRequestSent] = useState([]);
+
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     console.log('useEffect run')
@@ -80,6 +87,7 @@ const Friends = ({route}) => {
         requestArr.push({
           username: doc.data().sourceUsername,
           id: doc.data().source,
+          name: doc.data().sourceName,
           docID: doc.id
         })
 
@@ -100,11 +108,12 @@ const Friends = ({route}) => {
       const friendSet = new Set();
       querySnapshot.forEach((doc) => {
           relationshipArr = doc.data().relationship;
+          nameArr = doc.data().names;
           if (relationshipArr[0] === user.username) {
-            friendArr.push({username: relationshipArr[1], id: doc.id + "1"});
+            friendArr.push({username: relationshipArr[1], name: nameArr[1], id: doc.id + "1"});
             friendSet.add(relationshipArr[1]);
           } else {
-            friendArr.push({username: relationshipArr[0], id: doc.id + "0"});
+            friendArr.push({username: relationshipArr[0],  name: nameArr[0], id: doc.id + "0"});
             friendSet.add(relationshipArr[0]);
           }
       })
@@ -152,61 +161,109 @@ const Friends = ({route}) => {
           const postQuery = postCollection.where('username','==', username)
           const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
             var id;
+            var name;
             querySnapshot.forEach((doc) => {
               id = doc.id
+              name = doc.data().name;
               })
       
               firestore().collection('FriendRequests').doc(userId+''+id).set({
                 source: userId + '',
                 sourceUsername: user.username+"",
+                sourceName: user.name+"",
                 target: id+ '',
                 targetUsername: username+ '',
+                targetName: name+'',
                 status: '0'
               })
             })
 
         } else {
-          Alert.alert('User does not exist')
+          Alert.alert('User does not exist!')
         }
       })
     }
 
-    const accept = (item) => { 
-      const userId = firebase.auth().currentUser.uid;
-      const friendArray = [];
-      friendArray.push(item.username);
-      friendArray.push(user.username);
-      firestore().collection('Friends').add({
-        relationship: friendArray
-      })
-      firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
-        console.log(item);
-        // const reqSet = requestSent;
-        // const index = reqSet.indexOf(username);
-        // reqSet.splice(index, 1);
-        // setRequestSent(reqSet);
-        console.log('deleted');
-      })
-    }
+    // const accept = (item) => { 
+    //   const friendArray = [];
+    //   const nameArray = [];
+    //   friendArray.push(item.username);
+    //   nameArray.push(item.name);
+    //   friendArray.push(user.username);
+    //   nameArray.push(user.name);
+    //   firestore().collection('Friends').add({
+    //     relationship: friendArray,
+    //     names: nameArray,
+    //   })
+    //   firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
+    //     console.log(item);
+    //     // const reqSet = requestSent;
+    //     // const index = reqSet.indexOf(username);
+    //     // reqSet.splice(index, 1);
+    //     // setRequestSent(reqSet);
+    //     console.log('deleted');
+    //   })
+    // }
 
-    const reject = (item) => {
-      firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
-        console.log(item);
-        // const reqSet = requestSent;
-        // const index = reqSet.indexOf(username);
-        // reqSet.splice(index, 1);
-        // setRequestSent(reqSet);
-        console.log('deleted');
-      })
-    }
+    // const reject = (item) => {
+    //   firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
+    //     console.log(item);
+    //     // const reqSet = requestSent;
+    //     // const index = reqSet.indexOf(username);
+    //     // reqSet.splice(index, 1);
+    //     // setRequestSent(reqSet);
+    //     console.log('deleted');
+    //   })
+    // }
 
+    const navBack = () => {
+      navigation.navigate('Profile');
+    }
 
 
   
 
   return (
     <View style={styles.container}>
-      <View style ={styles.friendsContainer}>
+      <View style={styles.backContainer}>
+        <TouchableOpacity onPress={navBack}><Feather name="arrow-right" size={30} color={'black'} /></TouchableOpacity>
+      </View>
+      <View style={{flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between'}}>
+      <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.textInputStyle}
+                onChangeText={(text) => setUsername(text)}
+                value={username}
+                underlineColorAndroid="transparent"
+                placeholder="Add Friends"
+              />
+      </View>
+      <TouchableOpacity
+        style={{justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#505050'}}
+        onPress={sendRequest}
+      ><Text style={{fontFamily: 'Lato-Regular', color: 'white', fontSize: 13}}>SEND</Text>
+      </TouchableOpacity>
+      </View>
+
+      <View style={styles.myFriends}>
+        <View>
+          <Text style={{fontFamily: 'Lato-Bold', color: '#505050'}}>
+            MY FRIENDS
+          </Text>
+        </View>
+        <View style={{height: height * 0.2}}>
+        <FlatList
+          data={friendData}
+          // keyExtractor={item => item.id}
+          renderItem={({ item }) =>
+            <EachFriend name={item.name} username={item.username}/>
+          }
+          showsVerticalScrollIndicator={false}
+        />
+        </View>
+      </View>
+      
+      {/* <View style ={styles.friendsContainer}>
         <Text style={styles.text}>My Friends</Text>
         <View style={{height: height * 0.2}}>
         <FlatList
@@ -237,21 +294,10 @@ const Friends = ({route}) => {
           showsVerticalScrollIndicator={false}
         />
       </View>
+        
 
-      <View style={styles.friendsContainer}>
-        <Text style={styles.text}>Send Request</Text>
-        <TextInput
-              placeholder="enter username"
-              value={username}
-              onChangeText={text => { setUsername(text) }}
-              // style={styles.input}
-            />
-          <TouchableOpacity onPress={sendRequest}>
-            <Text>send</Text>
-          </TouchableOpacity>
-      </View>
 
-    </View>
+    </View> */}
     </View>
   )
 }
@@ -261,20 +307,49 @@ export default Friends
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       backgroundColor: 'white',
-      alignItems: 'center'
-    },
-
-    friendsContainer: {
-      justifyContent: 'center',
       alignItems: 'center',
-      flexDirection: 'column',
+      flexDirection:'column',
+      // alignContent: 'center'
     },
 
-    text: {
-      fontFamily: 'Lato-Bold',
-      fontSize: 20
+    searchContainer: {
+      height: height * 0.06,
+      width: width * 0.70,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: height * 0.013,
+      overflow: 'hidden',
+      // borderWidth: 1,
+      backgroundColor:'#F4F4F4',
+      padding:15,
+      borderRadius: 10
+    },
+
+    backContainer: {
+      justifyContent:'flex-end',
+      width: width * 0.89,
+      marginBottom: height * 0.02,
+      flexDirection: 'row',
+      marginTop: height * 0.08
+    },
+
+    myFriends: {
+      width: width * 0.88,
+      marginTop: height * 0.01
     }
+
+    // friendsContainer: {
+    //   justifyContent: 'center',
+    //   alignItems: 'center',
+    //   flexDirection: 'column',
+    // },
+
+    // text: {
+    //   fontFamily: 'Lato-Bold',
+    //   fontSize: 20
+    // }
 
 })

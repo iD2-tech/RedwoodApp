@@ -10,7 +10,6 @@ const Tab = ({ color, tab, onPress, icon }) => {
         padding: 10,
         backgroundColor: color,
         borderRadius: 100}} onPress={onPress}>
-       
             <Text style={{ color:'white', fontFamily: 'Lato-Bold' }}>{tab.name}</Text>
         
     </TouchableOpacity>
