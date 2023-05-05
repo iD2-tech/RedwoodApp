@@ -55,7 +55,6 @@ const Friends = ({route}) => {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    console.log('useEffect run')
     setUserInfo();
     requestRender();
     friendsRender();

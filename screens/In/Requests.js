@@ -17,7 +17,6 @@ const Requests = () => {
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
-    console.log('useEffect run')
     setUserInfo();
     requestRender();
     friendsRender();
