@@ -82,14 +82,15 @@ const styles = StyleSheet.create({
     nameContainer: {
         flexDirection: 'column',
         justifyContent: 'center',
-        marginLeft: width * 0.04
+        marginLeft: width * 0.04,
+        width: width * 0.49
     },
 
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: width * 0.27
+        // marginLeft: width * 0.27
     }
 
 })

@@ -211,7 +211,7 @@ const Requests = () => {
             FRIEND REQUESTS
           </Text>
         </View>
-        <View style={{height: height * 0.2}}>
+        <View style={{height: height * 0.57,}}>
         <FlatList
           data={requestData}
           // keyExtractor={item => item.id}

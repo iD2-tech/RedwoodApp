@@ -184,38 +184,6 @@ const Friends = ({route}) => {
       })
     }
 
-    // const accept = (item) => { 
-    //   const friendArray = [];
-    //   const nameArray = [];
-    //   friendArray.push(item.username);
-    //   nameArray.push(item.name);
-    //   friendArray.push(user.username);
-    //   nameArray.push(user.name);
-    //   firestore().collection('Friends').add({
-    //     relationship: friendArray,
-    //     names: nameArray,
-    //   })
-    //   firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
-    //     console.log(item);
-    //     // const reqSet = requestSent;
-    //     // const index = reqSet.indexOf(username);
-    //     // reqSet.splice(index, 1);
-    //     // setRequestSent(reqSet);
-    //     console.log('deleted');
-    //   })
-    // }
-
-    // const reject = (item) => {
-    //   firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
-    //     console.log(item);
-    //     // const reqSet = requestSent;
-    //     // const index = reqSet.indexOf(username);
-    //     // reqSet.splice(index, 1);
-    //     // setRequestSent(reqSet);
-    //     console.log('deleted');
-    //   })
-    // }
-
     const navBack = () => {
       navigation.navigate('Profile');
     }
@@ -256,7 +224,7 @@ const Friends = ({route}) => {
             MY FRIENDS
           </Text>
         </View>
-        <View style={{height: height * 0.2}}>
+        <View style={{height: height * 0.57}}>
         <FlatList
           data={friendData}
           // keyExtractor={item => item.id}
@@ -267,42 +235,6 @@ const Friends = ({route}) => {
         />
         </View>
       </View>
-      
-      {/* <View style ={styles.friendsContainer}>
-        <Text style={styles.text}>My Friends</Text>
-        <View style={{height: height * 0.2}}>
-        <FlatList
-          data={friendData}
-          // keyExtractor={item => item.id}
-          renderItem={({ item }) =>
-            <Text style= {{fontFamily: 'Lato-Regular', }}>{item.username}</Text>
-          }
-          showsVerticalScrollIndicator={false}
-        />
-        </View>
-      </View>
-
-      <View style ={styles.friendsContainer}>
-        <Text style={styles.text}>Friend Requests</Text>
-        <View style={{height: height * 0.2}}>
-        <FlatList
-          data={requestData}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) =>
-            <View style={{flexDirection: 'row'}}>
-               <Text style= {{fontFamily: 'Lato-Regular', marginRight: '10%' }}>{item.username}</Text>
-               <TouchableOpacity onPress={() => accept(item)}><Text style= {{fontFamily: 'Lato-Regular',marginRight: '5%' }}>accept</Text></TouchableOpacity>
-               <TouchableOpacity onPress={() => reject(item)}><Text style= {{fontFamily: 'Lato-Regular', }}>reject</Text></TouchableOpacity>
-            </View>
-           
-          }
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
-        
-
-
-    </View> */}
     </View>
   )
 }

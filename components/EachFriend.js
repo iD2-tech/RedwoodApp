@@ -35,12 +35,13 @@ const styles = StyleSheet.create({
     nameContainer: {
         flexDirection: 'column',
         justifyContent: 'center',
-        marginLeft: width * 0.04
+        marginLeft: width * 0.04,
+        width: width *0.65
     },
 
     xContainer: {
         justifyContent: 'center',
-        marginLeft: width * 0.4
+        // marginLeft: width * 0.4
     }
 
 })
