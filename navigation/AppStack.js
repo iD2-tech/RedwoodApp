@@ -17,10 +17,15 @@ import DisplayPost from '../screens/In/DisplayPost';
 import DisplayPostProfile from '../screens/In/DisplayPostProfile';
 import TabBar from '../components/TabBar';
 
+import GroupMain from '../screens/In/Group/GroupMain';
+import CreateGroup from '../screens/In/Group/CreateGroup';
+import EachGroup from '../screens/In/Group/EachGroup';
+import Members from '../screens/In/Group/Members';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-const Tabb = createMaterialBottomTabNavigator();
+// const Tabb = createMaterialBottomTabNavigator();
 // ios-add-circle-outline
 
 
@@ -49,6 +54,44 @@ const AppStack = () => {
     </Stack.Navigator>
   );
 
+  const GroupStack = ({navigation}) => (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="GroupMain"
+        component={GroupMain}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="EachGroup"
+        component={GroupNavStack}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="CreateGroup"
+        component={CreateGroup}
+        options ={{headerShown:false}}
+      />
+    </Stack.Navigator>
+  );
+
+  const GroupNavStack = ({route}) => {
+    const {item} = route.params
+    return (
+      <Tab.Navigator
+      tabBar={props => <TabBar {...props} />}
+      initialRouteName="Home"
+    >
+      <Tab.Screen name="Home" options ={{headerShown:false, gestureDirection: "horizontal-inverted"}}  >
+        {props => <EachGroup {...props} item={item}/>}
+      </Tab.Screen>
+      <Tab.Screen name="Members"  options ={{headerShown:false, gestureDirection: "horizontal-inverted"}} >
+        {props => <Members {...props} item={item}/>}
+      </Tab.Screen>
+     
+    </Tab.Navigator>
+    )
+  }
+
   const FriendStack = ({navigation}) => {
 return (
     <Tab.Navigator
@@ -76,10 +119,13 @@ return (
           <Feather name="home" size={size} color={color}/>
         ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray', }} 
       />
-      {/* <Tab.Screen
-        name="Friends"
-        component={Friends}
-      /> */}
+      <Tab.Screen
+        name="Groups"
+        component={GroupStack}   
+        options ={{  headerShown:false, tabBarLabel: '', tabBarIcon: ({color, size}) => (
+          <Feather name="zap" size={size} color={color}/>
+        ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray', }} 
+      />
       <Tab.Screen
         name="Post"
         component={CreatePost}

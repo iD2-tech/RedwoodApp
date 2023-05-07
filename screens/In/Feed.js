@@ -7,72 +7,7 @@ import { firebase } from "@react-native-firebase/auth";
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 
-const { width, height } = Dimensions.get('window')
-
-const DATA = [
-  {
-    id: '1',
-    user: 'David Hyun',
-    date: '04/01/2023',
-    title: 'Calling from God',
-    verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
-    verse: 'Psalm 51:10-12',
-    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
-    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
-  },
-  {
-    id: '2',
-    user: 'Hanara Nam',
-    date: '04/01/2023',
-    title: 'Eye on Jesus',
-    verseText: 'Then Peter got down out of the boat, walked on the water and came toward Jesus. But when he saw the wind, he was afraid and, beginning to sink, cried out, "Lord, save me!',
-    verse: 'Matthew 14:29-30',
-    text: 'I realize the importance of starting the day off with God and spending time with him on the daily and keeping my eyes on him. When I begin lacking in my efforts to spend time with God, I find myself falling, living life with worldly vision, indulging in worldly pleasures. Live everyday with my eyes fixed on Jesus, because quite frankly, the world we live in is a storm in itself and once my eyes begin to be distracted with the situations and everything around me, I sink. Following Jesus requires complete focus on him.'
-  },
-  {
-    id: '3',
-    user: 'Collin Kim',
-    date: '04/01/2023',
-    title: 'Rejoice in the Lord!',
-    verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
-    verse: 'Philippians 4:4',
-    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
-    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
-  },
-  {
-    id: '4',
-    user: 'David Hyun',
-    date: '04/01/2023',
-    title: 'Calling from God',
-    verseText: 'Create in me a pure heart, O God, and renew a steadfast spirit within me. Do not cast me from your presence or take your Holy Spirit from me. Restore to me the joy of your salvation and grant me a willing spirit, to sustain me',
-    verse: 'Psalm 51:10-12',
-    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.'
-    + 'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.',
-  },
-  {
-    id: '5',
-    user: 'Hanara Nam',
-    date: '04/01/2023',
-    title: 'Eye on Jesus',
-    verseText: 'Then Peter got down out of the boat, walked on the water and came toward Jesus. But when he saw the wind, he was afraid and, beginning to sink, cried out, "Lord, save me!',
-    verse: 'Matthew 14:29-30',
-    text: 'I realize the importance of starting the day off with God and spending time with him on the daily and keeping my eyes on him. When I begin lacking in my efforts to spend time with God, I find myself falling, living life with worldly vision, indulging in worldly pleasures. Live everyday with my eyes fixed on Jesus, because quite frankly, the world we live in is a storm in itself and once my eyes begin to be distracted with the situations and everything around me, I sink. Following Jesus requires complete focus on him.'
-  },
-  {
-    id: '6',
-    user: 'Collin Kim',
-    date: '04/01/2023',
-    title: 'Rejoice in the Lord!',
-    verseText: 'Rejoice in the Lord always. I will say it again: Rejoice!',
-    verse: 'Philippians 4:4',
-    text: 'How can I expect to win my battles entering the battlefield with zero preparation? No armor, no weapon, vulnerable. If I went to war in real life like that Id die in seconds! As it is with my spiritual warfare.' +
-    'I need to spend time with God, dwell and read his word every given opportunity I have, and put on the armor of God if I want to win my battles.'
-  },
-
-
-]
-
-
+const { width, height } = Dimensions.get('window');
 
 const Feed = () => {
 

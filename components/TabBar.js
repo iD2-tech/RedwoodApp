@@ -12,6 +12,7 @@ const TabBar = ({ state, navigation }) => {
   const renderColor = currentTab => (currentTab === selected ? '#898989' : '#505050');
 
   const handlePress = (activeTab, index) => {
+    // console.log(routes)
     if (state.index !== index) {
       setSelected(activeTab);
       navigation.navigate(activeTab);
