@@ -78,7 +78,6 @@ const Requests = () => {
           name: doc.data().sourceName,
           docID: doc.id
         })
-
         requestUsers.add(doc.data().sourceUsername);
       })
       setRequestUser(requestUsers);
@@ -136,12 +135,15 @@ const Requests = () => {
                 targetUsername: username+ '',
                 targetName: name+'',
                 status: '0'
+              }).then(() => {
+                unsubscribe();
               })
             }) 
-
+            
         } else {
           Alert.alert('User does not exist!')
         }
+        
       })
     }
 
@@ -149,13 +151,17 @@ const Requests = () => {
       const userId = firebase.auth().currentUser.uid;
       const friendArray = [];
       const nameArray = [];
+      const idArray = [];
       friendArray.push(item.username);
       nameArray.push(item.name);
-      friendArray.push(user.username);
+      idArray.push(item.id); 
+      friendArray.push(user.username); 
       nameArray.push(user.name);
+      idArray.push(userId);
       firestore().collection('Friends').add({
         relationship: friendArray,
         names: nameArray,
+        ids: idArray
       })
       firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
         console.log(item);

@@ -149,7 +149,6 @@ const Friends = ({route}) => {
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           if (documentSnapshot.data().username.toUpperCase() == username.toUpperCase()) {
-
             unique = false;
           }
         });
@@ -174,8 +173,11 @@ const Friends = ({route}) => {
                 targetUsername: username+ '',
                 targetName: name+'',
                 status: '0'
+              }).then(() => {
+                unsubscribe();
               })
             })
+            // unsubscribe();
 
         } else {
           Alert.alert('User does not exist!')
