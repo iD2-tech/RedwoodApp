@@ -224,7 +224,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: height * 0.01,
     overflow: 'hidden',
-    // borderWidth: 1,
     backgroundColor: '#F4F4F4',
     padding: 15,
     borderRadius: 10,
@@ -235,8 +234,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
-    marginTop: height * 0.03
-    // backgroundColor: 'black'
+    marginTop: height * 0.03,
   },
 
 })
