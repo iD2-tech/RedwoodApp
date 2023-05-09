@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import React, {useState} from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { NavigationContainerRefContext, useNavigation } from '@react-navigation/native'
 import OnboardButton from '../../../components/OnboardButton'
 import GroupDisplay from '../../../components/GroupDisplay'
 import Feather from 'react-native-vector-icons/Feather'
@@ -64,6 +64,10 @@ const GroupMain = () => {
         setShow(!show);
     }
 
+    const navToCreate = () => {
+      navigation.navigate('CreateGroup');
+    }
+
   return (
     <View style={styles.container}>
         <View style={{marginTop: height * 0.08, width: width * 0.9, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center'}}>
@@ -95,6 +99,7 @@ const GroupMain = () => {
       
             <TouchableOpacity
               style={{justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.9, borderRadius: 10, backgroundColor: '#505050'}}
+              onPress={navToCreate}
             ><Text style={{fontFamily: 'Lato-Regular', color: 'white', fontSize: 13}}>CREATE</Text>
             </TouchableOpacity>
             </View>
