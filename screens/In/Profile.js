@@ -83,7 +83,10 @@ const Profile = ( {route} ) => {
       setPosts(postsData);
       setFiltered(postsData);
     })
-    return () => unsubscribe();
+    return () => {
+      unsubscribe1();
+      unsubscribe();
+    };
   }, []);
 
 
@@ -108,7 +111,7 @@ const Profile = ( {route} ) => {
           var dateObj = new Date(item.date.seconds * 1000);
           const date = dateObj.getDate();
           const month = monthNames[dateObj.getMonth()];
-          const year = dateObj.getFullYear();
+          const year = dateObj.getFullYear(); 
 
           const dateString = date + " " + month + " " + year;
 

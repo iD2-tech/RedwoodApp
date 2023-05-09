@@ -11,7 +11,12 @@ const EachFriend = (props) => {
     <FontAwesome name="user-circle-o" size={height * 0.055} color="#505050"/>
     <View style={styles.nameContainer}>
         <Text style={{fontFamily:'Lato-Bold', fontSize: height * 0.022}}>{props.name}</Text>
+        {props.username === null ? 
+        null
+        : 
         <Text style={{fontFamily: 'Lato-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text>
+        }
+        {/* <Text style={{fontFamily: 'Lato-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text> */}
     </View>
     <View style={styles.xContainer}>
         <TouchableOpacity onPress={props.onPress}>
