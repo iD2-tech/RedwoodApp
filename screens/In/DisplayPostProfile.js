@@ -25,7 +25,7 @@ const DisplayPostProfile = ({ route }) => {
     const [editedBook, setEditedBook] = useState(arr.toString().replaceAll(",", " "))
     const [editedVerse, setEditedVerse] = useState(verse.split(":")[1]);
     const [editedVerseText, setEditedVerseText] = useState(verseText);
-    const [bookAutofill, setBookAutofill] = useState();
+    const [bookAutofill, setBookAutofill] = useState(arr.toString().replaceAll(',', ' '));
     const [showBookAutofill, setShowBookAutofill] = useState(false);
     const [invalidVerse, setInvalidVerse] = useState(false);
     const scrollViewRef = useRef();
@@ -211,132 +211,6 @@ const DisplayPostProfile = ({ route }) => {
                 <View style={styles.backButtonContainer}>
                     <PageBackButton onPress={navBack} />
                 </View>
-
-                {/*
-                <View style={styles.container}>
-                    <View style={{
-                        flexDirection: 'row',
-                        width: width * 0.05,
-                        justifyContent: 'space-between',
-                        alignContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: height * 0.01,
-                    }}>
-                        <View style={{ flexDirection: 'row', marginBottom: height * 0.002 }}>
-                            <TouchableOpacity onPress={() => editButtonPressed()} >
-                                {editMode ?
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Feather name="eye" size={20} color="#505050" />
-                                        <View style={{ marginLeft: width * 0.04 }}>
-                                            <TouchableOpacity onPress={deletePost}>
-                                                <Feather name={"trash-2"} size={20} color="#505050" />
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                    :
-                                    <Feather name={"edit-3"} size={20} color="#505050" />}
-                            </TouchableOpacity>
-
-
-                        </View>
-
-
-                    </View>
-
-
-
-                    {editMode ?
-                        <View>
-                            <Text style={styles.date}>{dateString}</Text>
-                            <View style={styles.titleInputContainer}>
-                                <TextInput
-                                    style={styles.title}
-                                    value={editedTitle}
-                                    onChangeText={text => setEditedTitle(text)}
-                                    ref={ref_input1}
-                                />
-                            </View>
-
-                            <Text style={styles.verseText}>{"\"" + editedVerseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
-                            <View style={styles.editVerseContainer}>
-                                <View>
-                                    <TextInput
-                                        value={editedBook}
-                                        onChangeText={text => { setEditedBook(text); autofillBook(text) }}
-                                        style={styles.editableBook}
-                                        returnKeyType='done'
-                                        onSubmitEditing={() => setAutofilledBook()}
-                                        onBlur={() => { setAutofilledBook(); getVerses() }}
-                                        onFocus={() => setShowBookAutofill(true)}
-                                    />
-                                    {showBookAutofill ?
-                                        <TouchableOpacity style={styles.bookAutofill} onPress={() => setAutofilledBook()}>
-                                            <Text style={styles.bookAutofillText}>{bookAutofill}</Text>
-                                        </TouchableOpacity>
-                                        :
-                                        <></>
-                                    }
-                                </View>
-                                <Text> </Text>
-                                <TextInput
-                                    value={editedChapter}
-                                    onChangeText={text => { setEditedChapter(text); getVersesFromNumber(text, 0) }}
-                                    style={styles.editableNumber}
-                                />
-                                <Text>:</Text>
-                                <TextInput
-                                    value={editedVerse}
-                                    onChangeText={text => { setEditedVerse(text); getVersesFromNumber(text, 1) }}
-                                    style={styles.editableNumber}
-                                />
-                            </View>
-                            {invalidVerse ?
-                                <Text style={styles.invalidVerse}>invalid verse</Text>
-                                :
-                                <></>
-                            }
-                            <View style={{
-                                height: height * 0.2,
-                                // borderWidth: 1,
-                                borderColor: '#D3D3D3',
-                                // paddingLeft: width * 0.02
-                            }}>
-                                <ScrollView>
-                                    <TextInput
-                                        style={styles.text}
-                                        value={editedText}
-                                        onChangeText={text => setEditedText(text)}
-                                        multiline
-                                    />
-                                </ScrollView>
-
-                            </View>
-                            <TouchableOpacity onPress={() => editButtonPressed()}>
-                                <Text style={styles.editLabel}>done</Text>
-                            </TouchableOpacity>
-
-                        </View>
-
-                        :
-                        <View>
-                            <Text style={styles.date}>{dateString}</Text>
-                            <View style={styles.titleContainer} >
-
-                                <Text style={styles.title}>{editedTitle}</Text>
-                            </View>
-                            <Text style={styles.verseText}>{"\"" + editedVerseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
-                            <Text style={styles.verse}>{editedBook} {editedChapter}:{editedVerse}</Text>
-                            <View style={{ height: height * 0.2 }}>
-                                <ScrollView>
-                                    <Text style={styles.text}>{editedText}</Text>
-                                </ScrollView>
-                            </View>
-                        </View>}
-
-
-                </View>
-
-                */}
                 {/* screen container */}
                 <View style={styles.container}>
                     <Text style={styles.date}>{dateString}</Text>
@@ -351,12 +225,6 @@ const DisplayPostProfile = ({ route }) => {
                                 onFocus={() => setEditMode(true)}
                                 onBlur={() => setEditMode(false)}
                             />
-                            <TouchableOpacity onPress={() => editButtonPressed()} style={styles.editButton}>
-                                {editMode ?
-                                    <Feather name="save" size={20} color="#505050" />
-                                    :
-                                    <Feather name={"edit"} size={20} color="#505050" />}
-                            </TouchableOpacity>
                         </View>
 
                         <View style={styles.editVerseContainer}>
@@ -414,7 +282,6 @@ const DisplayPostProfile = ({ route }) => {
                             // paddingLeft: width * 0.02
 
                         }}>
-                            {/* <ScrollView> */}
                             <TextInput
                                 style={styles.text}
                                 value={editedText}
@@ -426,8 +293,6 @@ const DisplayPostProfile = ({ route }) => {
                                 onFocus={() => setEditMode(true)}
                                 blurOnSubmit
                             />
-                            {/* </ScrollView> */}
-
                         </View>
                     </View>
                 </View>
@@ -564,7 +429,7 @@ const styles = StyleSheet.create({
         color: '#505050',
         // marginRight: width * 0.015,
         width: width * 0.7,
-        height: height * 0.2,
+        height: height * 0.28,
     },
 
     textInput: {
