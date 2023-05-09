@@ -144,6 +144,8 @@ const Requests = () => {
               targetUsername: userFromDatabase + '',
               targetName: name + '',
               status: '0'
+            }).then(() => {
+              unsubscribe();
             })
           })
 
