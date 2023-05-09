@@ -26,6 +26,7 @@ const CreateGroup = ({ route }) => {
 
 
   const createGroup = () => {
+    const userId = firebase.auth().currentUser.uid;
     const groupRef = firebase.firestore().collection('Groups').doc(code);
     groupRef.get().then((docSnapshot) => {
       if (docSnapshot.exists) {
@@ -33,12 +34,15 @@ const CreateGroup = ({ route }) => {
       } else {
         const moderator = [];
         moderator.push(user.username)
+        const memberIds = [];
+        memberIds.push(userId)
         firestore().collection('Groups').doc(code).set({
           name: name,
           description: description,
           moderators: moderator,
           members: moderator,
           numMembers: 1,
+          memberIds: memberIds
         }).then(() => {
           navigation.navigate('GroupMain')
         })

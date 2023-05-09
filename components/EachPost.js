@@ -44,8 +44,9 @@ export default EachPost
 
 const styles = StyleSheet.create({
     container: {
-        width: '80%',
+        width: '85%',
         marginBottom: '15%',
+        // backgroundColor: 'blue'
 
         // alignItems: 'center' 
     },

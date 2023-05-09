@@ -92,7 +92,7 @@ const GroupMain = () => {
       const unsubscribe2 = groupQuery.onSnapshot((querySnapshot) => {
         const groupArr = [];
         querySnapshot.forEach((doc) => {
-          const {description, members, moderators, name, numMembers } = doc.data();
+          const {description, members, moderators, name, memberIds } = doc.data();
           groupArr.push({
             id: doc.id,
             description: description,
@@ -100,7 +100,8 @@ const GroupMain = () => {
             numMembers: members.length,
             members: members,
             moderators: moderators,
-            currUser: user.username
+            currUser: user.username,
+            memberIds: memberIds,
           })
         })
 
@@ -129,11 +130,13 @@ const GroupMain = () => {
   }
 
   const join = () => {
+    const userId = firebase.auth().currentUser.uid;
     const groupRef = firebase.firestore().collection('Groups').doc(groupCode);
     groupRef.get().then((docSnapshot) => {
       if (docSnapshot.exists) {
         groupRef.update({
           members: firebase.firestore.FieldValue.arrayUnion(user.username),
+          memberIds:  firebase.firestore.FieldValue.arrayUnion(userId),
           numMembers: firebase.firestore.FieldValue.increment(1)
         })
       } else {

@@ -1,21 +1,36 @@
-import { StyleSheet, Text, View, Dimensions, FlatList, Alert } from 'react-native'
-import React, { useEffect } from 'react'
+import { StyleSheet, Text, View, Dimensions, FlatList, Alert, RefreshControl } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import PageBackButton from '../../../components/PageBackButton'
 import { useNavigation } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import EachPost from '../../../components/EachPost'
 
 
 
 const { width, height } = Dimensions.get('window')
 const EachGroup = (props) => {
+  const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  const [posts, setPosts] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    renderPosts();
+  }, [])
 
   const navigation = useNavigation();
     const navBack = () => {
       navigation.navigate("GroupMain")
     }
+    const onRefresh = () => {
+      setRefreshing(true);
+      // Fetch new data here and set it using setData
+      renderPosts();
+      setRefreshing(false);
+    };
 
     const leaveGroup = () => {
       Alert.alert('LEAVING GROUP', 'Are you sure?', [
@@ -32,6 +47,7 @@ const EachGroup = (props) => {
     }
 
     const deleteOP =() => {
+      const userId = firebase.auth().currentUser.uid;
       if (props.item.members.length === 1) {
         firestore().collection('Groups').doc(props.item.id).delete().then(() => {
           navigation.navigate("GroupMain")
@@ -39,6 +55,7 @@ const EachGroup = (props) => {
       } else {
       firestore().collection('Groups').doc(props.item.id).update({
         members: firebase.firestore.FieldValue.arrayRemove(props.item.currUser),
+        memberIds: firebase.firestore.FieldValue.arrayRemove(userId),
       }).then(() => {
         navigation.navigate("GroupMain")
       })
@@ -47,6 +64,50 @@ const EachGroup = (props) => {
 
     const navToMembers = () => {
       navigation.navigate("Members");
+    }
+
+    const renderPosts = () => {
+        const postArr = [];
+        const unsubscribeFunctions = [];
+        for (let i = 0; i < props.item.memberIds.length; i++) {
+          const userPostRef = firestore().collection('Posts').doc(props.item.memberIds[i]).collection('userPosts').where('date', '>', getStartofToday());
+          const unsubscribe = userPostRef.onSnapshot((querySnapshot) => {
+            querySnapshot.forEach((doc) => { 
+              var verses = doc.data().book + " " + doc.data().chapter + ":" + doc.data().verse;
+  
+              var dateObj = new Date(doc.data().date.seconds * 1000);
+              const date = dateObj.getDate();
+              const month = monthNames[dateObj.getMonth()];
+              const year = dateObj.getFullYear();
+    
+              const dateString = date + " " + month + " " + year;
+  
+              postArr.push({
+                user: props.item.members[i],
+                id: props.item.memberIds[i].ids,
+                date: dateString,
+                title: doc.data().title,
+                verseText: doc.data().verses, 
+                verse: verses,
+                text: doc.data().text,
+              }) 
+            })
+    
+          })
+          unsubscribeFunctions.push(unsubscribe);
+        }
+        setPosts(postArr); 
+        return () => {
+          unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
+        };
+        
+    }
+
+    function getStartofToday() {
+      const now = new Date();
+      now.setHours(0, 0, 0, 0);
+      const timestamp = firestore.Timestamp.fromDate(now);
+      return timestamp;
     }
    
 
@@ -90,44 +151,22 @@ const EachGroup = (props) => {
         fontSize: 10,
         marginTop: height * 0.03,
       }}>ANNOUNCEMENTS</Text> */}
-      {/* <View style={{height: height * 0.52, marginTop: height * 0.05, backgroundColor: '#F4F4F4', borderRadius: 10}}>
+      <View style={{height: height * 0.62, marginTop: height * 0.05,  }}>
+      <Text style={{
+        fontFamily: 'Lato-bold', fontSize: 20, marginBottom: height * 0.03
+      }}>Today's Posts!</Text>
       <FlatList
-          data={props.item.announcements}
-          // keyExtractor={item => item.id}
-          renderItem={({ item }) =>
-            <View style={{
-              width: width * 0.85,
-              // borderWidth: 1,
-              padding: 20,
-              // borderColor: "#505050",
-              // borderRadius: 10,
-              // marginBottom: height * 0.02
-            }}>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent:'flex-start'
-              }}>
-                <Feather name="flag" size={30} color={'#505050'} />
-                <Text style={{
-                  fontFamily:'Lato-Bold',
-                  fontSize: 20,
-                  marginLeft: width * 0.03,
-                  color: "#505050",
-                }}>{item.title}</Text>
-              </View>
-             
-              <Text style={{
-                fontFamily:'Lato-Regular',
-                fontSize: 15,
-                color: "#505050",
-                marginTop: height * 0.02,
-                
-              }}>{item.text}</Text>
-            </View>
+          data={posts}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => 
+            <EachPost user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text}/>
+          }
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           showsVerticalScrollIndicator={false}
         />
-      </View> */}
+      </View>
 
      
 
