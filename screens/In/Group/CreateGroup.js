@@ -31,13 +31,11 @@ const CreateGroup = ({ route }) => {
       if (docSnapshot.exists) {
         Alert.alert("code taken")
       } else {
-        const announcements = [];
         const moderator = [];
         moderator.push(user.username)
         firestore().collection('Groups').doc(code).set({
           name: name,
           description: description,
-          announcements: announcements,
           moderators: moderator,
           members: moderator,
           numMembers: 1,

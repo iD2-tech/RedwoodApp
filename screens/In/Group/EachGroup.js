@@ -1,8 +1,11 @@
-import { StyleSheet, Text, View, Dimensions, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, FlatList, Alert } from 'react-native'
 import React, { useEffect } from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import PageBackButton from '../../../components/PageBackButton'
 import { useNavigation } from '@react-navigation/native'
+import firestore from '@react-native-firebase/firestore';
+import { firebase } from "@react-native-firebase/auth";
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
 
@@ -12,6 +15,38 @@ const EachGroup = (props) => {
   const navigation = useNavigation();
     const navBack = () => {
       navigation.navigate("GroupMain")
+    }
+
+    const leaveGroup = () => {
+      Alert.alert('LEAVING GROUP', 'Are you sure?', [
+        {
+            text: 'Cancel',
+            onPress: () => console.log('canceled'),
+            style: 'cancel'
+        },
+        {
+            text: 'Ok',
+            onPress: () => deleteOP(),
+        }
+    ])
+    }
+
+    const deleteOP =() => {
+      if (props.item.members.length === 1) {
+        firestore().collection('Groups').doc(props.item.id).delete().then(() => {
+          navigation.navigate("GroupMain")
+        })
+      } else {
+      firestore().collection('Groups').doc(props.item.id).update({
+        members: firebase.firestore.FieldValue.arrayRemove(props.item.currUser),
+      }).then(() => {
+        navigation.navigate("GroupMain")
+      })
+    }
+    }
+
+    const navToMembers = () => {
+      navigation.navigate("Members");
     }
    
 
@@ -30,7 +65,7 @@ const EachGroup = (props) => {
       <View style={{
         width: width * 0.85,
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-evenly',
         marginTop: height * 0.01,
         alignItems: 'center'
       }}>
@@ -39,17 +74,23 @@ const EachGroup = (props) => {
             fontSize: 30,
             color:"black"
         }}>{props.item.name}</Text>
-        <View style={styles.numberDisplay}>
-                <Feather name="users" size={20} color={'#505050'} />
+        <View style={styles.numberDisplay }>
+          <TouchableOpacity onPress={navToMembers}><Feather name="users" size={20} color={'#505050'} /></TouchableOpacity>
+                
                 <Text style={{fontSize: 20, marginLeft: width * 0.01, fontFamily: 'Lato-Regular'}}>{props.item.numMembers}</Text>
         </View>
+        <TouchableOpacity ><Feather name="message-circle" size={20} color={'#505050'} /></TouchableOpacity>
+        <TouchableOpacity onPress={leaveGroup}><Feather name="x-circle" size={20} color={'#505050'} /></TouchableOpacity>
+        
+
+       
       </View>
       {/* <Text style={{
         fontFamily: 'Lato-Bold',
         fontSize: 10,
         marginTop: height * 0.03,
       }}>ANNOUNCEMENTS</Text> */}
-      <View style={{height: height * 0.52, marginTop: height * 0.05, backgroundColor: '#F4F4F4', borderRadius: 10}}>
+      {/* <View style={{height: height * 0.52, marginTop: height * 0.05, backgroundColor: '#F4F4F4', borderRadius: 10}}>
       <FlatList
           data={props.item.announcements}
           // keyExtractor={item => item.id}
@@ -86,7 +127,7 @@ const EachGroup = (props) => {
           }
           showsVerticalScrollIndicator={false}
         />
-      </View>
+      </View> */}
 
      
 

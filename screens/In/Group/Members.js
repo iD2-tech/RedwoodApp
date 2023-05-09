@@ -11,7 +11,7 @@ const Members = (props) => {
 
     const navigation = useNavigation();
     const navBack = () => {
-        navigation.navigate("GroupMain")
+        navigation.navigate("Home")
       }
 
   return (

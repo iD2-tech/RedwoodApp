@@ -92,15 +92,15 @@ const GroupMain = () => {
       const unsubscribe2 = groupQuery.onSnapshot((querySnapshot) => {
         const groupArr = [];
         querySnapshot.forEach((doc) => {
-          const { announcements, description, members, moderators, name, numMembers } = doc.data();
+          const {description, members, moderators, name, numMembers } = doc.data();
           groupArr.push({
             id: doc.id,
-            announcements: announcements,
             description: description,
             name: name,
             numMembers: members.length,
             members: members,
             moderators: moderators,
+            currUser: user.username
           })
         })
 
@@ -113,7 +113,8 @@ const GroupMain = () => {
 
   const navToGroup = (item) => {
     navigation.navigate('EachGroup',
-      { item: item }
+      { item: item,
+      }
     );
   }
 
