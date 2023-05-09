@@ -90,7 +90,9 @@ const Profile = ( {route} ) => {
   }, []);
 
 
-
+  const navToSettings = () => {
+    navigation.navigate("Settings");
+  }
 
 
   const navToFeed = () => {
@@ -181,9 +183,9 @@ const Profile = ( {route} ) => {
             {user ? user.name : 'Loading...'}
           </Text>
           <TouchableOpacity
-            onPress={() => logout()}
+            onPress={() => navToSettings()}
           >
-            <Feather name="log-out" size={25} color={'black'} />
+            <Feather name="settings" size={25} color={'black'} />
           </TouchableOpacity>
         </View>
         <View style={styles.nameBot}>

@@ -16,6 +16,13 @@ import Feather from 'react-native-vector-icons/Feather';
 import DisplayPost from '../screens/In/DisplayPost';
 import DisplayPostProfile from '../screens/In/DisplayPostProfile';
 import TabBar from '../components/TabBar';
+import DeletedPosts from '../screens/In/DeletedPosts';
+import MyProfile from '../screens/In/MyProfile';
+import Privacy from '../screens/In/Privacy';
+import Settings from '../screens/In/Settings';
+
+
+
 
 import GroupMain from '../screens/In/Group/GroupMain';
 import CreateGroup from '../screens/In/Group/CreateGroup';
@@ -50,6 +57,26 @@ const AppStack = () => {
         name="FriendStack"
         component={FriendStack}
         options ={{headerShown:false, gestureDirection: "horizontal-inverted"}}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options ={{headerShown:false}}
+      />
+      <Stack.Screen
+        name="DeletedPosts"
+        component={DeletedPosts}
+        options ={{headerShown:false}}
+      />
+      <Stack.Screen
+        name="Privacy"
+        component={Privacy}
+        options ={{headerShown:false}}
+      />
+      <Stack.Screen
+        name="MyProfile"
+        component={MyProfile}
+        options ={{headerShown:false}}
       />
     </Stack.Navigator>
   );
