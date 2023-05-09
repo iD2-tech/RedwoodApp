@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, FlatList } from 'react-native'
-import React, {useState} from 'react'
+import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native'
+import React, {useState, useEffect} from 'react'
 import { NavigationContainerRefContext, useNavigation } from '@react-navigation/native'
 import OnboardButton from '../../../components/OnboardButton'
 import GroupDisplay from '../../../components/GroupDisplay'
 import Feather from 'react-native-vector-icons/Feather'
+import firestore from '@react-native-firebase/firestore'; 
+import { firebase } from "@react-native-firebase/auth"; 
 
 const DATA = [
     {
@@ -49,10 +51,56 @@ const DATA = [
 
 const { width, height } = Dimensions.get('window')
 const GroupMain = () => {
+    const [user, setUser] = useState(null);
     const [groupCode, setGroupCode] = useState('');
     const [show, setShow] = useState(false);
+    const [groups, setGroups] = useState([]);
     
     const navigation = useNavigation();
+
+    useEffect(() => {
+    console.log('run')
+    const unsubscribeFunctions = [];
+    const userId = firebase.auth().currentUser.uid;
+    const userRef = firebase.firestore().collection('Users').doc(userId);
+    const unsubscribe1 = userRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        const { name, username } = doc.data();
+        setUser({ name, username });
+      }
+    });
+
+    unsubscribeFunctions.push(unsubscribe1);
+
+    if (user != null) {
+
+    const groupCollection = firestore().collection('Groups');
+    const groupQuery = groupCollection.where('members', 'array-contains', user.username);
+    const unsubscribe2 = groupQuery.onSnapshot((querySnapshot) => {
+      const groupArr = [];
+      querySnapshot.forEach((doc) => {
+        const {announcements, description, members, moderators, name, numMembers} = doc.data();
+        groupArr.push({
+          id: doc.id,
+          announcements: announcements,
+          description: description,
+          name: name,
+          numMembers: numMembers,
+          members: members,
+          moderators: moderators,
+        })
+      })
+
+      setGroups(groupArr);
+    })
+
+    unsubscribeFunctions.push(unsubscribe2);
+  }
+
+    return () => {
+      unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
+    };
+    }, [])
 
     const navToGroup = (item) => {
         navigation.navigate('EachGroup', 
@@ -65,7 +113,23 @@ const GroupMain = () => {
     }
 
     const navToCreate = () => {
-      navigation.navigate('CreateGroup');
+      navigation.navigate('CreateGroup', {
+        user: user,
+      });
+    }
+
+    const join = () => {
+      const groupRef = firebase.firestore().collection('Groups').doc(groupCode);
+      groupRef.get().then((docSnapshot) => {
+      if (docSnapshot.exists) {
+        groupRef.update({
+          members: firebase.firestore.FieldValue.arrayUnion(user.username),
+          numMembers: firebase.firestore.FieldValue.increment(1)
+        })
+      } else {
+        Alert.alert("Code doesn't exist!")
+      }
+    });
     }
 
   return (
@@ -93,6 +157,7 @@ const GroupMain = () => {
             </View>
             <TouchableOpacity
               style={{justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.17, borderRadius: 10, backgroundColor: '#505050'}}
+              onPress={join}
             ><Text style={{fontFamily: 'Lato-Regular', color: 'white', fontSize: 13}}>JOIN</Text>
             </TouchableOpacity>
             </View>
@@ -109,13 +174,17 @@ const GroupMain = () => {
       
       <View style={styles.listContainer}>
         <FlatList
-          data={DATA}
+          data={groups}
+          columnWrapperStyle={{
+            flex: 0.5,
+            justifyContent: 'flex-start'
+          }}
         //   keyExtractor={item => item.id.toString()}
           numColumns={2}
           renderItem={({ item }) =>
           <TouchableOpacity onPress={() => navToGroup(item)}>
             <GroupDisplay name={item.name} numMembers={item.numMembers} description={item.description}/>
-            </TouchableOpacity>
+          </TouchableOpacity>
           }
           showsVerticalScrollIndicator={false}
         />
