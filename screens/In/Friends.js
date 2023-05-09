@@ -75,28 +75,7 @@ const Friends = ({route}) => {
     return () => unsubscribe1();
   }
 
-  const requestRender = () => {
-    const friendCollection = firestore().collection('FriendRequests');
-    var userId = firebase.auth().currentUser.uid;
-    const requestQuery = friendCollection.where('target', '==', userId).where('status', '==', '0');
-    const unsubscribe = requestQuery.onSnapshot((querySnapshot) => {
-      const requestArr = [];
-      const requestUsers = new Set();
-      querySnapshot.forEach((doc) => {
-        requestArr.push({
-          username: doc.data().sourceUsername,
-          id: doc.data().source,
-          name: doc.data().sourceName,
-          docID: doc.id
-        })
-
-        requestUsers.add(doc.data().sourceUsername);
-      })
-      setRequestUser(requestUsers);
-      setRequestData(requestArr);
-    })
-    return () => unsubscribe();
-  }
+ 
 
   const friendsRender = () => {
     if (user != null) {
@@ -125,6 +104,29 @@ const Friends = ({route}) => {
   }
   }
 
+  const requestRender = () => {
+    const friendCollection = firestore().collection('FriendRequests');
+    var userId = firebase.auth().currentUser.uid;
+    const requestQuery = friendCollection.where('target', '==', userId).where('status', '==', '0');
+    const unsubscribe = requestQuery.onSnapshot((querySnapshot) => {
+      const requestArr = [];
+      const requestUsers = new Set();
+      querySnapshot.forEach((doc) => {
+        requestArr.push({
+          username: doc.data().sourceUsername,
+          id: doc.data().source,
+          name: doc.data().sourceName,
+          docID: doc.id
+        })
+
+        requestUsers.add(doc.data().sourceUsername);
+      })
+      setRequestUser(requestUsers);
+      setRequestData(requestArr);
+    })
+    return () => unsubscribe();
+  }
+
   const sendRequest = async () => {
     if (friends.has(username)) {
       Alert.alert('Already friends!');
@@ -143,20 +145,27 @@ const Friends = ({route}) => {
 
 
     var unique = true;
+    var userFromDatabase = '';
     await firestore()
       .collection('Users')
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           if (documentSnapshot.data().username.toUpperCase() == username.toUpperCase()) {
+            setUsername(documentSnapshot.data().username);
+            userFromDatabase = documentSnapshot.data().username;
             unique = false;
+            if (friends.has(userFromDatabase)) {
+              Alert.alert('Already friends!');
+              return;
+            }
           }
         });
       }).then(() => {
         if(!unique) {
           var userId = firebase.auth().currentUser.uid;
           const postCollection = firestore().collection('Users')
-          const postQuery = postCollection.where('username','==', username)
+          const postQuery = postCollection.where('username','==', userFromDatabase)
           const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
             var id;
             var name;
@@ -170,7 +179,7 @@ const Friends = ({route}) => {
                 sourceUsername: user.username+"",
                 sourceName: user.name+"",
                 target: id+ '',
-                targetUsername: username+ '',
+                targetUsername: userFromDatabase+ '',
                 targetName: name+'',
                 status: '0'
               }).then(() => {
