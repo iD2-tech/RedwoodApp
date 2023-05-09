@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, FlatList, SafeAreaView, ImageBackground, RefreshControl} from 'react-native'
-import React, {useContext, useState, useEffect} from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, FlatList, SafeAreaView, ImageBackground, RefreshControl } from 'react-native'
+import React, { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '../../navigation/AuthProvider';
 import EachPost from '../../components/EachPost';
 import firestore from '@react-native-firebase/firestore';
@@ -21,7 +21,7 @@ const Feed = () => {
     console.log(friends);
     renderPosts();
     console.log(posts)
-  }, [friends])  
+  }, [friends])
 
 
   const onRefresh = () => {
@@ -42,9 +42,9 @@ const Feed = () => {
         nameArr = doc.data().names;
         idArr = doc.data().ids;
         if (idArr[0] === userId) {
-          friendArr.push({username: relationshipArr[1], name: nameArr[1], ids: idArr[1]});
+          friendArr.push({ username: relationshipArr[1], name: nameArr[1], ids: idArr[1] });
         } else {
-          friendArr.push({username: relationshipArr[0],  name: nameArr[0], ids: idArr[0]});
+          friendArr.push({ username: relationshipArr[0], name: nameArr[0], ids: idArr[0] });
         }
       })
       console.log(friendArr);
@@ -53,7 +53,7 @@ const Feed = () => {
       }
     })
 
-    return () => unsubscribe();  
+    return () => unsubscribe();
   }
 
 
@@ -64,14 +64,14 @@ const Feed = () => {
       for (let i = 0; i < friends.length; i++) {
         const userPostRef = firestore().collection('Posts').doc(friends[i].ids).collection('userPosts').where('date', '>', getStartofToday());
         const unsubscribe = userPostRef.onSnapshot((querySnapshot) => {
-          querySnapshot.forEach((doc) => { 
+          querySnapshot.forEach((doc) => {
             var verses = doc.data().book + " " + doc.data().chapter + ":" + doc.data().verse;
 
             var dateObj = new Date(doc.data().date.seconds * 1000);
             const date = dateObj.getDate();
             const month = monthNames[dateObj.getMonth()];
             const year = dateObj.getFullYear();
-  
+
             const dateString = date + " " + month + " " + year;
 
             postArr.push({
@@ -79,20 +79,20 @@ const Feed = () => {
               id: friends[i].ids,
               date: dateString,
               title: doc.data().title,
-              verseText: doc.data().verses, 
+              verseText: doc.data().verses,
               verse: verses,
               text: doc.data().text,
-            }) 
+            })
           })
-  
+
         })
         unsubscribeFunctions.push(unsubscribe);
       }
-      setPosts(postArr); 
+      setPosts(postArr);
       return () => {
         unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
       };
-      
+
     }
   }
 
@@ -107,28 +107,29 @@ const Feed = () => {
 
 
   return (
-      <ImageBackground source={require('../../tree.jpg')} resizeMode="cover" style={styles.image}>
-      <MaskedView
+    <View style={styles.image}>
+      {/* <MaskedView
         style={styles.flatContainer}
         maskElement=
-        {<LinearGradient style={{ flex: 1, }} colors={['transparent', 'white']} locations={[0, 0.22]}/>}
-      >
-       <FlatList
-          contentContainerStyle={{ paddingTop: height * 0.15}}
+        {<LinearGradient style={{ flex: 1, }} colors={['transparent', 'white']} locations={[0, 0.22]} />}
+      > */}
+      <View style={styles.flatContainer}>
+        <FlatList
           data={posts}
           keyExtractor={item => item.id}
-          renderItem={({item}) => 
-            <EachPost user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text}/>
+          renderItem={({ item }) =>
+            <EachPost user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
           }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           showsVerticalScrollIndicator={false}
         />
-       
-    </MaskedView>
-    </ImageBackground>
-    
+
+      {/* </MaskedView> */}
+      </View>
+    </View>
+
   )
 }
 
@@ -136,14 +137,18 @@ export default Feed
 
 const styles = StyleSheet.create({
   flatContainer: {
-    marginTop: height * 0.12,
-    marginLeft: width * 0.095,
-    justifyContent: 'center',
-    alignContent: 'center'
+    // marginTop: height * 0.12,
+    // marginLeft: width * 0.095,
+    // justifyContent: 'center',
+    // alignContent: 'center'
+    // height: height,
+    width: width,
   },
   image: {
     flex: 1,
     justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
-  }, 
+  },
 })

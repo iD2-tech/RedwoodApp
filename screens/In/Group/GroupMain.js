@@ -7,48 +7,6 @@ import Feather from 'react-native-vector-icons/Feather'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
 
-const DATA = [
-  {
-    id: 1,
-    name: 'Redwood Co',
-    members: ['Marcus', 'Grace', 'Collin', 'David', 'Nicole', 'John'],
-    description: 'Where all Redwood Co members can share their devos!',
-    numMembers: 5,
-    announcements: [
-      {
-        title: 'Senior Sendoff!',
-        text: 'Senior sendoff is prolly one of the biggest events of the year, and is a place for us to celebrate the end of the year as well as send off our seniors!! It is going to be Monday (5/29) @6pm. Here is an rsvp link for it',
-      },
-      {
-        title: 'Spiritual Formation Retreat',
-        text: 'Today is the last day to sign up for spiritual formation retreat!! It is this Saturday from 9:30-3 and I really hope to see yall there! If your free I strongly encourage you to go!! There will be lots of silent time and time for you to spend with God, and is a great opportunity to find spiritual rest in the midst of this busy quarter!',
-      }
-    ],
-    moderators: ['Marcus', 'Grace']
-  },
-  {
-    id: 2,
-    numMembers: 20,
-    name: 'Small Group',
-    members: ['Marcus', 'Grace', 'Collin', 'David', 'Nicole', 'John'],
-    description: '2023 Small Group!!',
-    announcements: [
-      {
-        title: 'Senior Sendoff!',
-        text: 'Senior sendoff is prolly one of the biggest events of the year, and is a place for us to celebrate the end of the year as well as send off our seniors!! It is going to be Monday (5/29) @6pm. Here is an rsvp link for it',
-      },
-      {
-        title: 'Spiritual Formation Retreat',
-        text: 'Today is the last day to sign up for spiritual formation retreat!! It is this Saturday from 9:30-3 and I really hope to see yall there! If your free I strongly encourage you to go!! There will be lots of silent time and time for you to spend with God, and is a great opportunity to find spiritual rest in the midst of this busy quarter!',
-      }
-    ],
-    moderators: ['Marcus', 'Grace']
-  },
-
-]
-
-
-
 const { width, height } = Dimensions.get('window')
 const GroupMain = () => {
   const [user, setUser] = useState(null);
