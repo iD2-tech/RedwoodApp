@@ -107,6 +107,7 @@ const Feed = () => {
 
 
   return (
+    <ImageBackground source={require("../../lake_tree_mountain.jpg")} resizeMode='cover' style={styles.background}>
     <View style={styles.image}>
       {/* <MaskedView
         style={styles.flatContainer}
@@ -129,6 +130,7 @@ const Feed = () => {
       {/* </MaskedView> */}
       </View>
     </View>
+    </ImageBackground>
 
   )
 }
@@ -136,6 +138,11 @@ const Feed = () => {
 export default Feed
 
 const styles = StyleSheet.create({
+  background: {
+    height: height,
+    opacity: 1,
+  },
+
   flatContainer: {
     // marginTop: height * 0.12,
     // marginLeft: width * 0.095,

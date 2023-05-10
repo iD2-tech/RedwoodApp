@@ -20,7 +20,7 @@ const EachPost = (props) => {
 
 
     return (
-        <ImageBackground source={require(".././lake_tree_mountain.jpg")} resizeMode='cover' style={styles.background}>
+        <ImageBackground source={require(".././lake_tree_mountain.jpg")} resizeMode='cover' style={styles.background} imageStyle={{opacity:0.5}}>
 
 
             <View style={styles.container}>
@@ -49,7 +49,7 @@ const EachPost = (props) => {
                 </View>
 
             </View>
-        </ImageBackground>
+         </ImageBackground>
     )
 }
 
@@ -58,7 +58,7 @@ export default EachPost
 const styles = StyleSheet.create({
     background: {
         height: height,
-        opacity: 0.5
+    
     },
 
     container: {
@@ -123,12 +123,14 @@ const styles = StyleSheet.create({
         textShadowOffset: {width: 1.5, height: 1.5},
         textShadowRadius: 1,
         textAlign: 'right',
+        marginBottom: height * 0.3,
     },
 
     text: {
         fontFamily: 'Lato-Regular',
         fontSize: 14,
         color: 'black',
+        marginBottom: height * 0.2
 
     }
 

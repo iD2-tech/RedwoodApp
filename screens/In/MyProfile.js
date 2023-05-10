@@ -25,6 +25,7 @@ const MyProfile = () => {
     const ref_input2 = useRef();
     const [cursorPosition, setCursorPosition] = useState(null);
     
+    
     const navToSettings = () => {
         navigation.navigate("Settings");
     }
@@ -55,6 +56,8 @@ const MyProfile = () => {
             setUser({ name, username });
           }
         });
+        console.log(userId);
+        console.log("Hi");
       }, []);
 
 
