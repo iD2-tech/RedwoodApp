@@ -62,27 +62,40 @@ const Feed = () => {
       const postArr = [];
       const unsubscribeFunctions = [];
       for (let i = 0; i < friends.length; i++) {
-        const userPostRef = firestore().collection('Posts').doc(friends[i].ids).collection('userPosts').where('date', '>', getStartofToday());
+        const userPostRef = firestore().collection('Posts').doc(friends[i].ids).collection('userPosts').where('private', '==', '0').where('date', '>', getStartofToday());
         const unsubscribe = userPostRef.onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => { 
-            var verses = doc.data().book + " " + doc.data().chapter + ":" + doc.data().verse;
+            var verses = doc.data().book + " " + doc.data().chapter + ":" + doc.data().verse; 
 
             var dateObj = new Date(doc.data().date.seconds * 1000);
             const date = dateObj.getDate();
             const month = monthNames[dateObj.getMonth()];
             const year = dateObj.getFullYear();
   
-            const dateString = date + " " + month + " " + year;
+            const dateString = date + " " + month + " " + year; 
 
-            postArr.push({
-              user: friends[i].username,
-              id: friends[i].ids,
-              date: dateString,
-              title: doc.data().title,
-              verseText: doc.data().verses, 
-              verse: verses,
-              text: doc.data().text,
-            }) 
+            if (doc.data().anonymous === '1') {
+              postArr.push({
+                user: 'Anonymous Member',
+                id: friends[i].ids,
+                date: dateString,
+                title: doc.data().title,
+                verseText: doc.data().verses, 
+                verse: verses,
+                text: doc.data().text,
+              }) 
+            } else {
+              postArr.push({
+                user: friends[i].username,
+                id: friends[i].ids,
+                date: dateString,
+                title: doc.data().title,
+                verseText: doc.data().verses, 
+                verse: verses,
+                text: doc.data().text,
+              }) 
+            }
+            
           })
   
         })

@@ -70,7 +70,7 @@ const EachGroup = (props) => {
         const postArr = [];
         const unsubscribeFunctions = [];
         for (let i = 0; i < props.item.memberIds.length; i++) {
-          const userPostRef = firestore().collection('Posts').doc(props.item.memberIds[i]).collection('userPosts').where('date', '>', getStartofToday());
+          const userPostRef = firestore().collection('Posts').doc(props.item.memberIds[i]).collection('userPosts').where('private', '==', '0').where('date', '>', getStartofToday());
           const unsubscribe = userPostRef.onSnapshot((querySnapshot) => {
             querySnapshot.forEach((doc) => { 
               var verses = doc.data().book + " " + doc.data().chapter + ":" + doc.data().verse;
@@ -81,16 +81,29 @@ const EachGroup = (props) => {
               const year = dateObj.getFullYear();
     
               const dateString = date + " " + month + " " + year;
-  
-              postArr.push({
-                user: props.item.members[i],
-                id: props.item.memberIds[i].ids,
-                date: dateString,
-                title: doc.data().title,
-                verseText: doc.data().verses, 
-                verse: verses,
-                text: doc.data().text,
-              }) 
+              
+              if (doc.data().anonymous === '1') {
+                postArr.push({
+                  user: 'Anonymous Member',
+                  id: props.item.memberIds[i].ids,
+                  date: dateString,
+                  title: doc.data().title,
+                  verseText: doc.data().verses, 
+                  verse: verses,
+                  text: doc.data().text,
+                }) 
+              } else {
+                postArr.push({
+                  user: props.item.members[i],
+                  id: props.item.memberIds[i].ids,
+                  date: dateString,
+                  title: doc.data().title,
+                  verseText: doc.data().verses, 
+                  verse: verses,
+                  text: doc.data().text,
+                }) 
+              }
+      
             })
     
           })
