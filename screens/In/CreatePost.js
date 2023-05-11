@@ -9,6 +9,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { bookNames } from '../../assets/bibleBookNames';
 import { makeMutable } from 'react-native-reanimated';
 import Feather from 'react-native-vector-icons/Feather';
+import Modal from "react-native-modal";
+import RadioGroup from 'react-native-radio-buttons-group';
 
 const { width, height } = Dimensions.get('window')
 
@@ -17,8 +19,27 @@ const CreatePost = () => {
   var userId = firebase.auth().currentUser.uid;
 
   const navigation = useNavigation();
+  const [radioButtons, setRadioButtons] = useState([
+    {
+      id: '1', // acts as primary key, should be unique and non-empty string
+      label: 'Post Public',
+      value: 'public'
+    },
+    {
+      id: '2',
+      label: 'Post Private',
+      value: 'private'
+    },
+    {
+      id: '3',
+      label: 'Post Anonymous',
+      value: 'anonymous'
+    }
+  ]);
+
 
   const [verses, setVerses] = useState('');
+  const [selected, setSelected] = useState('public');
   const [book, setBook] = useState('');
   const [chapter, setChapter] = useState('');
   const [verse, setVerse] = useState('');
@@ -37,6 +58,7 @@ const CreatePost = () => {
   const [verseText, setVerseText] = useState('');
   const [invalidVerse, setInvalidVerse] = useState(false);
   const [nonEmpty, setNonEmpty] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
 
   // updates the status of if entry is postable or not
@@ -70,28 +92,90 @@ const CreatePost = () => {
           } else {
             setVerses(responseJson.text);
             console.log("Test2")
-            firestore().collection('Posts').doc(userId).collection('userPosts').add({
-              title: title,
-              book: book,
-              chapter: chapter,
-              verse: verse,
-              verses: responseJson.text,
-              text: text,
-              date: new Date(),
-              pinned: '0',
-            }).then((docRef) => {
-              console.log("added" + docRef)
-              setTitle('');
-              setBook('');
-              setChapter('');
-              setVerse('');
-              setText('');
-              setVerseText('');
-              setShowVerse(false);
-              navigation.navigate("ProfileStack")
-            }).catch((error) => {
-              console.log(error);
-            })
+
+            if (selected === 'public') {
+              firestore().collection('Posts').doc(userId).collection('userPosts').add({
+                title: title,
+                book: book,
+                chapter: chapter,
+                verse: verse,
+                verses: responseJson.text,
+                text: text,
+                date: new Date(),
+                pinned: '0',
+                public: '1',
+                private: '0',
+                anonymous: '0'
+              }).then((docRef) => {
+                console.log("added" + docRef)
+                setTitle('');
+                setBook('');
+                setChapter('');
+                setVerse('');
+                setText('');
+                setVerseText('');
+                setSelected('public')
+                setShowVerse(false);
+                navigation.navigate("ProfileStack")
+              }).catch((error) => {
+                console.log(error);
+              })
+            } else if (selected === 'private') {
+              firestore().collection('Posts').doc(userId).collection('userPosts').add({
+                title: title,
+                book: book,
+                chapter: chapter,
+                verse: verse,
+                verses: responseJson.text,
+                text: text,
+                date: new Date(),
+                pinned: '0',
+                public: '0',
+                private: '1',
+                anonymous: '0'
+              }).then((docRef) => {
+                console.log("added" + docRef)
+                setTitle('');
+                setBook('');
+                setChapter('');
+                setVerse('');
+                setText('');
+                setVerseText('');
+                setSelected('public')
+                setShowVerse(false);
+                navigation.navigate("ProfileStack")
+              }).catch((error) => {
+                console.log(error);
+              })
+            } else {
+              firestore().collection('Posts').doc(userId).collection('userPosts').add({
+                title: title,
+                book: book,
+                chapter: chapter,
+                verse: verse,
+                verses: responseJson.text,
+                text: text,
+                date: new Date(),
+                pinned: '0',
+                public: '0',
+                private: '0',
+                anonymous: '1'
+              }).then((docRef) => {
+                console.log("added" + docRef)
+                setTitle('');
+                setBook('');
+                setChapter('');
+                setVerse('');
+                setText('');
+                setVerseText('');
+                setSelected('public')
+                setShowVerse(false);
+                navigation.navigate("ProfileStack")
+              }).catch((error) => {
+                console.log(error);
+              })
+            }
+
           }
 
         });
@@ -187,6 +271,19 @@ const CreatePost = () => {
     } else if (isNaN(chapterRet) || chapterRet == '' || verseRet == '') {
       setInvalidVerse(true);
     }
+  }
+
+  function onPressRadioButton(radioButtonsArray) {
+    setRadioButtons(radioButtonsArray);
+  }
+
+  const handleModal = () => {
+    let selectedButton = radioButtons.find(e => e.selected == true);
+    selectedButton = selectedButton ? selectedButton.value : radioButtons[0].label;
+    setSelected(selectedButton);
+    setIsModalVisible(() =>
+      !isModalVisible
+    )
   }
 
   return (
@@ -301,6 +398,11 @@ const CreatePost = () => {
             onFocus={() => getVerses()}
           />
         </View>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: width * 0.9} }>
+        
+        <TouchableOpacity onPress={handleModal}>
+          <Feather name="lock" size={25} color="#505050" />
+        </TouchableOpacity>
 
         <TouchableOpacity style={
           btnColor ? styles.filledButton : styles.normalButton
@@ -320,10 +422,29 @@ const CreatePost = () => {
               }
           }>Post</Text>
         </TouchableOpacity>
-
-
-
+        </View>
+        <Modal
+        isVisible={isModalVisible}
+      >
+        <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: 'white', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={styles.filterText}>Filter</Text>
+          <RadioGroup
+            radioButtons={radioButtons}
+            onPress={onPressRadioButton}
+            containerStyle={styles.buttons}
+          />
+          <TouchableOpacity onPress={handleModal} style={styles.filterButton}>
+            <Text style={{
+              color: "#505050",
+              fontFamily: 'Lato-Regular',
+              fontWeight: '500'
+            }}>OK</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
       </View>
+      
+
     </DismissKeyBoard>
   )
 }
@@ -435,7 +556,7 @@ const styles = StyleSheet.create({
 
   filledButton: {
     backgroundColor: '#5C4033',
-    width: width * 0.75,
+    width: width * 0.7,
     padding: 12,
     borderRadius: 10,
     alignItems: 'center',
@@ -443,7 +564,7 @@ const styles = StyleSheet.create({
 
   normalButton: {
     backgroundColor: '#E4E4E4',
-    width: width * 0.75,
+    width: width * 0.7,
     padding: 12,
     borderRadius: 10,
     alignItems: 'center',
@@ -495,5 +616,31 @@ const styles = StyleSheet.create({
   alert: {
     position: 'absolute',
     left: width * -0.08,
+  },
+  filterButton: {
+    width: width * 0.5,
+    padding: width * 0.02,
+    borderRadius: 40,
+    alignItems: 'center',
+    // marginBottom: height * 0.01,
+    borderColor: '#E4E4E4',
+    borderWidth: 1,
+    backgroundColor: '#E4E4E4',
+    marginTop: height * 0.05
+  },
+
+  filterText: {
+    fontSize: 27,
+    fontWeight: '800',
+    fontFamily: 'Lato-Regular',
+    color: '#505050',
+    textAlign: 'left',
+    width: width * 0.44,
+    marginBottom: height * 0.03
+  },
+
+  buttons: {
+    alignItems: 'flex-start',
+    fontFamily: 'Lato-Regular',
   }
 })
