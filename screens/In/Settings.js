@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, TextInput, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, TextInput, ActivityIndicator, Share } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import PageBackButton from '../../components/PageBackButton';
 import { useNavigation } from '@react-navigation/native'
@@ -11,6 +11,27 @@ const { width, height } = Dimensions.get('window')
 const Settings = () => {
     const navigation = useNavigation();
     const { logout } = useContext(AuthContext);
+
+    const onShare = async () => {
+        try {
+            const result = await Share.share({
+              message:
+                'Donwload Redwood and join my community!',
+                url: 'https://google.com'
+            });
+            if (result.action === Share.sharedAction) {
+              if (result.activityType) {
+                // shared with activity type of result.activityType
+              } else {
+                // shared
+              }
+            } else if (result.action === Share.dismissedAction) {
+              // dismissed
+            }
+          } catch (error) {
+            Alert.alert(error.message);
+          }
+    }
 
     const navToProfile = () => {
         navigation.navigate("Profile");
@@ -74,6 +95,7 @@ const Settings = () => {
                             <View style = {styles.icons2Container}>
                                 <View style={{ flexDirection: 'row'}}>
                                     <TouchableOpacity
+                                    onPress={onShare}
                                         >
                                             <Feather name="share" size={28} color={'#505050'} marginBottom={height * 0.017} />
                                     </TouchableOpacity>

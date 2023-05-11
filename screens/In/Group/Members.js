@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, Dimensions, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, FlatList, Share } from 'react-native'
 import React, {useEffect} from 'react'
 import PageBackButton from '../../../components/PageBackButton'
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation } from '@react-navigation/native'
 import EachFriend from '../../../components/EachFriend'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
 const { width, height } = Dimensions.get('window')
@@ -11,8 +12,31 @@ const Members = (props) => {
 
     const navigation = useNavigation();
     const navBack = () => {
+      console.log(props);
         navigation.navigate("Home")
       }
+
+      const onShare = async () => {
+        try {
+            const result = await Share.share({
+              message:
+                'Donwload Redwood and join my group! My group code is ' + props.item.id + '!',
+                url: 'https://google.com'
+            });
+            if (result.action === Share.sharedAction) {
+              if (result.activityType) {
+                // shared with activity type of result.activityType
+              } else {
+                // shared
+              }
+            } else if (result.action === Share.dismissedAction) {
+              // dismissed
+            }
+          } catch (error) {
+            Alert.alert(error.message);
+          }
+    }
+
 
   return (
     <View style={styles.container}>
@@ -28,7 +52,7 @@ const Members = (props) => {
       <View style={{
         width: width * 0.85,
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         marginTop: height * 0.01,
         alignItems: 'center'
       }}>
@@ -41,6 +65,7 @@ const Members = (props) => {
                 <Feather name="users" size={20} color={'#505050'} />
                 <Text style={{fontSize: 20, marginLeft: width * 0.01, fontFamily: 'Lato-Regular'}}>{props.item.numMembers}</Text>
         </View>
+        <TouchableOpacity onPress={onShare}><Feather name="plus" size={30} color={'#505050'} style={{marginRight: width * 0.01}}/></TouchableOpacity>
       </View>
       <View style={{height: height * 0.57, marginTop: height * 0.02}}>
         <FlatList
@@ -69,6 +94,6 @@ const styles = StyleSheet.create({
     numberDisplay: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginLeft: width * 0.1
+        marginRight: width * 0.2
     },
 })
