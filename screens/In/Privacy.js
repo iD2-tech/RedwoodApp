@@ -29,12 +29,12 @@ const Privacy = () => {
                 <Text style={styles.privacy}>Privacy</Text>
                 <View style = {styles.accountPrivacyContainer}>
                     <Text style={styles.accountPrivacy}>Account Privacy</Text>
-                    <View style={{ flexDirection: 'row'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                         <TouchableOpacity
                             >
-                                <Feather name="lock" size={20} color={'#505050'} />
+                                <Feather name="lock" size={25} color={'#505050'} />
                         </TouchableOpacity>
-                            <Text style={styles.privateAccount}>Private Account</Text>
+                        <Text style={styles.privateAccount}>Private Account</Text>
                     </View>
                     <View style = {styles.switch}> 
                         <Switch 
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     privacy: {
         marginTop: height * -0.055,
         marginBottom: height * 0.04,
-        fontSize: 25,
+        fontSize: 29,
         fontFamily: 'Helvetica',
         fontWeight: 'bold',
         color: '#505050',
@@ -81,24 +81,23 @@ const styles = StyleSheet.create({
         width: width * 0.9,
     },
     accountPrivacy: {
-        fontSize: 13,
+        fontSize: 18,
         fontFamily: 'Helvetica',
         fontWeight: 600,
         color: '#505050',
         marginBottom: height * 0.02,
     },
     privateAccount: {
-        fontSize: 14,
+        fontSize: 16.5,
         fontFamily: 'Helvetica',
         fontWeight: 600,
         color: '#505050',
-        marginBottom: height * 0.027,
         marginLeft: width * 0.09,
         marginRight: width * 0.2
     },
     switch: {
         transform: [{ scaleX: 0.75 }, { scaleY: 0.75 }],
-        marginTop: -height * 0.056,
+        marginTop: -height * 0.0315,
         marginLeft: width * 0.54,
     },
 })
