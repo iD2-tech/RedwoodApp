@@ -4,6 +4,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import PageBackButton from '../../components/PageBackButton';
 import { useNavigation } from '@react-navigation/native'
 import { AuthContext } from '../../navigation/AuthProvider';
+import * as StoreReview from 'react-native-store-review';
 
 
 const { width, height } = Dimensions.get('window')
@@ -102,6 +103,7 @@ const Settings = () => {
                                 </View>
                                 <View style={{ flexDirection: 'row'}}>
                                 <TouchableOpacity
+                                onPress={StoreReview.requestReview}
                                     >
                                         <Feather name="star" size={28} color={'#505050'} marginBottom={height * 0.019}/>
                                 </TouchableOpacity>

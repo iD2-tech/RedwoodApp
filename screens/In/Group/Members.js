@@ -65,7 +65,7 @@ const Members = (props) => {
                 <Feather name="users" size={20} color={'#505050'} />
                 <Text style={{fontSize: 20, marginLeft: width * 0.01, fontFamily: 'Lato-Regular'}}>{props.item.numMembers}</Text>
         </View>
-        <TouchableOpacity onPress={onShare}><Feather name="plus" size={30} color={'#505050'} style={{marginRight: width * 0.01}}/></TouchableOpacity>
+        <TouchableOpacity onPress={onShare}><Feather name="share" size={25} color={'#505050'} style={{marginRight: width * 0.01}}/></TouchableOpacity>
       </View>
       <View style={{height: height * 0.57, marginTop: height * 0.02}}>
         <FlatList
