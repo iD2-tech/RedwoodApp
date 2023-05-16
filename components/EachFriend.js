@@ -8,19 +8,19 @@ const { width, height } = Dimensions.get('window')
 const EachFriend = (props) => {
   return (
     <View style={styles.container}>
-    <FontAwesome name="user-circle-o" size={height * 0.055} color="#505050"/>
+    <FontAwesome name="user-circle-o" size={height * 0.055} color="#C3A699"/>
     <View style={styles.nameContainer}>
-        <Text style={{fontFamily:'Lato-Bold', fontSize: height * 0.022}}>{props.name}</Text>
+        <Text style={{fontFamily:'Quicksand-Bold', fontSize: height * 0.022, color: '#785444'}}>{props.name}</Text>
         {props.username === null ? 
         null
         : 
-        <Text style={{fontFamily: 'Lato-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text>
+        <Text style={{fontFamily: 'Quicksand-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text>
         }
         {/* <Text style={{fontFamily: 'Lato-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text> */}
     </View>
     <View style={styles.xContainer}>
         <TouchableOpacity onPress={props.onPress}>
-        <Feather name="x-circle" size={height * 0.026} color="black"/> 
+        <Feather name="x-circle" size={height * 0.026} color="#C3A699"/> 
         </TouchableOpacity>
     </View>
       

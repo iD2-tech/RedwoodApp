@@ -20,13 +20,13 @@ const DisplayPostProfile = ({ route }) => {
 
     useEffect(() => {
         const subscriber = firestore()
-        .collection('Posts')
-        .doc(postUserId)
-        .collection('userPosts')
-        .doc(postId)
-        .onSnapshot(doc => {
-            setComments(parseComments(doc.data().comments));
-        })
+            .collection('Posts')
+            .doc(postUserId)
+            .collection('userPosts')
+            .doc(postId)
+            .onSnapshot(doc => {
+                setComments(parseComments(doc.data().comments));
+            })
 
         return () => subscriber();
     }, []);
@@ -39,7 +39,7 @@ const DisplayPostProfile = ({ route }) => {
             let divIndexEnd = divIndexStart + 5;
             let commentUser = comment.slice(0, divIndexStart);
             let commentContent = comment.slice(divIndexEnd);
-            let feed = {username: commentUser, comment: commentContent, key: key};
+            let feed = { username: commentUser, comment: commentContent, key: key };
             key++;
             parsedComments.push(feed);
         });
@@ -51,7 +51,7 @@ const DisplayPostProfile = ({ route }) => {
         navigation.goBack();
     }
 
-    const commentSent = () =>  {
+    const commentSent = () => {
         let userComment = username + '|div|' + commentEntry;
         firestore().collection('Posts').doc(postUserId).collection('userPosts').doc(postId).update({
             comments: firestore.FieldValue.arrayUnion(userComment),
@@ -70,41 +70,49 @@ const DisplayPostProfile = ({ route }) => {
                         <Text adjustsFontSizeToFit style={styles.title} numberOfLines={1}>{title}</Text>
                     </View>
                     <View style={styles.userContainer}>
-                        <Text adjustsFontSizeToFit style={styles.name} numberOfLines={2}>{user}</Text>
+                        <Text adjustsFontSizeToFit style={styles.name} numberOfLines={1}>{user}</Text>
                     </View>
                 </View>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.verseContainer}>
-                        <Text style={styles.verse}>{verse}</Text>
-                    </View>
-                    <View style={styles.verseTextContainer}>
-                        <Text style={styles.verseText}>{"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
-                    </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.text}>{text}</Text>
-                    </View>
-                    <View style={styles.commentSection}>
-                        <View style={styles.commentEntryContainer}>
-                            <TextInput
-                                placeholder='write your comment here'
-                                style={styles.commentEntry}
-                                placeholderTextColor='#C3A699'
-                                value={commentEntry}
-                                onChangeText={(text) => setCommentEntry(text)}
-                            />
-                            <TouchableOpacity style={styles.sendCommentButtonContainer} onPress={() => commentSent()}>
-                                <Feather name='send' color='#C3A699' size={18} style={styles.sendCommentButton} />
-                            </TouchableOpacity>
+
+                <View style={styles.scrollContainer}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <View style={styles.verseContainer}>
+                            <Text style={styles.verse}>{verse}</Text>
+                        </View>
+                        <View style={styles.verseTextContainer}>
+                            <Text style={styles.verseText}>{"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
+                        </View>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.text}>{text}</Text>
                         </View>
 
+
+                    </ScrollView>
+                </View>
+                <View style={styles.commentSection}>
+                    <View style={styles.commentEntryContainer}>
+                        <TextInput
+                            placeholder='write your comment here'
+                            style={styles.commentEntry}
+                            placeholderTextColor='#C3A699'
+                            value={commentEntry}
+                            onChangeText={(text) => setCommentEntry(text)}
+                        />
+                        <TouchableOpacity style={styles.sendCommentButtonContainer} onPress={() => commentSent()}>
+                            <Feather name='send' color='#C3A699' size={18} style={styles.sendCommentButton} />
+                        </TouchableOpacity>
                     </View>
-                    
-                </ScrollView>
-                <FlatList 
-                        data={comments}
-                        keyExtractor={item => item.key}
-                        renderItem={({item}) => <EachComment username={item.username} comment={item.comment}/>}
-                    />
+
+                </View>
+                <View style={styles.commentsContainer}>
+
+                
+                <FlatList
+                    data={comments}
+                    keyExtractor={item => item.key}
+                    renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
+                />
+                </View>
             </View>
         </DismissKeyBoard>
 
@@ -120,12 +128,18 @@ const styles = StyleSheet.create({
         paddingLeft: width * 0.13,
         paddingRight: width * 0.13,
         height: height,
-        backgroundColor: '#ECDCD1'
+        backgroundColor: '#ECDCD1',
+    },
+
+    scrollContainer: {
+        maxHeight: height * 0.45,
+        borderWidth: 1,
     },
 
     backButton: {
-        marginLeft: width * -0.1,
-        marginRight: width * 0.03,
+        marginLeft: width * -0.13,
+        paddingLeft: width * 0.025,
+        width: width * 0.13,
     },
 
     topBar: {
@@ -175,6 +189,11 @@ const styles = StyleSheet.create({
         transform: [{ rotate: '45deg' }],
         marginRight: width * 0.01,
 
+    },
+
+    commentsContainer: {
+        height: height * 0.22, 
+        borderWidth: 1,
     },
 
     userContainer: {
