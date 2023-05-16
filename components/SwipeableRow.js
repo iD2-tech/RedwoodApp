@@ -185,10 +185,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width * 0.22,
     borderWidth: 1,
-    height: height * 0.107,
+    height: '90%',
     borderColor: "#E4E4E4",
     borderRadius: 15,
     backgroundColor: '#DCC6BB',
+    marginLeft: width * 0.01
  },
 
  swipeText: {

@@ -31,7 +31,7 @@ const EachJournal = (props) => {
                         <View style={{
                             flexDirection: 'row'
                         }}>
-                            <FontAwesome name="thumb-tack" size={15} color="black"/>
+                            <FontAwesome name="thumb-tack" size={15} color="#785444"/>
                             <Text style={styles.titlePinned}>{props.title}</Text>
                         </View>
                     :
@@ -121,9 +121,9 @@ const styles = StyleSheet.create({
     },
 
     titlePinned: {
-        fontFamily: 'Lato-Bold',
+        fontFamily: 'Quicksand-Bold',
         fontSize: 18,
-        color: 'black',
+        color: '#785444',
         marginBottom: '5%',
         marginLeft: width * 0.02
     },
