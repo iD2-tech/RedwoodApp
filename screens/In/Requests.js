@@ -167,6 +167,7 @@ const Requests = () => {
     nameArray.push(user.name);
     idArray.push(userId);
     firestore().collection('Friends').add({
+      ids: idArray,
       relationship: friendArray,
       names: nameArray,
       ids: idArray,
