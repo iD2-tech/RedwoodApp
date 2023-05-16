@@ -97,18 +97,17 @@ const AppStack = () => {
   const GroupNavStack = ({ route }) => {
     const { item } = route.params
     return (
-      <Tab.Navigator
-        tabBar={props => <TabBar {...props} />}
+      <Stack.Navigator
         initialRouteName="Home"
       >
-        <Tab.Screen name="Home" options={{ headerShown: false, gestureDirection: "horizontal-inverted" }}  >
+        <Stack.Screen name="Home" options={{ headerShown: false,  }}  >
           {props => <EachGroup {...props} item={item} />}
-        </Tab.Screen>
-        <Tab.Screen name="Members" options={{ headerShown: false, gestureDirection: "horizontal-inverted" }} >
+        </Stack.Screen>
+        <Stack.Screen name="Members" options={{ headerShown: false, }} >
           {props => <Members {...props} item={item} />}
-        </Tab.Screen>
+        </Stack.Screen>
 
-      </Tab.Navigator>
+      </Stack.Navigator>
     )
   }
 
