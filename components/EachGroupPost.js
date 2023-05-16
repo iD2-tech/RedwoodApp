@@ -11,43 +11,21 @@ const EachGroupPost = (props) => {
     const postId = props.postId;
     const userId = props.userId;
     const username = props.username;
-    const likes = props.likes;
-    const [liked, setLiked] = useState(false);
     const navigation = useNavigation();
 
-    useEffect(() => {
-        if (likes.includes(username)) {
-            setLiked(true);
-        } else {
-            setLiked(false);
-        }
-    }, [])
-
     const entryPressed = () => {
-        // navigation.navigate("DisplayPostGroup", {
-        //     postId: props.postId,
-        //     postUserId: props.userId,
-        //     text: props.text,
-        //     username: props.username,
-        //     user: props.user,
-        //     title: props.title,
-        //     likes: props.likes,
-        //     verse: props.verse,
-        //     verseText: props.verseText
-        //   });
-    }
-
-    const likePost = () => {
-        if (!likes.includes(username)) {
-            setLiked(true);
-            likes.push(username);
-        } else {
-            setLiked(false);
-            likes.splice(likes.indexOf(username), 1);
-        }
-        props.handleCallback(props.postId, props.userId, likes);
-    }
-    
+        navigation.navigate("DisplayPostGroup", {
+            postId: props.postId,
+            postUserId: props.userId,
+            text: props.text,
+            username: props.username,
+            user: props.user,
+            title: props.title,
+            likes: props.likes,
+            verse: props.verse,
+            verseText: props.verseText
+          });
+    }  
 
     return (
         <TouchableOpacity onPress={() => entryPressed()} style={styles.container} activeOpacity={0.5}>
@@ -71,29 +49,6 @@ const EachGroupPost = (props) => {
             <View style={styles.textContainer}>
                 <Text style={styles.text} numberOfLines={8}>{props.text}</Text>
             </View>
-
-{/* 
-            <View style={styles.interactionContainer}>
-                <View style={styles.iteractionButtonContainer}>
-                    <TouchableOpacity onPress={() => likePost(props.item)}>
-                        {
-                            liked ?
-                                <FontAwesome name="heart" size={23} color="#785444" />
-                                :
-                                <Feather name="heart" size={23} color='#785444' />
-                        }
-
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.iteractionButtonContainer}>
-
-                    <TouchableOpacity onPress={() => entryPressed()}>
-                        <Feather name="message-circle" size={23} color='#785444' />
-                    </TouchableOpacity>
-                </View>
-            </View> */}
-
-
         </TouchableOpacity>
     )
 }

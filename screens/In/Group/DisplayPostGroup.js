@@ -18,46 +18,9 @@ const DisplayPostGroup = ({ route }) => {
     const [commentEntry, setCommentEntry] = useState('');
     const [comments, setComments] = useState([]);
 
-    useEffect(() => {
-        const subscriber = firestore()
-        .collection('Posts')
-        .doc(postUserId)
-        .collection('userPosts')
-        .doc(postId)
-        .onSnapshot(doc => {
-            console.log(doc.exists);
-            // setComments(parseComments(doc.data().comments));
-        })
-
-        return () => subscriber();
-    }, []);
-
-    const parseComments = (comments) => {
-        let parsedComments = [];
-        let key = 0;
-        comments.forEach(comment => {
-            let divIndexStart = comment.indexOf('|div|');
-            let divIndexEnd = divIndexStart + 5;
-            let commentUser = comment.slice(0, divIndexStart);
-            let commentContent = comment.slice(divIndexEnd);
-            let feed = {username: commentUser, comment: commentContent, key: key};
-            key++;
-            parsedComments.push(feed);
-        });
-        return parsedComments;
-    }
-
     // back button
     const navBack = () => {
         navigation.goBack();
-    }
-
-    const commentSent = () =>  {
-        let userComment = username + '|div|' + commentEntry;
-        firestore().collection('Posts').doc(postUserId).collection('userPosts').doc(postId).update({
-            comments: firestore.FieldValue.arrayUnion(userComment),
-        })
-        setCommentEntry('');
     }
 
     return (
@@ -84,26 +47,6 @@ const DisplayPostGroup = ({ route }) => {
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>{text}</Text>
                     </View>
-                    <View style={styles.commentSection}>
-                        <View style={styles.commentEntryContainer}>
-                            <TextInput
-                                placeholder='write your comment here'
-                                style={styles.commentEntry}
-                                placeholderTextColor='#C3A699'
-                                value={commentEntry}
-                                onChangeText={(text) => setCommentEntry(text)}
-                            />
-                            <TouchableOpacity style={styles.sendCommentButtonContainer} onPress={() => commentSent()}>
-                                <Feather name='send' color='#C3A699' size={18} style={styles.sendCommentButton} />
-                            </TouchableOpacity>
-                        </View>
-
-                    </View>
-                    <FlatList 
-                        data={comments}
-                        keyExtractor={item => item.key}
-                        renderItem={({item}) => <EachComment username={item.username} comment={item.comment}/>}
-                    />
                 </ScrollView>
             </View>
         </DismissKeyBoard>

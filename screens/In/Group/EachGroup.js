@@ -141,26 +141,6 @@ const EachGroup = (props) => {
     return timestamp;
   }
 
-  function CallBack(postId, postedUserId, likes) {
-    let correctLength = posts.length;
-    firestore().collection('Posts').doc(postedUserId).collection('userPosts').doc(postId).update({
-      likes: likes,
-    }).then(() => {
-      let updatedLength = posts.length;
-      let uniquePosts = [... new Set(posts)];
-      let narrowedPosts = [];
-      if (updatedLength === correctLength) {
-        narrowedPosts = uniquePosts;
-      } else {
-        for (let i = 0; i < uniquePosts.length / 2; i++) {
-          narrowedPosts.push(uniquePosts[i]);
-        }
-      }
-      setPosts(narrowedPosts);
-    })
-  }
-
-
   return (
     <View style={styles.container}>
       {/* <Feather name="chevron-left" size={30} color={'#505050'} /> */}
@@ -209,7 +189,7 @@ const EachGroup = (props) => {
           data={posts}
           keyExtractor={item => item.postId}
           renderItem={({ item }) =>
-          <EachGroupPost item={item} handleCallback={CallBack} user={item.user} likes={item.likes} username={item.username} postId={item.postId} userId={item.userId} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
+          <EachGroupPost item={item} user={item.user} likes={item.likes} username={item.username} postId={item.postId} userId={item.userId} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
           }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

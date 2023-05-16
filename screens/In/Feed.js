@@ -58,7 +58,7 @@ const Feed = () => {
     renderPosts();
     console.log(friends);
     setRefreshing(false);
-  }
+  } 
 
   const renderFriends = async () => {
     const userId = firebase.auth().currentUser.uid;
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   noEntryText: {
     textAlign: 'center',
     color: '#785444',
-    fontFamily: 'Lato-Regular',
+    fontFamily: 'Quicksand-Regular',
   },
 
   topText: {
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     height: height * 0.15,
     justifyContent: 'flex-end',
     paddingBottom: height * 0.02,
-    fontFamily: 'Lato-Regular',
+    fontFamily: 'Quicksand-Regular',
   },
 
   background: {

@@ -24,6 +24,7 @@ import GroupMain from '../screens/In/Group/GroupMain';
 import CreateGroup from '../screens/In/Group/CreateGroup';
 import EachGroup from '../screens/In/Group/EachGroup';
 import Members from '../screens/In/Group/Members';
+import DisplayPostGroup from '../screens/In/Group/DisplayPostGroup';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -106,6 +107,7 @@ const AppStack = () => {
         <Stack.Screen name="Members" options={{ headerShown: false, }} >
           {props => <Members {...props} item={item} />}
         </Stack.Screen>
+        <Stack.Screen name="DisplayPostGroup" component={DisplayPostGroup} options={{headerShown: false}} />
 
       </Stack.Navigator>
     )

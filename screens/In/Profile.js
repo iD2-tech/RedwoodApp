@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     // marginBottom: 30,
     fontSize: 30,
     fontWeight: '800',
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     color: '#785444',
     // marginLeft: 0
   },
