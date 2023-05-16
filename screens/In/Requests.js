@@ -166,11 +166,11 @@ const Requests = () => {
     friendArray.push(user.username);
     nameArray.push(user.name);
     idArray.push(userId);
-
     firestore().collection('Friends').add({
       ids: idArray,
       relationship: friendArray,
       names: nameArray,
+      ids: idArray,
     })
     firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
       console.log(item);
