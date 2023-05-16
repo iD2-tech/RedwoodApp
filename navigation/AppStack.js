@@ -19,6 +19,8 @@ import DeletedPosts from '../screens/In/DeletedPosts';
 import MyProfile from '../screens/In/MyProfile';
 import Privacy from '../screens/In/Privacy';
 import Settings from '../screens/In/Settings';
+import AboutUs from '../screens/In/AboutUs';
+import FAQ from '../screens/In/FAQ';
 
 import GroupMain from '../screens/In/Group/GroupMain';
 import CreateGroup from '../screens/In/Group/CreateGroup';
@@ -69,6 +71,16 @@ const AppStack = () => {
       <Stack.Screen
         name="MyProfile"
         component={MyProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AboutUs"
+        component={AboutUs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FAQ"
+        component={FAQ}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

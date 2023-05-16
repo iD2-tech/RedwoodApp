@@ -50,6 +50,14 @@ const Settings = () => {
         navigation.navigate("Privacy");
     }
 
+    const navToAboutUs = () => {
+        navigation.navigate("AboutUs");
+    }
+
+    const navToFAQ = () => {
+        navigation.navigate("FAQ");
+    }
+
     return (
         <View style = {styles.container}>
             <View style={{marginRight: width * 0.78, marginTop: height * 0.08,}}>
@@ -103,14 +111,16 @@ const Settings = () => {
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
                                 <TouchableOpacity
-                                    >
+                                        onPress={() =>  navToFAQ()}
+                                >
                                         <Feather name="help-circle" size={28} color={'#C3A699'}/>
                                 </TouchableOpacity>
                                 <Text style={styles.text}>Help</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
                                 <TouchableOpacity
-                                    >
+                                        onPress={() =>  navToAboutUs()}
+                                >
                                         <Feather name="info" size={28} color={'#C3A699'}/>
                                 </TouchableOpacity>
                                 <Text style={styles.text}>About Us</Text>
