@@ -65,7 +65,9 @@ const Feed = () => {
         idArr = doc.data().ids;
         if (idArr[0] === userId) {
           friendArr.push({ username: relationshipArr[1], name: nameArr[1], ids: idArr[1] });
+          friendArr.push({ username: relationshipArr[1], name: nameArr[1], ids: idArr[1] });
         } else {
+          friendArr.push({ username: relationshipArr[0], name: nameArr[0], ids: idArr[0] });
           friendArr.push({ username: relationshipArr[0], name: nameArr[0], ids: idArr[0] });
         }
       })
@@ -84,6 +86,7 @@ const Feed = () => {
       for (let i = 0; i < friends.length; i++) {
         const userPostRef = firestore().collection('Posts').doc(friends[i].ids).collection('userPosts').where('private', '==', '0').where('date', '>', getStartofToday());
         const unsubscribe = userPostRef.onSnapshot((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
           querySnapshot.forEach((doc) => {
             var verses = doc.data().book + " " + doc.data().chapter + ":" + doc.data().verse;
             var dateObj = new Date(doc.data().date.seconds * 1000);
@@ -195,6 +198,11 @@ const Feed = () => {
 export default Feed;
 
 const styles = StyleSheet.create({
+  background: {
+    height: height,
+    opacity: 1,
+  },
+
   flatContainer: {
     justifyContent: 'center',
     alignContent: 'center',
