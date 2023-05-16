@@ -28,6 +28,13 @@
 		C1746460BE894249B20E2182 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 483789DA18FB4CD38523E276 /* Lato-Thin.ttf */; };
 		F0B0DFB9062E40658138E0EB /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE4F55B0C34A348932EFC5 /* Lato-Light.ttf */; };
 		F4367A0797D446999B9CB2AC /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 081DCA15CC424741A6AF021B /* Lato-Italic.ttf */; };
+		BE99C06CF1C9426EA6B0F224 /* Margarine-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32896E33819746B4BBC1D186 /* Margarine-Regular.ttf */; };
+		A9551597260C42FB925EB2E5 /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF0320A9CE224DF5A8107528 /* Quicksand-Bold.ttf */; };
+		F72BBE834FF94F05AC184C03 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A167DDEF3C70487A84333EFE /* Quicksand-Light.ttf */; };
+		70B2D108A7D34F9BBD1F2FEF /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E58C8EE51C1442BA64C15F4 /* Quicksand-Medium.ttf */; };
+		58073A277ECE4CCA97BA6B6C /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0934C77E7E714B5F9E6A93F2 /* Quicksand-Regular.ttf */; };
+		B754D85B57B84D519EDCE045 /* Quicksand-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3ADB56787A9A4069924AFA17 /* Quicksand-SemiBold.ttf */; };
+		18217C2BD7404420B6675CBC /* Quicksand-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80A7ADAF351B40FF8760B128 /* Quicksand-VariableFont_wght.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +80,14 @@
 		E60B4DF50C074AD2A1FBEB15 /* Lato-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Regular.ttf"; path = "../assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; };
 		E79D80A0B600B62628AAEB30 /* Pods-RedwoodApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedwoodApp.release.xcconfig"; path = "Target Support Files/Pods-RedwoodApp/Pods-RedwoodApp.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		32896E33819746B4BBC1D186 /* Margarine-Regular.ttf */ = {isa = PBXFileReference; name = "Margarine-Regular.ttf"; path = "../assets/fonts/Margarine-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CF0320A9CE224DF5A8107528 /* Quicksand-Bold.ttf */ = {isa = PBXFileReference; name = "Quicksand-Bold.ttf"; path = "../assets/fonts/Quicksand-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A167DDEF3C70487A84333EFE /* Quicksand-Light.ttf */ = {isa = PBXFileReference; name = "Quicksand-Light.ttf"; path = "../assets/fonts/Quicksand-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9E58C8EE51C1442BA64C15F4 /* Quicksand-Medium.ttf */ = {isa = PBXFileReference; name = "Quicksand-Medium.ttf"; path = "../assets/fonts/Quicksand-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0934C77E7E714B5F9E6A93F2 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; name = "Quicksand-Regular.ttf"; path = "../assets/fonts/Quicksand-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3ADB56787A9A4069924AFA17 /* Quicksand-SemiBold.ttf */ = {isa = PBXFileReference; name = "Quicksand-SemiBold.ttf"; path = "../assets/fonts/Quicksand-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		80A7ADAF351B40FF8760B128 /* Quicksand-VariableFont_wght.ttf */ = {isa = PBXFileReference; name = "Quicksand-VariableFont_wght.ttf"; path = "../assets/fonts/Quicksand-VariableFont_wght.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +168,12 @@
 				483789DA18FB4CD38523E276 /* Lato-Thin.ttf */,
 				ACEC82BE30AA4687A16A8001 /* Lato-ThinItalic.ttf */,
 				32896E33819746B4BBC1D186 /* Margarine-Regular.ttf */,
+				CF0320A9CE224DF5A8107528 /* Quicksand-Bold.ttf */,
+				A167DDEF3C70487A84333EFE /* Quicksand-Light.ttf */,
+				9E58C8EE51C1442BA64C15F4 /* Quicksand-Medium.ttf */,
+				0934C77E7E714B5F9E6A93F2 /* Quicksand-Regular.ttf */,
+				3ADB56787A9A4069924AFA17 /* Quicksand-SemiBold.ttf */,
+				80A7ADAF351B40FF8760B128 /* Quicksand-VariableFont_wght.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -311,6 +332,12 @@
 				BDCD258AB232432D90237F2D /* Lato-ThinItalic.ttf in Resources */,
 				3E5A7B0929E28E070037BAF7 /* GoogleService-Info.plist in Resources */,
 				BE99C06CF1C9426EA6B0F224 /* Margarine-Regular.ttf in Resources */,
+				A9551597260C42FB925EB2E5 /* Quicksand-Bold.ttf in Resources */,
+				F72BBE834FF94F05AC184C03 /* Quicksand-Light.ttf in Resources */,
+				70B2D108A7D34F9BBD1F2FEF /* Quicksand-Medium.ttf in Resources */,
+				58073A277ECE4CCA97BA6B6C /* Quicksand-Regular.ttf in Resources */,
+				B754D85B57B84D519EDCE045 /* Quicksand-SemiBold.ttf in Resources */,
+				18217C2BD7404420B6675CBC /* Quicksand-VariableFont_wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
