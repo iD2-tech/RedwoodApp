@@ -52,6 +52,19 @@ const Settings = () => {
 
     return (
         <View style = {styles.container}>
+            <ImageBackground  source={require('../../FeatherNormal.png')} resizeMode="cover" style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        // flex: 1,
+        width: '100%',
+        height: '100%',
+      }} imageStyle={{
+        transform: [
+            { scaleY: -1, }, {scaleX: -1}
+          ],
+          marginLeft: width * 0.2,
+        //   marginBottom: height * 0
+      }}>
             <View style={{marginRight: width * 0.78, marginTop: height * 0.08,}}>
                 <PageBackButton onPress={navToProfile}/>
             </View>
@@ -128,6 +141,7 @@ const Settings = () => {
                             </View>
                     </View>
             </View>
+            </ImageBackground>
         </View>
     )
 };

@@ -23,17 +23,20 @@ const CreatePost = () => {
     {
       id: '1', // acts as primary key, should be unique and non-empty string
       label: 'Post Public',
-      value: 'public'
+      value: 'public',
+      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
     },
     {
       id: '2',
       label: 'Post Private',
-      value: 'private'
+      value: 'private',
+      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
     },
     {
       id: '3',
       label: 'Post Anonymous',
-      value: 'anonymous'
+      value: 'anonymous',
+      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
     }
   ]);
 
@@ -419,12 +422,12 @@ const CreatePost = () => {
           <Text style={
             btnColor ? {
               color: "#FFFFFF",
-              fontFamily: 'Margarine',
+              fontFamily: 'Quicksand-Bold',
               fontSize: 18
             } :
               {
                 color: "#FFFFFF",
-                fontFamily: 'Margarine',
+                fontFamily: 'Quicksand-Bold',
                 fontSize: 18
               }
           }>Post</Text>
@@ -433,17 +436,20 @@ const CreatePost = () => {
         <Modal
         isVisible={isModalVisible}
       >
-        <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: 'white', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: '#ECDCD1', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Text style={styles.filterText}>Filter</Text>
+
           <RadioGroup
             radioButtons={radioButtons}
             onPress={onPressRadioButton}
             containerStyle={styles.buttons}
           />
+
+
           <TouchableOpacity onPress={handleModal} style={styles.filterButton}>
             <Text style={{
               color: "#505050",
-              fontFamily: 'Lato-Regular',
+              fontFamily: 'Quicksand-Regular',
               fontWeight: '500'
             }}>OK</Text>
           </TouchableOpacity>
@@ -484,26 +490,26 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 27,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     marginBottom: height * 0.023,
     color: '#785444'
   },
 
   bookInputValid: {
     fontSize: 20,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     color: '#785444',
   },
 
   bookInputInvalid: {
     fontSize: 20,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     color: 'red',
   },
 
   chapterInputValid: {
     fontSize: 20,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     marginRight: width * 0.04,
     color: '#785444',
     marginLeft: width * 0.3,
@@ -513,7 +519,7 @@ const styles = StyleSheet.create({
 
   chapterInputInvalid: {
     fontSize: 20,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     marginRight: width * 0.04,
     color: 'red',
     marginLeft: width * 0.3,
@@ -523,14 +529,14 @@ const styles = StyleSheet.create({
 
   semiColon: {
     fontSize: 20,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     marginLeft: width * 0.50,
     opacity: 0.3,
   },
 
   verseInputValid: {
     fontSize: 20,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     marginLeft: width * 0.523,
     color: '#785444',
     position: 'absolute'
@@ -538,7 +544,7 @@ const styles = StyleSheet.create({
 
   verseInputInvalid: {
     fontSize: 20,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     marginLeft: width * 0.523,
     color: 'red',
     position: 'absolute'
@@ -546,7 +552,7 @@ const styles = StyleSheet.create({
 
   textInputTall: {
     fontSize: 15,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     height: height * 0.5,
     marginBottom: height * 0.015,
     color: '#785444',
@@ -554,7 +560,7 @@ const styles = StyleSheet.create({
 
   textInputShort: {
     fontSize: 15,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     height: height * 0.40,
     top: height * 0.1,
     marginBottom: height * 0.115,
@@ -632,15 +638,14 @@ const styles = StyleSheet.create({
     // marginBottom: height * 0.01,
     borderColor: '#E4E4E4',
     borderWidth: 1,
-    backgroundColor: '#E4E4E4',
-    marginTop: height * 0.05
+    backgroundColor: '#C3A699',
+    marginTop: height * 0.05,
   },
-
   filterText: {
     fontSize: 27,
     fontWeight: '800',
-    fontFamily: 'Lato-Regular',
-    color: '#505050',
+    fontFamily: 'Quicksand-Regular',
+    color: '#785444',
     textAlign: 'left',
     width: width * 0.44,
     marginBottom: height * 0.03
@@ -648,6 +653,6 @@ const styles = StyleSheet.create({
 
   buttons: {
     alignItems: 'flex-start',
-    fontFamily: 'Lato-Regular',
-  }
+    fontFamily: 'Quicksand-Regular',
+  },
 })
