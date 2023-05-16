@@ -146,6 +146,7 @@ const Friends = ({ route }) => {
 
     var unique = true;
     var userFromDatabase = '';
+    var usernameCase = false;
     await firestore()
       .collection('Users')
       .get()
@@ -157,12 +158,14 @@ const Friends = ({ route }) => {
             unique = false;
             if (friends.has(userFromDatabase)) {
               Alert.alert('Already friends!');
+              unique = true;
+              usernameCase = true;
               return;
             }
           }
         });
       }).then(() => {
-        if (!unique) {
+        if (!unique && !usernameCase) {
           var userId = firebase.auth().currentUser.uid;
           const postCollection = firestore().collection('Users')
           const postQuery = postCollection.where('username', '==', userFromDatabase)
@@ -188,8 +191,9 @@ const Friends = ({ route }) => {
           })
           // unsubscribe();
 
+        } else if (unique && usernameCase) {
         } else {
-          Alert.alert('User does not exist!')
+          Alert.alert('User does not exist!');
         }
       })
   }
@@ -211,27 +215,27 @@ const Friends = ({ route }) => {
       <View style={styles.backContainer}>
         <TouchableOpacity onPress={navBack}><Feather name="arrow-right" size={30} color={'black'} /></TouchableOpacity>
       </View>
-      <View style={{flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between'}}>
-      <View style={styles.searchContainer}>
-              <TextInput
-                style={styles.textInputStyle}
-                onChangeText={(text) => setUsername(text)}
-                value={username}
-                underlineColorAndroid="transparent"
-                placeholder="Add Friends"
-                placeholderTextColor="#FFE3D7"
-              />
-      </View>
-      <TouchableOpacity
-        style={{justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444'}}
-        onPress={sendRequest}
-      ><Text style={{fontFamily: 'Margarine', color: 'white', fontSize: 13}}>SEND</Text>
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between' }}>
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.textInputStyle}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
+            underlineColorAndroid="transparent"
+            placeholder="Add Friends"
+            placeholderTextColor="#FFE3D7"
+          />
+        </View>
+        <TouchableOpacity
+          style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444' }}
+          onPress={sendRequest}
+        ><Text style={{ fontFamily: 'Margarine', color: 'white', fontSize: 13 }}>SEND</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.myFriends}>
         <View>
-          <Text style={{fontFamily: 'Margarine', color: '#785444'}}>
+          <Text style={{ fontFamily: 'Margarine', color: '#785444' }}>
             MY FRIENDS
           </Text>
         </View>
@@ -253,46 +257,47 @@ const Friends = ({ route }) => {
 export default Friends
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'flex-start',
-      backgroundColor: '#ECDCD1',
-      alignItems: 'center',
-      flexDirection:'column',
-      // alignContent: 'center'
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    backgroundColor: '#ECDCD1',
+    alignItems: 'center',
+    flexDirection: 'column',
+    // alignContent: 'center'
+  },
 
-    searchContainer: {
-      height: height * 0.06,
-      width: width * 0.70,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: height * 0.013,
-      overflow: 'hidden',
-      // borderWidth: 1,
-      backgroundColor:'#C3A699',
-      padding:15,
-      borderRadius: 10
-    },
+  searchContainer: {
+    height: height * 0.06,
+    width: width * 0.70,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: height * 0.013,
+    overflow: 'hidden',
+    // borderWidth: 1,
+    backgroundColor: '#C3A699',
+    padding: 15,
+    borderRadius: 10
+  },
 
-    backContainer: {
-      justifyContent:'flex-end',
-      width: width * 0.89,
-      marginBottom: height * 0.02,
-      flexDirection: 'row',
-      marginTop: height * 0.08
-    },
+  backContainer: {
+    justifyContent: 'flex-end',
+    width: width * 0.89,
+    marginBottom: height * 0.02,
+    flexDirection: 'row',
+    marginTop: height * 0.08
+  },
 
-    textInputStyle: {
-      color: '#FFE3D7',
-      fontFamily: 'Margarine',
+  textInputStyle: {
+    color: '#FFE3D7',
+    fontFamily: 'Margarine',
+    width: width * 0.63,
+    height: height * 0.05,
+  },
 
-    },
-
-    myFriends: {
-      width: width * 0.88,
-      marginTop: height * 0.01
-    },
+  myFriends: {
+    width: width * 0.88,
+    marginTop: height * 0.01
+  },
 
 })

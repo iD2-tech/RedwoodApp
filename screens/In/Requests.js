@@ -106,6 +106,7 @@ const Requests = () => {
 
     var unique = true;
     var userFromDatabase = '';
+    var usernameCase = false;
     await firestore()
       .collection('Users')
       .get()
@@ -117,14 +118,14 @@ const Requests = () => {
             unique = false;
             if (friends.has(userFromDatabase)) {
               Alert.alert('Already friends!');
+              unique = true;
+              usernameCase = true;
               return;
             }
           }
         });
       }).then(() => {
-        if (!unique) {
-          console.log(userFromDatabase);
-          console.log("test");
+        if (!unique && !usernameCase) {
           var userId = firebase.auth().currentUser.uid;
           const postCollection = firestore().collection('Users')
           const postQuery = postCollection.where('username', '==', userFromDatabase)
@@ -148,9 +149,11 @@ const Requests = () => {
               unsubscribe();
             })
           })
+          // unsubscribe();
 
+        } else if (unique && usernameCase) {
         } else {
-          Alert.alert('User does not exist!')
+          Alert.alert('User does not exist!');
         }
       })
   }
@@ -270,6 +273,8 @@ const styles = StyleSheet.create({
   textInputStyle: {
     color: '#FFE3D7',
     fontFamily: 'Margarine',
+    width: width * 0.63,
+    height: height * 0.05,
 
   },
   backContainer: {
