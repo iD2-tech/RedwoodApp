@@ -16,12 +16,11 @@ const EachQuestion = () => {
 
     const renderChevronIcon = (questionId) => {
     if (questionId === selectedQuestion) {
-      return <Feather name="chevron-down" size={25} color="#505050" style={{alignItems: 'flex-end'}}/>;
+      return <Feather name="chevron-down" size={25} color="#785444" style={{alignItems: 'flex-end'}}/>;
     } else {
-      return <Feather name="chevron-right" size={25} color="#505050" style={{justifyContent: 'flex-end'}} />;
+      return <Feather name="chevron-right" size={25} color="#785444" style={{justifyContent: 'flex-end'}} />;
     }
     };
-
     return (
         <View style = {styles.container}>
             <TouchableOpacity style={styles.button} onPress={() => {toggleQuestion(1)}}>
@@ -74,7 +73,8 @@ const EachQuestion = () => {
                     )}
             <TouchableOpacity style={styles.button} onPress={() => {toggleQuestion(4)}}>
             <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
-                <Text style={styles.buttonText}>Is there a notification feature to remind me to read devotionals daily?</Text>
+                <Text style={styles.buttonText}>Are there any privacy settings to control who can see my devotionals?
+            </Text>
                 {renderChevronIcon(4)}
             </View>
             </TouchableOpacity>
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#DCC6BB',
         height: height * 0.07,
-        width: width * 0.89,
+        width: width * 0.795,
         alignItems: 'center',
         justifyContent: 'space-around',
         marginBottom: height * 0.02,
@@ -157,37 +157,38 @@ const styles = StyleSheet.create({
         color: '#785444',
         fontSize: 14,
         fontFamily: 'Quicksand',
-        fontWeight: '400',
+        fontWeight: '600',
         justifyContent: 'flex-start',
-        width: width * 0.8
+        width: width * 0.717,
+        paddingHorizontal: 20, 
     },
 
     answerContainer: {
         height: height * 0.07,
         marginTop: height * 0.3,
-        width: width * 0.8,
+        width: width * 0.7,
     },
 
     answerContainer2: {
         height: height * 0.2,
         marginTop: height * 0.3,
-        width: width * 0.8,
+        width: width * 0.7,
     },
 
     answerContainer3: {
         marginTop: height * 0.3,
-        width: width * 0.8,
+        width: width * 0.7,
     },
 
     answerContainer4: {
         height: height * 0.4,
         marginTop: height * 0.3,
-        width: width * 0.8,
+        width: width * 0.7,
     },
 
     answerContainer5: {
         marginTop: height * 0.3,
-        width: width * 0.8,
+        width: width * 0.7,
     },
 
     faqtext: {
@@ -197,5 +198,4 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         marginTop: -height * 0.3,
     },
-    
 })

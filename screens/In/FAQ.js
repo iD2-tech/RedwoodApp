@@ -13,7 +13,7 @@ const { width, height } = Dimensions.get('window')
 
 const FAQ = () => {
     const navigation = useNavigation();
-
+    
     const navToSettings = () => {
         navigation.navigate("Settings");
     }
@@ -24,19 +24,20 @@ const FAQ = () => {
                 <PageBackButton onPress={navToSettings}/>
             </View>
             <View style = {styles.faqContainer}>
-                <Text style={styles.faq}>FAQ</Text>
+                <Text style={styles.faq}>FAQ</Text>   
+                <View style={{ flexGrow: 1 }}>
                 <ScrollView
                     contentContainerStyle={styles.scrollViewContent}
-                    style={styles.scrollView}
                     showsVerticalScrollIndicator={false}
                     >
                     <View style = {styles.textContainer}>
-                        <EachQuestion>Hello</EachQuestion>
+                        <EachQuestion></EachQuestion>
                     </View>
-                    <View style={styles.bottomPadding} />
+                    <View style = {styles.bottomPadding}></View>
                 </ScrollView>
+                </View>
             </View>
-            </View>
+        </View>
     )
 };
 
@@ -45,7 +46,7 @@ export default FAQ;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ECDCD1',
-        height: '100%',
+        height: height * 0.91,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
         color: '#785444',
     },
     textContainer: {
-        height: height * 0.8, 
         marginTop: -height * 0.03,
         width: width,
     },
@@ -75,14 +75,8 @@ const styles = StyleSheet.create({
         color: '#785444',
     },
     scrollViewContent: {
-        flexGrow: 1,
-        paddingTop: 32,
-        paddingBottom: 100,
-    },
-    scrollView: {
-        flex: 1,
-    },
-    bottomPadding: {
-        height: 100,
+        height: height,
+        paddingTop: height * 0.04,
+        paddingBottom: height * 0.08,
     },
 })
