@@ -20,7 +20,7 @@ const OnboardButton = (props) => {
         <Text style={
             {color: props.textColor,
             fontFamily: 'Lato-Regular',
-            fontWeight:'500'
+            fontWeight:'bold'
             }
         }>{props.text}</Text>
     </TouchableOpacity>

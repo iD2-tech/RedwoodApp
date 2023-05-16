@@ -210,18 +210,19 @@ const Friends = ({route}) => {
                 value={username}
                 underlineColorAndroid="transparent"
                 placeholder="Add Friends"
+                placeholderTextColor="#FFE3D7"
               />
       </View>
       <TouchableOpacity
-        style={{justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#505050'}}
+        style={{justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444'}}
         onPress={sendRequest}
-      ><Text style={{fontFamily: 'Lato-Regular', color: 'white', fontSize: 13}}>SEND</Text>
+      ><Text style={{fontFamily: 'Margarine', color: 'white', fontSize: 13}}>SEND</Text>
       </TouchableOpacity>
       </View>
 
       <View style={styles.myFriends}>
         <View>
-          <Text style={{fontFamily: 'Lato-Bold', color: '#505050'}}>
+          <Text style={{fontFamily: 'Margarine', color: '#785444'}}>
             MY FRIENDS
           </Text>
         </View>
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'flex-start',
-      backgroundColor: 'white',
+      backgroundColor: '#ECDCD1',
       alignItems: 'center',
       flexDirection:'column',
       // alignContent: 'center'
@@ -261,7 +262,7 @@ const styles = StyleSheet.create({
       marginBottom: height * 0.013,
       overflow: 'hidden',
       // borderWidth: 1,
-      backgroundColor:'#F4F4F4',
+      backgroundColor:'#C3A699',
       padding:15,
       borderRadius: 10
     },
@@ -274,11 +275,16 @@ const styles = StyleSheet.create({
       marginTop: height * 0.08
     },
 
+    textInputStyle: {
+      color: '#FFE3D7',
+      fontFamily: 'Margarine',
+
+    },
+
     myFriends: {
       width: width * 0.88,
       marginTop: height * 0.01
     }
-
     // friendsContainer: {
     //   justifyContent: 'center',
     //   alignItems: 'center',

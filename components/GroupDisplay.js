@@ -14,14 +14,14 @@ const GroupDisplay = (props) => {
         <View style={styles.textContainer}>
             <Text style={styles.title}>{props.name}</Text>
             <View style={styles.numberDisplay}>
-                <Feather name="users" size={15} color={'#505050'} />
-                <Text style={{fontSize: 15, marginLeft: width * 0.006}}>{props.numMembers}</Text>
+                <Feather name="users" size={15} color={'#785444'} />
+                <Text style={{fontSize: 15, marginLeft: width * 0.006, color: '#785444'}}>{props.numMembers}</Text>
             </View>
         </View>
         <Text style={{
             marginTop: height * 0.01,
-            fontFamily: 'Lato-Regular',
-            color: '#505050',
+            fontFamily: 'Margarine',
+            color: '#785444',
             fontSize: 12,
             width: width * 0.35,
         }}>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         // alignItems: 'center' 
         borderWidth: 1,
         // padding: 15,
-        borderColor: "#E4E4E4",
+        borderColor: "#785444",
         borderRadius: 10,
         marginLeft: width * 0.01,
         height: height * 0.18,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 
     numberDisplay: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
     textContainer: {
@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
 
 
     title: {
-        fontFamily: 'Lato-Bold',
+        fontFamily: 'Margarine',
         fontSize: 13,
-        color: 'black',
+        color: '#785444',
         width: width * 0.2
         // marginBottom: '5%'
     },

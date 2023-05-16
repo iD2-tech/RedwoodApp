@@ -97,12 +97,12 @@ const SwipeableRow = (props) => {
             { (text === "Pin") ? 
             
             <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-                <FontAwesome name="thumb-tack" size={25} color="black"/>
+                <FontAwesome name="thumb-tack" size={25} color="#C3A699"/>
                 <Text style={styles.swipeText}>UNPIN</Text>
             </RectButton>
             : 
             <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-                <Feather name="trash-2" size={25} color="black"/>
+                <Feather name="trash-2" size={25} color="#C3A699"/>
                 <Text style={styles.swipeText}>DELETE</Text>
             </RectButton>
             }
@@ -113,12 +113,12 @@ const SwipeableRow = (props) => {
             { (text === "Pin") ? 
             
             <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-                <FontAwesome name="thumb-tack" size={25} color="black"/>
+                <FontAwesome name="thumb-tack" size={25} color="#785444"/>
                 <Text style={styles.swipeText}>PIN</Text>
             </RectButton>
             : 
             <RectButton style={styles.swipeContainer} onPress={pressHandler}>
-                <Feather name="trash-2" size={25} color="black"/>
+                <Feather name="trash-2" size={25} color="#785444"/>
                 <Text style={styles.swipeText}>DELETE</Text>
             </RectButton>
             }
@@ -188,7 +188,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: height * 0.107,
     borderColor: "#E4E4E4",
-    borderRadius: 15
+    borderRadius: 15,
+    backgroundColor: '#DCC6BB',
  },
 
  swipeText: {

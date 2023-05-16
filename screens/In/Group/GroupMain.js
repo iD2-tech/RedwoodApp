@@ -71,10 +71,10 @@ const GroupMain = () => {
   return (
     <View style={styles.container}>
         <View style={{marginTop: height * 0.08, width: width * 0.9, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{fontFamily: 'Lato-Bold', fontSize: 30, color: "#505050", width: width * 0.82}}>GROUPS</Text>
+            <Text style={{fontFamily: 'Margarine', fontSize: 30, color: "", width: width * 0.82}}>GROUPS</Text>
             <TouchableOpacity onPress={showornoshow}>
             {
-                show ? <Feather name="minus" size={30} color={'#505050'} />:<Feather name="plus" size={30} color={'#505050'} />
+                show ? <Feather name="minus" size={30} color={'#785444'} />:<Feather name="plus" size={30} color={'#785444'} />
             }
             </TouchableOpacity>
         </View>
@@ -88,19 +88,20 @@ const GroupMain = () => {
                       onChangeText={(text) => setGroupCode(text)}
                       value={groupCode}
                       underlineColorAndroid="transparent"
-                      placeholder="Group Code..."
+                      placeholder="ENTER CODE"
+                      placeholderTextColor={'#FFE3D7'}
                     />
             </View>
             <TouchableOpacity
-              style={{justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.17, borderRadius: 10, backgroundColor: '#505050'}}
-            ><Text style={{fontFamily: 'Lato-Regular', color: 'white', fontSize: 13}}>JOIN</Text>
+              style={{justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444'}}
+            ><Text style={{fontFamily: 'Margarine', color: '#ECDCD1', fontSize: 13}}>JOIN</Text>
             </TouchableOpacity>
             </View>
       
             <TouchableOpacity
-              style={{justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.9, borderRadius: 10, backgroundColor: '#505050'}}
+              style={{justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.9, borderRadius: 10, backgroundColor: '#785444'}}
               onPress={navToCreate}
-            ><Text style={{fontFamily: 'Lato-Regular', color: 'white', fontSize: 13}}>CREATE</Text>
+            ><Text style={{fontFamily: 'Margarine', color: '#ECDCD1', fontSize: 13}}>CREATE</Text>
             </TouchableOpacity>
             </View>
             :
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
         alignItems: 'center'
     },
 
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
         marginBottom: height * 0.01,
         overflow: 'hidden',
         // borderWidth: 1,
-        backgroundColor:'#F4F4F4',
+        backgroundColor:'#C3A699',
         padding:15,
         borderRadius: 10,
       },
@@ -156,5 +157,11 @@ const styles = StyleSheet.create({
         marginTop: height * 0.03
         // backgroundColor: 'black'
       },
+
+      textInputStyle: {
+        color: '#FFE3D7',
+        fontFamily: 'Margarine',
+    },
+
     
 })

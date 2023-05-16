@@ -41,7 +41,7 @@ const Settings = () => {
                                 <TouchableOpacity
                                     onPress={() =>  navToMyProfile()}
                                 >
-                                    <Feather name="user" size={28} color={'#505050'}/>
+                                    <Feather name="user" size={28} color={'#C3A699'}/>
                                 </TouchableOpacity>
                                 <Text style={styles.text}>My Profile</Text>
                             </View>
@@ -57,7 +57,7 @@ const Settings = () => {
                                 <TouchableOpacity
                                     onPress={() =>  navToPrivacy()}
                                 >
-                                    <Feather name="lock" size={28} color={'#505050'} />
+                                    <Feather name="lock" size={28} color={'#C3A699'} />
                                 </TouchableOpacity>
                                 <Text style={styles.text}>Privacy</Text>
                             </View>
@@ -67,28 +67,28 @@ const Settings = () => {
                             <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
                                 <TouchableOpacity
                                     >
-                                        <Feather name="share" size={28} color={'#505050'} />
+                                        <Feather name="share" size={28} color={'#C3A699'} />
                                 </TouchableOpacity>
                                 <Text style={styles.text}>Share Redwood</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
                                 <TouchableOpacity
                                     >
-                                        <Feather name="star" size={28} color={'#505050'}/>
+                                        <Feather name="star" size={28} color={'#C3A699'}/>
                                 </TouchableOpacity>
                                 <Text style={styles.text}>Rate Redwood</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
                                 <TouchableOpacity
                                     >
-                                        <Feather name="help-circle" size={28} color={'#505050'}/>
+                                        <Feather name="help-circle" size={28} color={'#C3A699'}/>
                                 </TouchableOpacity>
                                 <Text style={styles.text}>Help</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
                                 <TouchableOpacity
                                     >
-                                        <Feather name="info" size={28} color={'#505050'}/>
+                                        <Feather name="info" size={28} color={'#C3A699'}/>
                                 </TouchableOpacity>
                                 <Text style={styles.text}>About Us</Text>
                             </View>
@@ -99,7 +99,7 @@ const Settings = () => {
                                     <TouchableOpacity
                                         onPress={() =>  logout()}
                                     >
-                                        <Feather name="log-out" size={28} color={'#505050'}/>
+                                        <Feather name="log-out" size={28} color={'#C3A699'}/>
                                     </TouchableOpacity>
                                 <Text style={styles.text}>Log Out</Text>
                             </View>
@@ -113,7 +113,7 @@ export default Settings;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -129,9 +129,9 @@ const styles = StyleSheet.create({
         marginTop: height * -0.055,
         marginBottom: height * 0.04,
         fontSize: 29,
-        fontFamily: 'Helvetica',
+        fontFamily: 'Margarine',
         fontWeight: 'bold',
-        color: '#505050',
+        color: '#785444',
         paddingBottom: '3%',
     },
     personalContainer: {
@@ -140,16 +140,16 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 15,
-        fontFamily: 'Helvetica',
+        fontFamily: 'Margarine',
         fontWeight: 600,
-        color: '#505050',
+        color: '#785444',
         marginBottom: height * 0.015,
     },
     text: {
         fontSize: 17.5,
-        fontFamily: 'Helvetica',
+        fontFamily: 'Margarine',
         fontWeight: 600,
-        color: '#505050',
+        color: '#785444',
         marginLeft: width * 0.15,
     },
     aboutContainer: {

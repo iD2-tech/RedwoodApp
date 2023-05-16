@@ -37,14 +37,14 @@ const CreateGroup = () => {
         // alignItems: 'center'
       }}>
         <Text style={{
-            fontFamily:'Lato-Bold',
+            fontFamily:'Margarine',
             fontSize: 25,
-            color:"black"
+            color:"#785444"
         }}>CREATE A CODE</Text>
         <Text style={{
-           fontFamily:'Lato-Regular',
+           fontFamily:'Margarine',
            fontSize: 15,
-           color:"black",
+           color:"#785444",
            marginTop: height * 0.005
         }}>
           to make a new group!
@@ -75,7 +75,7 @@ const CreateGroup = () => {
                     onChangeText={text => { setDescription(text) }}
                   />
             </View>
-            <OnboardButton buttonColor="#505050" textColor="#FFFFFF" text="CREATE" onPress={() => {}}/>
+            <OnboardButton buttonColor="#785444" fontFamily= "Margarine" textColor="#FFFFFF" text="CREATE" onPress={() => {}}/>
     </View>
   )
 }
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: 'white',
+    backgroundColor: '#ECDCD1',
     alignItems: 'center'
 },
 inputContainer: {
@@ -97,31 +97,31 @@ inputContainer: {
   marginTop: height * 0.02
 },
 input: {
-  backgroundColor: 'white',
+  backgroundColor: '#ECDCD1',
   paddingHorizontal: 5,
   paddingVertical: 10,
   marginTop: height * 0.02,
   marginBottom: height * 0.008,
   width: width * 0.77,
   borderStyle: 'solid',
-  borderBottomColor: 'black',
+  borderBottomColor: '#785444',
   borderBottomWidth: 1,
   borderColor: 'black',
   opacity: 50,
-  fontFamily: 'Lato-Regular'
+  fontFamily: 'Margarine'
 },
 input2: {
-  backgroundColor: 'white',
+  backgroundColor: '#ECDCD1',
   paddingHorizontal: 5,
   paddingVertical: 10,
   marginTop: height * 0.03,
   marginBottom: height * 0.008,
   width: width * 0.77,
   borderStyle: 'solid',
-  borderBottomColor: 'black',
+  borderBottomColor: '#785444',
   borderBottomWidth: 1,
   borderColor: 'black',
   opacity: 50,
-  fontFamily: 'Lato-Regular'
+  fontFamily: 'Margarine'
 },
 })

@@ -38,9 +38,9 @@ const Privacy = () => {
                     </View>
                     <View style = {styles.switch}> 
                         <Switch 
-                            trackColor={{false: '#767577', true: '#5C4033'}}
-                            thumbColor={isEnabled ? '#f4f3f4' : '#f4f3f4'}
-                            ios_backgroundColor="#A59E9E"
+                            trackColor={{false: '#DCC6BB', true: '#785444'}}
+                            thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
+                            ios_backgroundColor="#DCC6BB"
                             onValueChange={toggleSwitch}
                             value={isEnabled}
                         />
@@ -55,7 +55,7 @@ export default Privacy;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -71,9 +71,9 @@ const styles = StyleSheet.create({
         marginTop: height * -0.055,
         marginBottom: height * 0.04,
         fontSize: 29,
-        fontFamily: 'Helvetica',
+        fontFamily: 'Margarine',
         fontWeight: 'bold',
-        color: '#505050',
+        color: '#785444',
         paddingBottom: '3%',
     },
     accountPrivacyContainer: {
@@ -82,21 +82,21 @@ const styles = StyleSheet.create({
     },
     accountPrivacy: {
         fontSize: 18,
-        fontFamily: 'Helvetica',
+        fontFamily: 'Margarine',
         fontWeight: 600,
-        color: '#505050',
+        color: '#785444',
         marginBottom: height * 0.02,
     },
     privateAccount: {
         fontSize: 16.5,
-        fontFamily: 'Helvetica',
+        fontFamily: 'Margarine',
         fontWeight: 600,
-        color: '#505050',
+        color: '#785444',
         marginLeft: width * 0.09,
         marginRight: width * 0.2
     },
     switch: {
-        transform: [{ scaleX: 0.75 }, { scaleY: 0.75 }],
+        transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }],
         marginTop: -height * 0.0315,
         marginLeft: width * 0.54,
     },

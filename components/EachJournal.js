@@ -53,18 +53,19 @@ export default EachJournal
 
 const styles = StyleSheet.create({
     container: {
-        width: '95%',
+        width: '91.9%',
         marginBottom: '3%',
         // height: 30,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
+        backgroundColor: '#DCC6BB',
         // paddingBottom: 30,
         // borderBottomColor: 'black',
         // borderBottomWidth: 1,
         // alignItems: 'center' 
         borderWidth: 1,
         padding: 15,
-        borderColor: "#E4E4E4",
+        borderColor: "#C3A699",
         borderRadius: 15,
         marginLeft: width * 0.02
     },
@@ -80,21 +81,21 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer: {
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
     dateNum: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Margarine',
         fontWeight: '300',
         fontSize: 17,
-        color: 'black',
+        color: '#785444',
         marginBottom: '7%'
     },
 
     dateVal: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Margarine',
         fontSize: 15,
-        color: 'black',
+        color: '#785444',
         // marginBottom: '5%'
     },
 
@@ -112,9 +113,10 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontFamily: 'Lato-Bold',
+        fontFamily: 'Margarine',
         fontSize: 18,
-        color: 'black',
+        fontWeight: 700,
+        color: '#785444',
         marginBottom: '5%'
     },
 
@@ -141,9 +143,9 @@ const styles = StyleSheet.create({
     },
 
     verse: {
-        fontFamily: 'Lato-Bold',
+        fontFamily: 'Margarine',
         fontSize: 14,
-        color: '#505050', 
+        color: '#785444', 
         marginBottom: '5%',
     },
 

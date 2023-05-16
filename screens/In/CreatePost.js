@@ -310,12 +310,12 @@ const CreatePost = () => {
           <Text style={
             btnColor ? {
               color: "#FFFFFF",
-              fontFamily: 'Lato-Bold',
+              fontFamily: 'Margarine',
               fontSize: 18
             } :
               {
-                color: "#ABABAB",
-                fontFamily: 'Lato-Bold',
+                color: "#FFFFFF",
+                fontFamily: 'Margarine',
                 fontSize: 18
               }
           }>Post</Text>
@@ -333,7 +333,7 @@ export default CreatePost
 const styles = StyleSheet.create({
 
   container: {
-    backgroundColor: 'white', height: '100%', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: '#ECDCD1', height: '100%', justifyContent: 'center', alignItems: 'center',
   },
 
   backButtonContainer: {
@@ -356,28 +356,28 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 27,
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Margarine',
     marginBottom: height * 0.023,
-    color: '#505050'
+    color: '#785444'
   },
 
   bookInputValid: {
     fontSize: 20,
-    fontFamily: 'Lato-Bold',
-    color: '#505050',
+    fontFamily: 'Margarine',
+    color: '#785444',
   },
 
   bookInputInvalid: {
     fontSize: 20,
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Margarine',
     color: 'red',
   },
 
   chapterInputValid: {
     fontSize: 20,
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Margarine',
     marginRight: width * 0.04,
-    color: '#505050',
+    color: '#785444',
     marginLeft: width * 0.3,
     position: 'absolute',
     width: width * 0.19,
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
 
   chapterInputInvalid: {
     fontSize: 20,
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Margarine',
     marginRight: width * 0.04,
     color: 'red',
     marginLeft: width * 0.3,
@@ -395,22 +395,22 @@ const styles = StyleSheet.create({
 
   semiColon: {
     fontSize: 20,
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Margarine',
     marginLeft: width * 0.50,
     opacity: 0.3,
   },
 
   verseInputValid: {
     fontSize: 20,
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Margarine',
     marginLeft: width * 0.523,
-    color: '#505050',
+    color: '#785444',
     position: 'absolute'
   },
 
   verseInputInvalid: {
     fontSize: 20,
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Margarine',
     marginLeft: width * 0.523,
     color: 'red',
     position: 'absolute'
@@ -418,23 +418,23 @@ const styles = StyleSheet.create({
 
   textInputTall: {
     fontSize: 15,
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Margarine',
     height: height * 0.5,
     marginBottom: height * 0.015,
-    color: '#505050',
+    color: '#785444',
   },
 
   textInputShort: {
     fontSize: 15,
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Margarine',
     height: height * 0.40,
     top: height * 0.1,
     marginBottom: height * 0.115,
-    color: '#505050',
+    color: '#785444',
   },
 
   filledButton: {
-    backgroundColor: '#5C4033',
+    backgroundColor: '#785444',
     width: width * 0.75,
     padding: 12,
     borderRadius: 10,
@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
   },
 
   normalButton: {
-    backgroundColor: '#E4E4E4',
+    backgroundColor: '#C3A699',
     width: width * 0.75,
     padding: 12,
     borderRadius: 10,

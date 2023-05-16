@@ -74,7 +74,7 @@ const UsernameAdd = () => {
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
         opacity: fadeAnim
       }}>
         <KeyboardAvoidingView style={{ width: '100%', alignItems: 'center', }}>
@@ -114,7 +114,7 @@ const UsernameAdd = () => {
               </View>
            <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
           </View> */}
-          <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="CONTINUE" onPress={navSignup} />
+          <OnboardButton buttonColor="#785444" textColor="#FFFFFF" text="CONTINUE" onPress={navSignup} />
 
         </KeyboardAvoidingView>
       </Animated.View>
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: height * 0.055,
+
   },
   letterContainer: {
     display: 'flex',
@@ -145,24 +146,25 @@ const styles = StyleSheet.create({
 
 
   input: {
-    backgroundColor: 'white',
+    backgroundColor: '#ECDCD1',
     paddingHorizontal: 10,
     paddingVertical: 10,
     marginTop: 5,
     marginBottom: 10,
     width: '95%',
     borderStyle: 'solid',
-    borderBottomColor: '#AAAAAA',
+    borderBottomColor: '#785444',
     borderBottomWidth: 1,
     borderColor: 'black',
     opacity: 50,
-    fontFamily: 'Lato-Regular'
+    fontFamily: 'Margarine',
+    color: '#785444'
   },
   su: {
     marginBottom: 30,
-    fontSize: 25,
+    fontSize: 28,
     fontWeight: '800',
-    fontFamily: 'Lato-Regular',
+    fontFamily: 'Margarine',
     color: '#505050',
     marginLeft: 0
   },

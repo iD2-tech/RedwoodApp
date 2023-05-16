@@ -116,16 +116,16 @@ const MyProfile = () => {
                                 defaultValue={user?.username}
                                 onChangeText={setText}
                                 editable={editableField === 'username'}
-                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Helvetica', color: '#505050', marginRight: width * 0.03}}
+                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Margarine', color: '#785444', marginRight: width * 0.03}}
                             />
                             <Feather
                                 name="edit"
                                 size={23}
-                                color={'#505050'}
+                                color={'#785444'}
                                 onPress={handleEditPress}
                             />
                         </View>
-                        <View style={{height: 1.5, backgroundColor: '#000000', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
+                        <View style={{height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
                     </View>
                     <View style = {styles.NameInput}>
                     <Text style={styles.names}>Name</Text>
@@ -135,16 +135,16 @@ const MyProfile = () => {
                                 defaultValue={user?.name}
                                 onChangeText={setText2}
                                 editable={editableField === 'name'}
-                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Helvetica', color: '#505050', marginRight: width * 0.03}}
+                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Margarine', color: '#785444', marginRight: width * 0.03}}
                             />
                             <Feather
                                 name="edit"
                                 size={23}
-                                color={'#505050'}
+                                color={'#785444'}
                                 onPress={handleEditPress2}
                             />
                         </View>
-                        <View style={{height: 1.5, backgroundColor: '#000000', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
+                        <View style={{height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
                     </View>
                 </View>
                 {
@@ -165,7 +165,7 @@ export default MyProfile;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -181,28 +181,28 @@ const styles = StyleSheet.create({
         marginTop: height * -0.055,
         marginBottom: height * 0.04,
         fontSize: 29,
-        fontFamily: 'Helvetica',
+        fontFamily: 'Margarine',
         fontWeight: 'bold',
         color: '#505050',
         paddingBottom: '3%',
     },
     names: {
         fontSize: 18,
-        fontFamily: 'Helvetica',
+        fontFamily: 'Margarine',
         fontWeight: 800,
-        color: '#505050',
+        color: '#A47C69',
         marginBottom: height * 0.015,
     },
     buttonContainer: {
         alignItems: 'center',
     },
     button: {
-        backgroundColor: '#505050',
+        backgroundColor: '#785444',
         height: height * 0.05,
         width: width * 0.72,
         alignItems: 'center',
         justifyContent: 'space-around',
-        marginBottom: height * 0.3,
+        marginBottom: height * 0.32,
         borderRadius: 35,
         shadowColor: 'rgba(60, 60, 60, 0.4)',
         shadowOpacity: 2,
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 16,
-        fontFamily: 'Helvetica',
+        fontFamily: 'Margarine',
         fontWeight: 'bold',
     },
 })
