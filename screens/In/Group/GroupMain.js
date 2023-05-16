@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, FlatList, Alert, RefreshControl } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, FlatList, Alert, RefreshControl, ImageBackground } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { NavigationContainerRefContext, useNavigation } from '@react-navigation/native'
 import OnboardButton from '../../../components/OnboardButton'
@@ -105,11 +105,23 @@ const GroupMain = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginTop: height * 0.08, width: width * 0.9, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={{ fontFamily: 'Lato-Bold', fontSize: 30, color: "#505050", width: width * 0.82 }}>GROUPS</Text>
+      <ImageBackground source={require('../../../FeatherGroup.png')}  resizeMode="cover" style={{
+        // justifyContent: 'center',
+        alignItems: 'center',
+        // flex: 1,
+        width: '100%',
+        height: '100%',
+      }} imageStyle={{
+        marginTop: height * 0.02,
+        transform: [
+          { scaleX: -1 }
+        ]
+      }}>
+      <View style={{ marginTop: height * 0.1, width: width * 0.9, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={{ fontFamily: 'Quicksand-Bold', fontSize: 30, color: "#785444", width: width * 0.82 }}>GROUPS</Text>
         <TouchableOpacity onPress={showornoshow}>
           {
-            show ? <Feather name="minus" size={30} color={'#505050'} /> : <Feather name="plus" size={30} color={'#505050'} />
+            show ? <Feather name="minus" size={30} color={'#785444'} /> : <Feather name="plus" size={30} color={'#785444'} />
           }
         </TouchableOpacity>
       </View>
@@ -123,21 +135,22 @@ const GroupMain = () => {
                   onChangeText={(text) => setGroupCode(text)}
                   maxLength={5}
                   value={groupCode}
+                  placeholderTextColor='#FFE3D7'
                   underlineColorAndroid="transparent"
                   placeholder="Group Code..."
                 />
               </View>
               <TouchableOpacity
-                style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.17, borderRadius: 10, backgroundColor: '#505050' }}
+                style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444' }}
                 onPress={join}
-              ><Text style={{ fontFamily: 'Lato-Regular', color: 'white', fontSize: 13 }}>JOIN</Text>
+              ><Text style={{ fontFamily: 'Quicksand-Bold', color: 'white', fontSize: 13 }}>JOIN</Text>
               </TouchableOpacity>
             </View>
 
             <TouchableOpacity
-              style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.9, borderRadius: 10, backgroundColor: '#505050' }}
+              style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.9, borderRadius: 10, backgroundColor: '#785444' }}
               onPress={navToCreate}
-            ><Text style={{ fontFamily: 'Lato-Regular', color: 'white', fontSize: 13 }}>CREATE</Text>
+            ><Text style={{ fontFamily: 'Quicksand-Bold', color: 'white', fontSize: 13 }}>CREATE</Text>
             </TouchableOpacity>
           </View>
           :
@@ -164,6 +177,7 @@ const GroupMain = () => {
           showsVerticalScrollIndicator={false}
         />
       </View>
+      </ImageBackground>
     </View>
   )
 }
@@ -202,8 +216,8 @@ searchContainer: {
   },
 
   textInputStyle: {
-    color: '#FFE3D7',
-    fontFamily: 'Margarine',
+    color: 'white',
+    fontFamily: 'Quicksand-Bold',
 },
 
 })

@@ -411,7 +411,7 @@ const CreatePost = () => {
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: width * 0.9} }>
         
         <TouchableOpacity onPress={handleModal}>
-          <Feather name="lock" size={25} color="#505050" />
+          <Feather name="lock" size={25} color="#785444" />
         </TouchableOpacity>
 
         <TouchableOpacity style={
