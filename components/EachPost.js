@@ -34,7 +34,7 @@ const EachPost = (props) => {
             likes: props.likes,
             verse: props.verse,
             verseText: props.verseText
-          });
+        });
     }
 
     const likePost = () => {
@@ -47,7 +47,6 @@ const EachPost = (props) => {
         }
         props.handleCallback(props.postId, props.userId, likes);
     }
-    
 
     return (
         <TouchableOpacity onPress={() => entryPressed()} style={styles.container} activeOpacity={0.5}>
@@ -86,8 +85,7 @@ const EachPost = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.iteractionButtonContainer}>
-
-                    <TouchableOpacity onPress={() => entryPressed()}>
+                    <TouchableOpacity onPress={() => entryPressed()} style={{ flexDirection: 'row' }}>
                         <Feather name="message-circle" size={23} color='#785444' />
                     </TouchableOpacity>
                 </View>
@@ -194,6 +192,5 @@ const styles = StyleSheet.create({
         width: width * 0.085,
         height: height * 0.035,
         justifyContent: 'flex-end'
-
     },
 })

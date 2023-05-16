@@ -24,6 +24,7 @@
 		9C61F0757D6F49CEA330402D /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 638B8240EF844AC4B658A4F4 /* Lato-LightItalic.ttf */; };
 		B37EC9E5199B4A01804D0C8B /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DD6806E8417425C9E85C0F4 /* Lato-Bold.ttf */; };
 		BDCD258AB232432D90237F2D /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACEC82BE30AA4687A16A8001 /* Lato-ThinItalic.ttf */; };
+		BE99C06CF1C9426EA6B0F224 /* Margarine-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32896E33819746B4BBC1D186 /* Margarine-Regular.ttf */; };
 		C1746460BE894249B20E2182 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 483789DA18FB4CD38523E276 /* Lato-Thin.ttf */; };
 		F0B0DFB9062E40658138E0EB /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE4F55B0C34A348932EFC5 /* Lato-Light.ttf */; };
 		F4367A0797D446999B9CB2AC /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 081DCA15CC424741A6AF021B /* Lato-Italic.ttf */; };
@@ -57,6 +58,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RedwoodApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RedwoodApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RedwoodApp/main.m; sourceTree = "<group>"; };
+		32896E33819746B4BBC1D186 /* Margarine-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Margarine-Regular.ttf"; path = "../assets/fonts/Margarine-Regular.ttf"; sourceTree = "<group>"; };
 		353AA5FAE79548A091572953 /* Questrial-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Questrial-Regular.ttf"; path = "../assets/fonts/Questrial-Regular.ttf"; sourceTree = "<group>"; };
 		3E5A7B0829E28E070037BAF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3E5A7B0A29E4803F0037BAF7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -85,6 +87,7 @@
 		0934C77E7E714B5F9E6A93F2 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; name = "Quicksand-Regular.ttf"; path = "../assets/fonts/Quicksand-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		3ADB56787A9A4069924AFA17 /* Quicksand-SemiBold.ttf */ = {isa = PBXFileReference; name = "Quicksand-SemiBold.ttf"; path = "../assets/fonts/Quicksand-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		80A7ADAF351B40FF8760B128 /* Quicksand-VariableFont_wght.ttf */ = {isa = PBXFileReference; name = "Quicksand-VariableFont_wght.ttf"; path = "../assets/fonts/Quicksand-VariableFont_wght.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
