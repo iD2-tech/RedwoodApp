@@ -24,27 +24,33 @@ const Feed = () => {
 
   useEffect(() => {
     if (username === '') {
-      setDateTitle(dateUnrendered);
-      const userRef = firebase.firestore().collection('Users').doc(userId);
-      const unsubscribe = userRef.onSnapshot((doc) => {
-        if (doc.exists) {
-          const { username, name } = doc.data();
-          setName(name);
-          setUsername(username);
-        }
-      });
-      return () => {
-        unsubscribe();
-      }
+      getUsername();
     }
 
-    renderFriends().then(() => {
-      renderPosts().then(() => {
-        setPostsExist(true);
-      })
-    })
+    // renderFriends().then(() => {
+    //   renderPosts().then(() => {
+    //     setPostsExist(true);
+    //   })
+    // })
+    renderFriends();
+    renderPosts();
 
-  }, [friends, username, posts])
+  }, [friends, username])
+
+  const getUsername = () => {
+    setDateTitle(dateUnrendered);
+    const userRef = firebase.firestore().collection('Users').doc(userId);
+    const unsubscribe = userRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        const { username, name } = doc.data();
+        setName(name);
+        setUsername(username);
+      }
+    });
+    return () => {
+      unsubscribe();
+    }
+  }
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -82,6 +88,7 @@ const Feed = () => {
   const renderPosts = async () => {
     if (friends != null) {
       let postArr = [];
+      let idArr = [];
       const unsubscribeFunctions = [];
       for (let i = 0; i < friends.length; i++) {
         const userPostRef = firestore().collection('Posts').doc(friends[i].ids).collection('userPosts').where('private', '==', '0').where('date', '>', getStartofToday());
@@ -95,6 +102,8 @@ const Feed = () => {
             const dateString = date + " " + month + " " + year;
 
             if (doc.data().anonymous === '1') {
+              if (!idArr.includes(doc.id)) {
+              idArr.push(doc.id);
               postArr.push({
                 user: 'Anonymous',
                 userId: friends[i].ids,
@@ -107,7 +116,10 @@ const Feed = () => {
                 username: username,
                 likes: doc.data().likes,
               })
+            }
             } else {
+              if (!idArr.includes(doc.id)) {
+              idArr.push(doc.id);
               postArr.push({
                 user: friends[i].username,
                 userId: friends[i].ids,
@@ -121,15 +133,13 @@ const Feed = () => {
                 likes: doc.data().likes,
               })
             }
+            }
           })
         })
         unsubscribeFunctions.push(unsubscribe);
       }
-
-
-      if (posts === null) {
-        setPosts(postArr);
-      }
+      setPosts(postArr);
+      
       return () => {
         unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
       };
@@ -145,22 +155,9 @@ const Feed = () => {
   }
 
   function CallBack(postId, postedUserId, likes) {
-    let correctLength = posts.length;
     firestore().collection('Posts').doc(postedUserId).collection('userPosts').doc(postId).update({
       likes: likes,
-    }).then(() => {
-      let updatedLength = posts.length;
-      let uniquePosts = [... new Set(posts)];
-      let narrowedPosts = [];
-      if (updatedLength === correctLength) {
-        narrowedPosts = uniquePosts;
-      } else {
-        for (let i = 0; i < uniquePosts.length / 2; i++) {
-          narrowedPosts.push(uniquePosts[i]);
-        }
-      }
-      setPosts(narrowedPosts);
-    })
+    });
   }
 
   return (
@@ -174,7 +171,7 @@ const Feed = () => {
             data={posts}
             keyExtractor={item => item.postId}
             renderItem={({ item }) =>
-              <EachPost item={item} handleCallback={CallBack} user={item.user} likes={item.likes} username={item.username} postId={item.postId} userId={item.userId} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
+            <EachPost item={item} handleCallback={CallBack} user={item.user} likes={item.likes} username={item.username} postId={item.postId} userId={item.userId} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
             }
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

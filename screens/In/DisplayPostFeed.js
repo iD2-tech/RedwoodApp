@@ -98,12 +98,13 @@ const DisplayPostProfile = ({ route }) => {
                         </View>
 
                     </View>
-                    <FlatList 
+                    
+                </ScrollView>
+                <FlatList 
                         data={comments}
                         keyExtractor={item => item.key}
                         renderItem={({item}) => <EachComment username={item.username} comment={item.comment}/>}
                     />
-                </ScrollView>
             </View>
         </DismissKeyBoard>
 
