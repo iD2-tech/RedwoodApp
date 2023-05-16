@@ -109,6 +109,7 @@ const Settings = () => {
                         <Text style={styles.title}>ABOUT</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
                                 <TouchableOpacity
+                                onPress={onShare}
                                     >
                                         <Feather name="share" size={28} color={'#C3A699'} />
                                 </TouchableOpacity>

@@ -46,7 +46,11 @@ const Members = (props) => {
 
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{props.item.numMembers} Members</Text>
-        
+        <TouchableOpacity
+          onPress={onShare}
+        >
+          <Feather name="share" size={28} color={'#C3A699'} />
+        </TouchableOpacity>
       </View>
       <View style={{ height: height * 0.57, marginTop: height * 0.02 }}>
         <FlatList
