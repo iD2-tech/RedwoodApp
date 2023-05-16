@@ -35,19 +35,19 @@ const Profile = ( {route} ) => {
       id: '1', // acts as primary key, should be unique and non-empty string
       label: 'Search by Title',
       value: 'title',
-      labelStyle: { fontFamily: 'Margarine', fontSize: 14.5, color: '#785444'}
+      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
     },
     {
       id: '2',
       label: 'Search by Date',
       value: 'date',
-      labelStyle: { fontFamily: 'Margarine', fontSize: 14.5, color: '#785444'}
+      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
     },
     {
       id: '3',
       label: 'Search by Bible Verse',
       value: 'bible',
-      labelStyle: { fontFamily: 'Margarine', fontSize: 14.5, color: '#785444'}
+      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
     }
   ]);
 
@@ -177,8 +177,17 @@ const Profile = ( {route} ) => {
 
   return (
 
-
+    
     <View style={styles.container}>
+      <ImageBackground source={require('../../FeatherLeft.png')} resizeMode="cover" style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        // flex: 1,
+        width: '100%',
+        height: '100%',
+      }} imageStyle={{
+        marginTop: height * 0.02
+      }}>
       <View style={styles.nameContainer}>
         <View style={styles.nameTop}>
         <TouchableOpacity onPress={navToFriends}><Feather name="users" size={25} color={'black'} /></TouchableOpacity>
@@ -205,7 +214,7 @@ const Profile = ( {route} ) => {
           placeholder="Search"
         />
         <TouchableOpacity onPress={handleModal}>
-          <Feather name="menu" size={25} color={'black'} marginRight={width * 0.04}/>
+          <Feather name="menu" size={27} color={'black'} marginRight={width * 0.04}/>
         </TouchableOpacity>
       </View>
       <View style={styles.listContainer}>
@@ -235,13 +244,15 @@ const Profile = ( {route} ) => {
           <TouchableOpacity onPress={handleModal} style={styles.filterButton}>
             <Text style={{
               color: "#505050",
-              fontFamily: 'Margarine',
+              fontFamily: 'Quicksand-Regular',
               fontWeight: '500'
             }}>OK</Text>
           </TouchableOpacity>
         </View>
       </Modal>
+      </ImageBackground>
     </View>
+   
 
 
   )
@@ -253,7 +264,7 @@ export default Profile
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ECDCD1',
-    height: '100%',
+    // height: '100%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -261,9 +272,11 @@ const styles = StyleSheet.create({
 
   nameContainer: {
     flexDirection: 'column',
-    width: '80%',
+    width: width * 0.8,
     marginBottom: height * 0.04,
-    marginTop: height * 0.06
+    marginTop: height * 0.06,
+    justifyContent: 'center',
+    // backgroundColor: 'black'
   },
 
   nameTop: {
@@ -292,7 +305,7 @@ const styles = StyleSheet.create({
   userText: {
     fontSize: 20,
     fontWeight: '500',
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Regular',
     color: '#ABABAB',
   },
 
@@ -307,26 +320,27 @@ const styles = StyleSheet.create({
 
   searchContainer: {
     height: height * 0.04,
-    width: width * 0.89,
+    width: width * 0.85,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: height * 0.013,
     overflow: 'hidden',
+
   },
 
   textInputStyle: {
-    width: width * 0.75,
+    width: width * 0.70,
     borderWidth: 1,
     padding: 10,
-    height: height * 0.04,
+    paddingLeft: 20,
+    height: height * 0.042,
     borderColor: "#D2D2D2",
-    borderRadius: 7,
     fontSize: 12,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     backgroundColor: '#C3A699',
     color: '#FFE3D7',
-    borderRadius: 20,
+    borderRadius: 15,
   },
 
   filterButton: {
@@ -344,7 +358,7 @@ const styles = StyleSheet.create({
   filterText: {
     fontSize: 27,
     fontWeight: '800',
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Regular',
     color: '#785444',
     textAlign: 'left',
     width: width * 0.44,
@@ -355,4 +369,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     fontFamily: 'Lato-Regular',
   },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+},
 })

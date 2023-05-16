@@ -75,14 +75,14 @@ const Settings = () => {
                                 </TouchableOpacity>
                                 <Text style={styles.text}>Recently Deleted</Text>
                             </View> */}
-                            <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
+                            {/* <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
                                 <TouchableOpacity
                                     onPress={() =>  navToPrivacy()}
                                 >
                                     <Feather name="lock" size={28} color={'#C3A699'} />
                                 </TouchableOpacity>
                                 <Text style={styles.text}>Privacy</Text>
-                            </View>
+                            </View> */}
                     </View>
                     <View style = {styles.aboutContainer}>
                         <Text style={styles.title}>ABOUT</Text>
@@ -152,25 +152,25 @@ const styles = StyleSheet.create({
         marginTop: height * -0.055,
         marginBottom: height * 0.04,
         fontSize: 29,
-        fontFamily: 'Margarine',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 'bold',
         color: '#785444',
         paddingBottom: '3%',
     },
     personalContainer: {
-        height: height * 0.18,
+        height: height * 0.11,
         width: width * 0.7,
     },
     title: {
         fontSize: 15,
-        fontFamily: 'Margarine',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 600,
         color: '#785444',
         marginBottom: height * 0.015,
     },
     text: {
         fontSize: 17.5,
-        fontFamily: 'Margarine',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 600,
         color: '#785444',
         marginLeft: width * 0.15,

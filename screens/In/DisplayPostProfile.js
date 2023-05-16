@@ -206,7 +206,9 @@ const DisplayPostProfile = ({ route }) => {
 
     return (
         <DismissKeyBoard>
-            <ImageBackground source={require('../../tree.jpg')} resizeMode="cover" style={styles.image}>
+            <ImageBackground source={require('../../FeatherLeft.png')} resizeMode="cover" style={styles.image} imageStyle={{ marginTop: height * 0.02,  transform: [
+    { scaleX: -1 }
+  ]}}>
                 {/* back button */}
                 <View style={styles.backButtonContainer}>
                     <PageBackButton onPress={navBack} />
@@ -442,7 +444,7 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
     },
 
     backButtonContainer: {
