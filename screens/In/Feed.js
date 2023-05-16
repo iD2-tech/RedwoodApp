@@ -10,7 +10,6 @@ import LinearGradient from 'react-native-linear-gradient';
 const { width, height } = Dimensions.get('window');
 
 const Feed = () => {
-
   const [posts, setPosts] = useState(null);
   const [friends, setFriends] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -21,7 +20,6 @@ const Feed = () => {
   const [postsExist, setPostsExist] = useState(false);
   let tempDate = new Date() + '';
   let dateUnrendered = tempDate.split(' ')[1] + ' ' + tempDate.split(' ')[2];
-  
 
   useEffect(() => {
     if (username === '') {
@@ -51,7 +49,7 @@ const Feed = () => {
     // Fetch new data here and set it using setData
     renderPosts();
     setRefreshing(false);
-  };
+  }
 
   const renderFriends = async () => {
     const userId = firebase.auth().currentUser.uid;
@@ -65,9 +63,7 @@ const Feed = () => {
         idArr = doc.data().ids;
         if (idArr[0] === userId) {
           friendArr.push({ username: relationshipArr[1], name: nameArr[1], ids: idArr[1] });
-          friendArr.push({ username: relationshipArr[1], name: nameArr[1], ids: idArr[1] });
         } else {
-          friendArr.push({ username: relationshipArr[0], name: nameArr[0], ids: idArr[0] });
           friendArr.push({ username: relationshipArr[0], name: nameArr[0], ids: idArr[0] });
         }
       })
@@ -87,14 +83,13 @@ const Feed = () => {
         const userPostRef = firestore().collection('Posts').doc(friends[i].ids).collection('userPosts').where('private', '==', '0').where('date', '>', getStartofToday());
         const unsubscribe = userPostRef.onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-          querySnapshot.forEach((doc) => {
             var verses = doc.data().book + " " + doc.data().chapter + ":" + doc.data().verse;
             var dateObj = new Date(doc.data().date.seconds * 1000);
             const date = dateObj.getDate();
             const month = monthNames[dateObj.getMonth()];
             const year = dateObj.getFullYear();
             const dateString = date + " " + month + " " + year;
-            
+
             if (doc.data().anonymous === '1') {
               postArr.push({
                 user: 'Anonymous',
@@ -126,15 +121,17 @@ const Feed = () => {
         })
         unsubscribeFunctions.push(unsubscribe);
       }
+
+
       if (posts === null) {
         setPosts(postArr);
       }
-      
       return () => {
         unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
       };
     }
   }
+
 
   function getStartofToday() {
     const now = new Date();
@@ -164,14 +161,10 @@ const Feed = () => {
 
   return (
     <View style={styles.background}>
-
       <View style={styles.topBar}>
         <Text style={styles.topText}>{dateTitle}</Text>
       </View>
-
-
       <View style={styles.flatContainer}>
-
         {posts != null ?
           <FlatList
             data={posts}
@@ -184,15 +177,12 @@ const Feed = () => {
             }
             showsVerticalScrollIndicator={false}
           />
-
           :
           <Text style={styles.noEntryText}>No entries yet, encourage your friends to reflect!</Text>
         }
       </View>
     </View>
-  )
-
-
+  );
 }
 
 export default Feed;

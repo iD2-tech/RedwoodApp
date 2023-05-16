@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Text, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -144,31 +143,19 @@ const AppStack = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-<<<<<<< HEAD
           // borderTopWidth: 0,
           backgroundColor: '#ECDCD1',
           paddingTop: height * 0.01,
           height: height * 0.09
-=======
-          borderTopWidth: 0,
->>>>>>> 6c0f4d8a761307fea8100352d765c82091d92ff1
         }
       }}>
       <Tab.Screen
         name="Home"
-<<<<<<< HEAD
         component={FeedStack}
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
             <Feather name="home" size={size} color={color} />
           ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
-=======
-        component={Feed}
-        options={{
-          headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
-            <Feather name="home" size={size} color={color} />
-          ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',
->>>>>>> 6c0f4d8a761307fea8100352d765c82091d92ff1
         }}
       />
       <Tab.Screen
@@ -177,11 +164,7 @@ const AppStack = () => {
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
             <Feather name="zap" size={size} color={color} />
-<<<<<<< HEAD
           ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
-=======
-          ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',
->>>>>>> 6c0f4d8a761307fea8100352d765c82091d92ff1
         }}
       />
       <Tab.Screen
@@ -190,11 +173,7 @@ const AppStack = () => {
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
             <Feather name="plus-circle" size={size} color={color} />
-<<<<<<< HEAD
           ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
-=======
-          ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',
->>>>>>> 6c0f4d8a761307fea8100352d765c82091d92ff1
         }}
       />
       <Tab.Screen
@@ -203,11 +182,7 @@ const AppStack = () => {
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
             <Feather name="book-open" size={size} color={color} />
-<<<<<<< HEAD
           ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
-=======
-          ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',
->>>>>>> 6c0f4d8a761307fea8100352d765c82091d92ff1
         }}
       />
     </Tab.Navigator>
