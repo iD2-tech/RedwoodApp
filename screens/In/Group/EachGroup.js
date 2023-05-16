@@ -121,9 +121,7 @@ const EachGroup = (props) => {
               likes: doc.data().likes,
             })
           }
-
         })
-
       })
       unsubscribeFunctions.push(unsubscribe);
     }
@@ -143,53 +141,58 @@ const EachGroup = (props) => {
 
   return (
     <View style={styles.container}>
-      {/* <Feather name="chevron-left" size={30} color={'#505050'} /> */}
-      <View style={{
-        width: width * 0.85,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        marginTop: height * 0.1
-      }}>
-        <PageBackButton onPress={() => navBack()} />
-      </View>
+      <View style={styles.topBar}>
+        <View style={styles.backButtonContainer}>
 
-      <View style={{
-        width: width * 0.85,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        marginTop: height * 0.01,
-        alignItems: 'center'
-      }}>
-        <Text style={{
-          fontFamily: 'Lato-Bold',
-          fontSize: 30,
-          color: "black"
-        }}>{props.item.name}</Text>
-        <View style={styles.numberDisplay}>
-          <TouchableOpacity onPress={navToMembers}><Feather name="users" size={20} color={'#505050'} /></TouchableOpacity>
 
-          <Text style={{ fontSize: 20, marginLeft: width * 0.01, fontFamily: 'Lato-Regular' }}>{props.item.numMembers}</Text>
+          <PageBackButton onPress={() => navBack()} />
         </View>
-        <TouchableOpacity ><Feather name="message-circle" size={20} color={'#505050'} /></TouchableOpacity>
-        <TouchableOpacity onPress={leaveGroup}><Feather name="x-circle" size={20} color={'#505050'} /></TouchableOpacity>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{props.item.name}</Text>
+        </View>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <View style={styles.individualButton}>
+          <TouchableOpacity onPress={navToMembers}>
+            <View style={{alignItems: 'center'}}>
+            <Feather name="users" size={20} color={'#785444'} />
+            </View>
+            
+            <Text style={styles.buttonLogo}>members</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.individualButton}>
+          <TouchableOpacity >
+          <View style={{alignItems: 'center'}}>
+            <Feather name="message-circle" size={20} color={'#785444'} />
+            </View>
+            <Text style={styles.buttonLogo}>chat</Text>
+            
+          </TouchableOpacity>
+        </View>
+        <View style={styles.individualButton}>
+          <TouchableOpacity >
+          <View style={{alignItems: 'center'}}>
+            <Feather name="x-circle" size={20} color={'#785444'} />
+            </View>
+            <Text style={styles.buttonLogo}>leave</Text>
+            
+          </TouchableOpacity>
+        </View>
+
+
+
 
 
 
       </View>
-      {/* <Text style={{
-        fontFamily: 'Lato-Bold',
-        fontSize: 10,
-        marginTop: height * 0.03,
-      }}>ANNOUNCEMENTS</Text> */}
       <View style={{ height: height * 0.62, marginTop: height * 0.05, }}>
-        <Text style={{
-          fontFamily: 'Lato-bold', fontSize: 20, marginBottom: height * 0.03
-        }}>Today's Posts!</Text>
         <FlatList
           data={posts}
           keyExtractor={item => item.postId}
           renderItem={({ item }) =>
-          <EachGroupPost item={item} user={item.user} likes={item.likes} username={item.username} postId={item.postId} userId={item.userId} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
+            <EachGroupPost item={item} user={item.user} likes={item.likes} username={item.username} postId={item.postId} userId={item.userId} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
           }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -209,13 +212,63 @@ export default EachGroup
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: 'white',
-    alignItems: 'center'
+    backgroundColor: '#ECDCD1',
+    alignItems: 'center',
   },
   numberDisplay: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginLeft: width * 0.1
+  },
+
+  topBar: {
+    width: width,
+    flexDirection: 'row',
+    height: height * 0.13,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingLeft: width * 0.03,
+    paddingRight: width * 0.03,
+  },
+
+  titleContainer: {
+    width: width * 0.86,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: height * 0.045,
+  },
+
+  backButtonContainer: {
+    width: width * 0.04,
+    height: height * 0.045,
+  },
+
+  title: {
+    fontFamily: 'Quicksand-Bold',
+    color: '#785444',
+    fontSize: 30
+  },
+
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: height * 0.02,
+    width: width * 0.6,
+
+  },
+
+  individualButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+
+
+  buttonLogo: {
+    textAlign: 'center',
+    fontFamily: 'Quicksand-Regular',
+    color: '#785444',
+    fontSize: 12,
+    marginTop: height * 0.002,
   },
 })

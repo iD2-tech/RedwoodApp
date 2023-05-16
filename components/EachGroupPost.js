@@ -25,7 +25,7 @@ const EachGroupPost = (props) => {
             verse: props.verse,
             verseText: props.verseText
           });
-    }  
+    }
 
     return (
         <TouchableOpacity onPress={() => entryPressed()} style={styles.container} activeOpacity={0.5}>
@@ -58,10 +58,10 @@ export default EachGroupPost;
 const styles = StyleSheet.create({
     container: {
         width: width,
-        marginBottom: height * 0.015,
         paddingLeft: width * 0.13,
         paddingRight: width * 0.13,
-        height: height * 0.36,
+        marginBottom: 0,
+        paddingBottom: height * 0.015,
     },
 
     topBar: {
@@ -76,79 +76,76 @@ const styles = StyleSheet.create({
     },
 
     titleContainer: {
-        width: width * 0.5,
+        width: width * 0.52,
         height: height * 0.04,
         justifyContent: 'center',
     },
 
     userContainer: {
-        width: width * 0.25,
+        width: width * 0.18,
+        marginLeft: width * 0.05,
         textAlign: 'right',
         justifyContent: 'center',
     },
 
     name: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 16.5,
+        fontFamily: 'Quicksand-Medium',
+        fontSize: 13,
         color: '#785444',
         textAlign: 'right',
+        // borderWidth: 1,
     },
 
     title: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Bold',
         fontWeight: 500,
-        fontSize: 23,
+        fontSize: 25,
         color: '#785444',
+        // borderWidth: 1,
     },
 
     verseContainer: {
-        height: height * 0.03,
+        height: height * 0.025,
+        marginTop: height * 0.005,
+        justifyContent: 'flex-end'
     },
 
     verse: {
-        fontFamily: 'Lato-Bold',
+        fontFamily: 'Quicksand-SemiBold',
         fontSize: 14,
         color: '#A47C69',
     },
 
     verseTextContainer: {
+        maxHeight: height * 0.08,
+        flexDirection: 'row',
         // borderWidth: 1,
-        height: height * 0.08,
-        flexDirection: 'row'
     },
 
     quote: {
-        fontFamily: 'Lato-Bold',
+        fontFamily: 'Quicksand-Bold',
         fontSize: 17,
         color: '#505050',
     },
 
     verseText: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontSize: 14,
         color: '#A47C69',
-        marginBottom: '3%'
     },
 
     text: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
+        fontWeight: '500',
         fontSize: 14,
         color: '#785444',
+        marginTop: height * 0.01,
     },
 
     textContainer: {
-        height: height * 0.16,
-    },
-
-    interactionContainer: {
-        height: height * 0.03,
-        flexDirection: 'row',
-    },
-
-    iteractionButtonContainer: {
-        width: width * 0.085,
-        height: height * 0.035,
-        justifyContent: 'flex-end'
-
+        maxHeight: height * 0.35,
+        marginTop: height * 0.005,
+        marginBottom: height * 0.005,
+        //borderWidth: 1,
     },
 })
