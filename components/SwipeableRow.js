@@ -26,7 +26,7 @@ const SwipeableRow = (props) => {
 
     const deleteOP = (item) => { 
      firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).delete().then(() => {
-       Alert.alert('POST DELETED!')
+      
      })     
     }
 
@@ -76,7 +76,6 @@ const SwipeableRow = (props) => {
         const pressHandler = () => {
 
             if (text === "Pin") {
-              // Alert.alert("Pin");
               if (item.pinned === '1') {
                 unpinItem(item);
               } else {

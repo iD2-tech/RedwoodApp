@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, FlatList, Dimensions, TextInput, Alert, LogBox } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
@@ -37,7 +37,7 @@ friendsdata = [
 //   },
 // ]
 const { width, height } = Dimensions.get('window')
-const Friends = ({route}) => {
+const Friends = ({ route }) => {
 
   const navigation = useNavigation();
 
@@ -66,13 +66,42 @@ const Friends = ({route}) => {
     const unsubscribe1 = userRef.onSnapshot((doc) => {
       if (doc.exists) {
         const { name, username } = doc.data();
-        if(user === null) {
+        if (user === null) {
           setUser({ name, username });
-        }     
+        }
       }
     });
 
     return () => unsubscribe1();
+  }
+
+
+
+  const friendsRender = () => {
+    if (user != null) {
+      const friendCollection = firestore().collection('Friends');
+      const friend1Query = friendCollection.where('relationship', 'array-contains', user.username);
+      const unsubscribe = friend1Query.onSnapshot((querySnapshot) => {
+        const friendArr = [];
+        const friendSet = new Set();
+        querySnapshot.forEach((doc) => {
+          relationshipArr = doc.data().relationship;
+          nameArr = doc.data().names;
+          if (relationshipArr[0] === user.username) {
+            friendArr.push({ username: relationshipArr[1], name: nameArr[1], id: doc.id });
+            friendSet.add(relationshipArr[1]);
+          } else {
+            friendArr.push({ username: relationshipArr[0], name: nameArr[0], id: doc.id });
+            friendSet.add(relationshipArr[0]);
+          }
+        })
+        setFriendsData(friendArr);
+        setFriends(friendSet);
+      })
+      return () => unsubscribe();
+    } else {
+      console.log('hi')
+    }
   }
 
   const requestRender = () => {
@@ -98,33 +127,6 @@ const Friends = ({route}) => {
     return () => unsubscribe();
   }
 
-  const friendsRender = () => {
-    if (user != null) {
-    const friendCollection = firestore().collection('Friends');
-    const friend1Query = friendCollection.where('relationship', 'array-contains', user.username);
-    const unsubscribe = friend1Query.onSnapshot((querySnapshot) => {
-      const friendArr = [];
-      const friendSet = new Set();
-      querySnapshot.forEach((doc) => {
-          relationshipArr = doc.data().relationship;
-          nameArr = doc.data().names;
-          if (relationshipArr[0] === user.username) {
-            friendArr.push({username: relationshipArr[1], name: nameArr[1], id: doc.id});
-            friendSet.add(relationshipArr[1]);
-          } else {
-            friendArr.push({username: relationshipArr[0],  name: nameArr[0], id: doc.id});
-            friendSet.add(relationshipArr[0]);
-          }
-      })
-      setFriendsData(friendArr);
-      setFriends(friendSet);
-    })
-    return () => unsubscribe();
-  } else {
-    console.log('hi')
-  }
-  }
-
   const sendRequest = async () => {
     if (friends.has(username)) {
       Alert.alert('Already friends!');
@@ -143,59 +145,66 @@ const Friends = ({route}) => {
 
 
     var unique = true;
+    var userFromDatabase = '';
     await firestore()
       .collection('Users')
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           if (documentSnapshot.data().username.toUpperCase() == username.toUpperCase()) {
+            setUsername(documentSnapshot.data().username);
+            userFromDatabase = documentSnapshot.data().username;
             unique = false;
+            if (friends.has(userFromDatabase)) {
+              Alert.alert('Already friends!');
+              return;
+            }
           }
         });
       }).then(() => {
-        if(!unique) {
+        if (!unique) {
           var userId = firebase.auth().currentUser.uid;
           const postCollection = firestore().collection('Users')
-          const postQuery = postCollection.where('username','==', username)
+          const postQuery = postCollection.where('username', '==', userFromDatabase)
           const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
             var id;
             var name;
             querySnapshot.forEach((doc) => {
               id = doc.id
               name = doc.data().name;
-              })
-      
-              firestore().collection('FriendRequests').doc(userId+''+id).set({
-                source: userId + '',
-                sourceUsername: user.username+"",
-                sourceName: user.name+"",
-                target: id+ '',
-                targetUsername: username+ '',
-                targetName: name+'',
-                status: '0'
-              }).then(() => {
-                unsubscribe();
-              })
             })
-            // unsubscribe();
+
+            firestore().collection('FriendRequests').doc(userId + '' + id).set({
+              source: userId + '',
+              sourceUsername: user.username + "",
+              sourceName: user.name + "",
+              target: id + '',
+              targetUsername: userFromDatabase + '',
+              targetName: name + '',
+              status: '0'
+            }).then(() => {
+              unsubscribe();
+            })
+          })
+          // unsubscribe();
 
         } else {
           Alert.alert('User does not exist!')
         }
       })
-    }
+  }
 
-    const navBack = () => {
-      navigation.navigate('Profile');
-    }
+  const navBack = () => {
+    navigation.navigate('Profile');
+  }
 
-    const deleteFriend = (item) => {
-      firestore().collection('Friends').doc(item.id).delete().then(() => {
-        console.log("Friend removed")
-      })
-    }
+  const deleteFriend = (item) => {
+    firestore().collection('Friends').doc(item.id).delete().then(() => {
+      console.log("Friend removed")
+    })
+  }
 
-  
+
 
   return (
     <View style={styles.container}>
@@ -226,15 +235,15 @@ const Friends = ({route}) => {
             MY FRIENDS
           </Text>
         </View>
-        <View style={{height: height * 0.57}}>
-        <FlatList
-          data={friendData}
-          // keyExtractor={item => item.id}
-          renderItem={({ item }) =>
-            <EachFriend name={item.name} username={item.username} onPress={() => deleteFriend(item)}/>
-          }
-          showsVerticalScrollIndicator={false}
-        />
+        <View style={{ height: height * 0.57 }}>
+          <FlatList
+            data={friendData}
+            // keyExtractor={item => item.id}
+            renderItem={({ item }) =>
+              <EachFriend name={item.name} username={item.username} onPress={() => deleteFriend(item)} />
+            }
+            showsVerticalScrollIndicator={false}
+          />
         </View>
       </View>
     </View>
@@ -284,16 +293,6 @@ const styles = StyleSheet.create({
     myFriends: {
       width: width * 0.88,
       marginTop: height * 0.01
-    }
-    // friendsContainer: {
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
-    //   flexDirection: 'column',
-    // },
-
-    // text: {
-    //   fontFamily: 'Lato-Bold',
-    //   fontSize: 20
-    // }
+    },
 
 })

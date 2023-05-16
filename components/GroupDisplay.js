@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginLeft: width * 0.01,
         height: height * 0.18,
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     numberDisplay: {

@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TextInput,FlatList, Alert } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TextInput, FlatList, Alert } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
 import Feather from 'react-native-vector-icons/Feather'
@@ -12,7 +12,7 @@ const Requests = () => {
   const [user, setUser] = useState(null);
   const [requestUser, setRequestUser] = useState([]);
   const [requestData, setRequestData] = useState([]);
-  const [friendData, setFriendsData] = useState([]); 
+  const [friendData, setFriendsData] = useState([]);
   const [username, setUsername] = useState('');
   const [friends, setFriends] = useState([]);
 
@@ -28,9 +28,9 @@ const Requests = () => {
     const unsubscribe1 = userRef.onSnapshot((doc) => {
       if (doc.exists) {
         const { name, username } = doc.data();
-        if(user === null) {
+        if (user === null) {
           setUser({ name, username });
-        }     
+        }
       }
     });
 
@@ -39,29 +39,29 @@ const Requests = () => {
 
   const friendsRender = () => {
     if (user != null) {
-    const friendCollection = firestore().collection('Friends');
-    const friend1Query = friendCollection.where('relationship', 'array-contains', user.username);
-    const unsubscribe = friend1Query.onSnapshot((querySnapshot) => {
-      const friendArr = [];
-      const friendSet = new Set();
-      querySnapshot.forEach((doc) => {
+      const friendCollection = firestore().collection('Friends');
+      const friend1Query = friendCollection.where('relationship', 'array-contains', user.username);
+      const unsubscribe = friend1Query.onSnapshot((querySnapshot) => {
+        const friendArr = [];
+        const friendSet = new Set();
+        querySnapshot.forEach((doc) => {
           relationshipArr = doc.data().relationship;
           nameArr = doc.data().names;
           if (relationshipArr[0] === user.username) {
-            friendArr.push({username: relationshipArr[1], name: nameArr[1], id: doc.id + "1"});
+            friendArr.push({ username: relationshipArr[1], name: nameArr[1], id: doc.id + "1" });
             friendSet.add(relationshipArr[1]);
           } else {
-            friendArr.push({username: relationshipArr[0],  name: nameArr[0], id: doc.id + "0"});
+            friendArr.push({ username: relationshipArr[0], name: nameArr[0], id: doc.id + "0" });
             friendSet.add(relationshipArr[0]);
           }
+        })
+        setFriendsData(friendArr);
+        setFriends(friendSet);
       })
-      setFriendsData(friendArr);
-      setFriends(friendSet);
-    })
-    return () => unsubscribe();
-  } else {
-    console.log('hi')
-  }
+      return () => unsubscribe();
+    } else {
+      console.log('hi')
+    }
   }
 
   const requestRender = () => {
@@ -78,6 +78,7 @@ const Requests = () => {
           name: doc.data().sourceName,
           docID: doc.id
         })
+
         requestUsers.add(doc.data().sourceUsername);
       })
       setRequestUser(requestUsers);
@@ -104,89 +105,97 @@ const Requests = () => {
 
 
     var unique = true;
+    var userFromDatabase = '';
     await firestore()
       .collection('Users')
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           if (documentSnapshot.data().username.toUpperCase() == username.toUpperCase()) {
-
+            setUsername(documentSnapshot.data().username);
+            userFromDatabase = documentSnapshot.data().username;
             unique = false;
+            if (friends.has(userFromDatabase)) {
+              Alert.alert('Already friends!');
+              return;
+            }
           }
         });
       }).then(() => {
-        if(!unique) {
+        if (!unique) {
+          console.log(userFromDatabase);
+          console.log("test");
           var userId = firebase.auth().currentUser.uid;
           const postCollection = firestore().collection('Users')
-          const postQuery = postCollection.where('username','==', username)
+          const postQuery = postCollection.where('username', '==', userFromDatabase)
           const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
             var id;
             var name;
             querySnapshot.forEach((doc) => {
               id = doc.id
               name = doc.data().name;
-              })
-      
-              firestore().collection('FriendRequests').doc(userId+''+id).set({
-                source: userId + '',
-                sourceUsername: user.username+"",
-                sourceName: user.name+"",
-                target: id+ '',
-                targetUsername: username+ '',
-                targetName: name+'',
-                status: '0'
-              }).then(() => {
-                unsubscribe();
-              })
-            }) 
-            
+            })
+
+            firestore().collection('FriendRequests').doc(userId + '' + id).set({
+              source: userId + '',
+              sourceUsername: user.username + "",
+              sourceName: user.name + "",
+              target: id + '',
+              targetUsername: userFromDatabase + '',
+              targetName: name + '',
+              status: '0'
+            }).then(() => {
+              unsubscribe();
+            })
+          })
+
         } else {
           Alert.alert('User does not exist!')
         }
-        
       })
-    }
+  }
 
-    const accept = (item) => { 
-      const userId = firebase.auth().currentUser.uid;
-      const friendArray = [];
-      const nameArray = [];
-      const idArray = [];
-      friendArray.push(item.username);
-      nameArray.push(item.name);
-      idArray.push(item.id); 
-      friendArray.push(user.username); 
-      nameArray.push(user.name);
-      idArray.push(userId);
-      firestore().collection('Friends').add({
-        relationship: friendArray,
-        names: nameArray,
-        ids: idArray
-      })
-      firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
-        console.log(item);
-        // const reqSet = requestSent;
-        // const index = reqSet.indexOf(username);
-        // reqSet.splice(index, 1);
-        // setRequestSent(reqSet);
-        console.log('deleted');
-      })
-    }
+  const accept = (item) => {
+    const userId = firebase.auth().currentUser.uid;
+    const friendArray = [];
+    const nameArray = [];
+    const idArray = [];
+    friendArray.push(item.username);
+    nameArray.push(item.name);
+    idArray.push(item.id);
+    friendArray.push(user.username);
+    nameArray.push(user.name);
+    idArray.push(userId);
+    firestore().collection('Friends').add({
+      ids: idArray,
+      relationship: friendArray,
+      names: nameArray,
+      ids: idArray,
+    })
+    firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
+      console.log(item);
+      // const reqSet = requestSent;
+      // const index = reqSet.indexOf(username);
+      // reqSet.splice(index, 1);
+      // setRequestSent(reqSet);
+      console.log('deleted');
+    })
+  }
 
-    const reject = (item) => {
-      firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
-        console.log(item);
-        // const reqSet = requestSent;
-        // const index = reqSet.indexOf(username);
-        // reqSet.splice(index, 1);
-        // setRequestSent(reqSet);
-        console.log('deleted');
-      })
-    }
+  const reject = (item) => {
+    firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
+      console.log(item);
+      // const reqSet = requestSent;
+      // const index = reqSet.indexOf(username);
+      // reqSet.splice(index, 1);
+      // setRequestSent(reqSet);
+      console.log('deleted');
+    })
+  }
 
-    const navBack = () => {
-      navigation.navigate('Profile');
-    }
+  const navBack = () => {
+    navigation.navigate('Profile');
+  }
 
 
   return (
@@ -217,15 +226,15 @@ const Requests = () => {
             FRIEND REQUESTS
           </Text>
         </View>
-        <View style={{height: height * 0.57,}}>
-        <FlatList
-          data={requestData}
-          // keyExtractor={item => item.id}
-          renderItem={({ item }) =>
-            <EachRequest name={item.name} username={item.username} item={item} currUser={user} onAccept={() => accept(item)} onReject={() => reject(item)}/>
-          }
-          showsVerticalScrollIndicator={false}
-        />
+        <View style={{ height: height * 0.57, }}>
+          <FlatList
+            data={requestData}
+            // keyExtractor={item => item.id}
+            renderItem={({ item }) =>
+              <EachRequest name={item.name} username={item.username} item={item} currUser={user} onAccept={() => accept(item)} onReject={() => reject(item)} />
+            }
+            showsVerticalScrollIndicator={false}
+          />
         </View>
       </View>
     </View>
@@ -241,7 +250,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: '#ECDCD1',
     alignItems: 'center',
-    flexDirection:'column',
+    flexDirection: 'column',
     // alignContent: 'center'
   },
 
@@ -264,7 +273,7 @@ const styles = StyleSheet.create({
 
   },
   backContainer: {
-    justifyContent:'flex-end',
+    justifyContent: 'flex-end',
     width: width * 0.89,
     marginBottom: height * 0.02,
     flexDirection: 'row',

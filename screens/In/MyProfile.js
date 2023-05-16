@@ -24,6 +24,7 @@ const MyProfile = () => {
     const ref_input1 = useRef();
     const ref_input2 = useRef();
     const [cursorPosition, setCursorPosition] = useState(null);
+
     const [show, setShow] = useState(false);
 
     const navToSettings = () => {
@@ -96,6 +97,7 @@ const MyProfile = () => {
         return () => {
           unsubscribe1();
         };
+
       }, []);
 
     const [text, setText] = useState('');

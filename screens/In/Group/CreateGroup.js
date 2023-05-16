@@ -1,22 +1,57 @@
-import { StyleSheet, Text, View, Dimensions, TextInput } from 'react-native'
-import React, {useState} from 'react'
+import { StyleSheet, Text, View, Dimensions, TextInput, Alert } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import PageBackButton from '../../../components/PageBackButton'
 import { useNavigation } from '@react-navigation/native'
 import OnboardButton from '../../../components/OnboardButton'
+import firestore from '@react-native-firebase/firestore';
+import { firebase } from "@react-native-firebase/auth";
+import { RotationGestureHandler } from 'react-native-gesture-handler'
 
 
 const { width, height } = Dimensions.get('window')
-const CreateGroup = () => {
+const CreateGroup = ({ route }) => {
 
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
   const [description, setDescription] = useState('');
 
   const navigation = useNavigation();
-    const navBack = () => {
-      navigation.navigate("GroupMain")
-    }
-   
+
+  const { user } = route.params
+
+
+  const navBack = () => {
+    navigation.navigate("GroupMain")
+  }
+
+
+  const createGroup = () => {
+    const userId = firebase.auth().currentUser.uid;
+    const groupRef = firebase.firestore().collection('Groups').doc(code);
+    groupRef.get().then((docSnapshot) => {
+      if (docSnapshot.exists) {
+        Alert.alert("code taken")
+      } else {
+        const moderator = [];
+        moderator.push(user.username)
+        const memberIds = [];
+        memberIds.push(userId)
+        firestore().collection('Groups').doc(code).set({
+          name: name,
+          description: description,
+          moderators: moderator,
+          members: moderator,
+          numMembers: 1,
+          memberIds: memberIds
+        }).then(() => {
+          navigation.navigate('GroupMain')
+        })
+
+      }
+    });
+  }
+
+
 
   return (
     <View style={styles.container}>
@@ -26,7 +61,7 @@ const CreateGroup = () => {
         justifyContent: 'flex-start',
         marginTop: height * 0.1
       }}>
-        <PageBackButton onPress={() => navBack()}/>
+        <PageBackButton onPress={() => navBack()} />
       </View>
 
       <View style={{
@@ -51,7 +86,6 @@ const CreateGroup = () => {
         </Text>
       </View>
       <View style={styles.inputContainer}>
-
                 <TextInput 
                     placeholder="Group Name"
                     value={name}
@@ -124,4 +158,5 @@ input2: {
   opacity: 50,
   fontFamily: 'Margarine'
 },
+
 })
