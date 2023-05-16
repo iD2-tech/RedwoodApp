@@ -20,9 +20,9 @@ const GroupDisplay = (props) => {
         </View>
         <Text style={{
             marginTop: height * 0.01,
-            fontFamily: 'Margarine',
+            fontFamily: 'Quicksand-Bold',
             color: '#785444',
-            fontSize: 12,
+            fontSize: 15,
             width: width * 0.35,
         }}>
             {props.description}
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
 
 
     title: {
-        fontFamily: 'Margarine',
-        fontSize: 13,
+        fontFamily: 'Quicksand-Bold',
+        fontSize: 16,
         color: '#785444',
         width: width * 0.2
         // marginBottom: '5%'

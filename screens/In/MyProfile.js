@@ -118,7 +118,7 @@ const MyProfile = () => {
                                 defaultValue={user?.username}
                                 onChangeText={setText}
                                 editable={editableField === 'username'}
-                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Margarine', color: '#785444', marginRight: width * 0.03}}
+                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Quicksand-Regular', color: '#785444', marginRight: width * 0.03}}
                             />
                             <Feather
                                 name="edit"
@@ -137,7 +137,7 @@ const MyProfile = () => {
                                 defaultValue={user?.name}
                                 onChangeText={setText2}
                                 editable={editableField === 'name'}
-                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Margarine', color: '#785444', marginRight: width * 0.03}}
+                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Quicksand-Regular', color: '#785444', marginRight: width * 0.03}}
                             />
                             <Feather
                                 name="edit"
@@ -183,14 +183,14 @@ const styles = StyleSheet.create({
         marginTop: height * -0.055,
         marginBottom: height * 0.04,
         fontSize: 29,
-        fontFamily: 'Margarine',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 'bold',
         color: '#505050',
         paddingBottom: '3%',
     },
     names: {
         fontSize: 18,
-        fontFamily: 'Margarine',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 800,
         color: '#A47C69',
         marginBottom: height * 0.015,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 16,
-        fontFamily: 'Margarine',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 'bold',
     },
 })

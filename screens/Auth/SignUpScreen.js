@@ -135,14 +135,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         paddingVertical: 10,
         marginTop: height * 0.0005,
-        marginBottom: height * 0.008,
+        marginBottom: height * 0.014,
         width: width * 0.77,
         borderStyle: 'solid',
         borderBottomColor: '#AAAAAA',
         borderBottomWidth: 1,
         borderColor: 'black',
         opacity: 50,
-        fontFamily: 'Margarine',
+        fontFamily: 'Quicksand-Bold',
         color: '#785444'
       },
 
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         marginTop: -height * 0.03,
         fontSize: 30,
         fontWeight: '800',
-        fontFamily: 'Margarine',
+        fontFamily: 'Quicksand-Bold',
         color: '#785444',
         marginLeft: 0
       },

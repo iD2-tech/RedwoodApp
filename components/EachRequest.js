@@ -45,18 +45,18 @@ const EachRequest = (props) => {
 
   return (
     <View style={styles.container}>
-    <FontAwesome name="user-circle-o" size={height * 0.055} color="#505050"/>
+    <FontAwesome name="user-circle-o" size={height * 0.055} color="#785444"/>
     <View style={styles.nameContainer}>
-        <Text style={{fontFamily:'Lato-Bold', fontSize: height * 0.022}}>{props.name}</Text>
-        <Text style={{fontFamily: 'Lato-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text>
+        <Text style={{fontFamily:'Quicksand-Bold', fontSize: height * 0.022, color: '#505050'}}>{props.name}</Text>
+        <Text style={{fontFamily: 'Quicksand-Regular', fontSize: height * 0.015, color: '#505050'}}>{props.username}</Text>
     </View>
     <View style={styles.buttonsContainer}>
         <TouchableOpacity
-            style={{backgroundColor: '#505050', borderRadius: 10, padding: 8, marginRight: width * 0.02}}
+            style={{backgroundColor: '#785444', borderRadius: 10, padding: 8, marginRight: width * 0.02}}
             onPress={props.onAccept}
         >
             <Text 
-                style={{fontFamily: 'Lato-Bold', fontSize: 12, color: 'white'}}
+                style={{fontFamily: 'Quicksand-Bold', fontSize: 12, color: 'white'}}
             >ACCEPT</Text>
         </TouchableOpacity>
         <TouchableOpacity

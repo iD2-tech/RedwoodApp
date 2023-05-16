@@ -71,7 +71,7 @@ const LoginScreen = () => {
           <View style={styles.lineContainer}>
             <View style={{ flex: 1, height: 2, backgroundColor: '#5C4033' }} />
             <View>
-              <Text style={{ width: 50, textAlign: 'center', fontFamily: 'Lato-Regular' }}>Or</Text>
+              <Text style={{ width: 50, textAlign: 'center', fontFamily: 'Quicksand-Regular' }}>Or</Text>
             </View>
             <View style={{ flex: 1, height: 2, backgroundColor: '#5C4033' }} />
           </View>
@@ -122,21 +122,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 10,
     marginTop: height * 0.005,
-    marginBottom: width * 0.01,
+    marginBottom: width * 0.014,
     width: width * 0.77,
     borderStyle: 'solid',
     borderBottomColor: '#AAAAAA',
     borderBottomWidth: 1,
     borderColor: 'black',
     opacity: 50,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     color: '#785444'
   },
   su: {
     marginBottom: height * 0.01,
     fontSize: 30,
     fontWeight: '800',
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     color: '#785444',
   },
 

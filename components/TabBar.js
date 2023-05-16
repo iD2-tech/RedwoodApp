@@ -9,7 +9,7 @@ const { width, height } = Dimensions.get('screen');
 const TabBar = ({ state, navigation }) => {
   const [selected, setSelected] = useState('Friends');
   const { routes } = state;
-  const renderColor = currentTab => (currentTab === selected ? '#898989' : '#505050');
+  const renderColor = currentTab => (currentTab === selected ? '#C3A699' : '#785444');
 
   const handlePress = (activeTab, index) => {
     // console.log(routes)
@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
     width: 250,
     borderRadius: 100,
     elevation: 2,
-    borderColor: '#505050',
+    borderColor: '#785444',
     borderWidth: 6,
-    backgroundColor: '#505050',
+    backgroundColor: '#785444',
     
   },
 });
