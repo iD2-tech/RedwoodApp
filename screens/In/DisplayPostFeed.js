@@ -63,6 +63,7 @@ const DisplayPostProfile = ({ route }) => {
         <DismissKeyBoard>
             <View style={styles.container}>
                 <View style={styles.topBar}>
+                    
                     <View style={styles.backButton}>
                         <PageBackButton onPress={navBack} />
                     </View>
@@ -72,6 +73,7 @@ const DisplayPostProfile = ({ route }) => {
                     <View style={styles.userContainer}>
                         <Text adjustsFontSizeToFit style={styles.name} numberOfLines={1}>{user}</Text>
                     </View>
+                    
                 </View>
 
                 <View style={styles.scrollContainer}>
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
     },
 
     topBar: {
-        height: height * 0.05,
+        height: height * 0.065,
         width: width,
         marginLeft: width * -0.13,
         paddingLeft: width * 0.13,
@@ -151,6 +153,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: height * 0.1,
+        marginBottom: height * 0.02
     },
 
     titleContainer: {
@@ -203,16 +206,16 @@ const styles = StyleSheet.create({
     },
 
     name: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 16.5,
+        fontFamily: 'Quicksand-Bold',
+        fontSize: 15,
         color: '#785444',
         textAlign: 'right',
     },
 
     title: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 500,
-        fontSize: 23,
+        fontSize: 27,
         color: '#785444',
     },
 
@@ -222,8 +225,8 @@ const styles = StyleSheet.create({
     },
 
     verse: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 16,
+        fontFamily: 'Quicksand-Bold',
+        fontSize: 20,
         color: '#A47C69',
     },
 
@@ -231,21 +234,21 @@ const styles = StyleSheet.create({
     },
 
     quote: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 17,
+        fontFamily: 'Quicksand-Bold',
+        fontSize: 19,
         color: '#505050',
     },
 
     verseText: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 14,
+        fontFamily: 'Quicksand-Regular',
+        fontSize: 17,
         color: '#A47C69',
     },
 
     text: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 500,
-        fontSize: 14,
+        fontSize: 17,
         color: '#785444',
     },
 

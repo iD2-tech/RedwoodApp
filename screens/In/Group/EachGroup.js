@@ -96,7 +96,7 @@ const EachGroup = (props) => {
 
           if (doc.data().anonymous === '1') {
             postArr.push({
-              user: 'Anonymous Member',
+              user: 'Anonymous',
               userId: props.item.memberIds[i].ids,
               date: dateString,
               title: doc.data().title,
@@ -156,7 +156,7 @@ const EachGroup = (props) => {
         <View style={styles.individualButton}>
           <TouchableOpacity onPress={navToMembers}>
             <View style={{alignItems: 'center'}}>
-            <Feather name="users" size={20} color={'#785444'} />
+            <Feather name="users" size={22} color={'#785444'} />
             </View>
             
             <Text style={styles.buttonLogo}>members</Text>
@@ -165,7 +165,7 @@ const EachGroup = (props) => {
         <View style={styles.individualButton}>
           <TouchableOpacity >
           <View style={{alignItems: 'center'}}>
-            <Feather name="message-circle" size={20} color={'#785444'} />
+            <Feather name="message-circle" size={22} color={'#785444'} />
             </View>
             <Text style={styles.buttonLogo}>chat</Text>
             
@@ -174,7 +174,7 @@ const EachGroup = (props) => {
         <View style={styles.individualButton}>
           <TouchableOpacity >
           <View style={{alignItems: 'center'}}>
-            <Feather name="x-circle" size={20} color={'#785444'} />
+            <Feather name="x-circle" size={22} color={'#785444'} />
             </View>
             <Text style={styles.buttonLogo}>leave</Text>
             
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Quicksand-Regular',
     color: '#785444',
-    fontSize: 12,
+    fontSize: 14,
     marginTop: height * 0.002,
   },
 })
