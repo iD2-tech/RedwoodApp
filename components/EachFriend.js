@@ -16,7 +16,7 @@ const EachFriend = (props) => {
         : 
         <Text style={{fontFamily: 'Quicksand-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text>
         }
-        {/* <Text style={{fontFamily: 'Lato-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text> */}
+        {/* <Text style={{fontFamily: 'Quicksand-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text> */}
     </View>
     <View style={styles.xContainer}>
         <TouchableOpacity onPress={props.onPress}>

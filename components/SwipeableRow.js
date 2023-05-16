@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
  },
 
  swipeText: {
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Quicksand-Bold',
         fontSize: 12,
         color: '#505050',
         marginTop: height * 0.01

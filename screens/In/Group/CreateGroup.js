@@ -72,12 +72,12 @@ const CreateGroup = ({ route }) => {
         // alignItems: 'center'
       }}>
         <Text style={{
-            fontFamily:'Margarine',
+            fontFamily:'Quicksand-Bold',
             fontSize: 25,
             color:"#785444"
         }}>CREATE A CODE</Text>
         <Text style={{
-           fontFamily:'Margarine',
+           fontFamily:'Quicksand-Bold',
            fontSize: 15,
            color:"#785444",
            marginTop: height * 0.005
@@ -109,7 +109,7 @@ const CreateGroup = ({ route }) => {
                     onChangeText={text => { setDescription(text) }}
                   />
             </View>
-            <OnboardButton buttonColor="#785444" fontFamily= "Margarine" textColor="#FFFFFF" text="CREATE" onPress={() => {}}/>
+            <OnboardButton buttonColor="#785444" fontFamily= "Quicksand-Bold" textColor="#FFFFFF" text="CREATE" onPress={createGroup}/>
     </View>
   )
 }
@@ -142,7 +142,7 @@ input: {
   borderBottomWidth: 1,
   borderColor: 'black',
   opacity: 50,
-  fontFamily: 'Margarine'
+  fontFamily: 'Quicksand-Bold'
 },
 input2: {
   backgroundColor: '#ECDCD1',
@@ -156,7 +156,7 @@ input2: {
   borderBottomWidth: 1,
   borderColor: 'black',
   opacity: 50,
-  fontFamily: 'Margarine'
+  fontFamily: 'Quicksand-Bold'
 },
 
 })

@@ -13,6 +13,7 @@ import { bookNames } from '../../assets/bibleBookNames';
 const { width, height } = Dimensions.get('window')
 
 const DisplayPostProfile = ({ route }) => {
+    const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const userId = firebase.auth().currentUser.uid;
     const navigation = useNavigation();
     const { date, id, text, title, user, verse, verseText } = route.params;
@@ -36,17 +37,21 @@ const DisplayPostProfile = ({ route }) => {
         }, 500);
     }, []);
 
+    // var dateObj = new Date(date.seconds * 1000);
+    // var dateNum = dateObj.getDate();
+    // if (dateNum < 10) {
+    //     dateNum = "0" + dateNum;
+    // }
+    // var month = dateObj.getMonth() + 1;
+    // if (month < 10) {
+    //     month = "0" + month;
+    // }
+    // const year = dateObj.getFullYear();
+    // const dateString = month + "/" + dateNum + "/" + year;
     var dateObj = new Date(date.seconds * 1000);
-    var dateNum = dateObj.getDate();
-    if (dateNum < 10) {
-        dateNum = "0" + dateNum;
-    }
-    var month = dateObj.getMonth() + 1;
-    if (month < 10) {
-        month = "0" + month;
-    }
+    const datee = dateObj.getDate();
+    const month = monthNames[dateObj.getMonth()];
     const year = dateObj.getFullYear();
-    const dateString = month + "/" + dateNum + "/" + year;
 
     // back button
     const navBack = () => {
@@ -206,14 +211,16 @@ const DisplayPostProfile = ({ route }) => {
 
     return (
         <DismissKeyBoard>
-            <ImageBackground source={require('../../tree.jpg')} resizeMode="cover" style={styles.image}>
+            <ImageBackground source={require('../../FeatherLeft.png')} resizeMode="cover" style={styles.image} imageStyle={{ marginTop: height * 0.02,  transform: [
+    { scaleX: -1 }
+  ]}}>
                 {/* back button */}
                 <View style={styles.backButtonContainer}>
                     <PageBackButton onPress={navBack} />
                 </View>
                 {/* screen container */}
                 <View style={styles.container}>
-                    <Text style={styles.date}>{dateString}</Text>
+                    <Text style={styles.date}>{month + ' ' + datee + ', ' + year}</Text>
 
                     <View>
 
@@ -280,7 +287,7 @@ const DisplayPostProfile = ({ route }) => {
                             height: height * 0.2,
                             borderColor: '#D3D3D3',
                             // paddingLeft: width * 0.02
-
+                            
                         }}>
                             <TextInput
                                 style={styles.text}
@@ -306,10 +313,10 @@ export default DisplayPostProfile
 
 const styles = StyleSheet.create({
     container: {
-        width: width * 0.8,
-        justifyContent: 'center',
-        marginLeft: width * 0.05,
-        height: height * 0.6,
+        width: width * 0.7,
+        justifyContent: 'flex-start',
+        marginLeft: width * 0.1,
+        height: height * 0.7,
         // borderWidth: 1,
     },
 
@@ -319,22 +326,24 @@ const styles = StyleSheet.create({
     },
 
     date: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 15,
-        color: '#505050',
+        fontFamily: 'Quicksand-Regular',
+        fontSize: 20,
+        color: '#785444',
         fontWeight: 'bold',
+        marginTop: height * 0.02
     },
 
     verseTextContainer: {
         height: height * 0.12,
-        marginBottom: height * 0.02
+        marginBottom: height * 0.02,
+        width: width * 0.67
     },
 
     title: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 23,
-        color: '#505050',
-        width: width * 0.65
+        fontFamily: 'Quicksand-Bold',
+        fontSize: 25,
+        color: '#785444',
+        width: width * 0.7
 
     },
 
@@ -345,14 +354,14 @@ const styles = StyleSheet.create({
     },
 
     editLabel: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontSize: 10,
-        color: '#505050',
+        color: '#A47C69',
     },
 
     titleInputContainer: {
-        color: '#505050',
-        width: width * 0.75,
+        color: '#A47C69',
+        width: width * 0.62,
         marginBottom: height * 0.022,
         marginTop: height * 0.01,
 
@@ -364,22 +373,22 @@ const styles = StyleSheet.create({
     },
 
     quote: {
-        fontFamily: 'Lato-Bold',
+        fontFamily: 'Quicksand-Bold',
         fontSize: 17,
-        color: '#505050',
+        color: '#A47C69',
 
     },
 
     verseText: {
-        fontFamily: 'Lato-Bold',
+        fontFamily: 'Quicksand-Bold',
         fontSize: 14,
-        color: '#505050',
+        color: '#A47C69',
         marginBottom: height * 0.022
     },
 
     verse: {
-        fontFamily: 'Lato-Bold',
-        color: '#505050',
+        fontFamily: 'Quicksand-Bold',
+        color: '#A47C69',
         textAlign: 'right',
         fontSize: 14,
         marginBottom: height * 0.021,
@@ -390,24 +399,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: height * 0.012,
         marginRight: width * 0.03,
-        width: width * 0.8,
+        width: width * 0.7,
         height: height * 0.05,
 
     },
 
     editableBook: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontSize: 20,
-        color: '#505050',
+        color: '#A47C69',
 
-        width: width * 0.5,
+        width: width * 0.4,
         height: height * 0.05,
     },
 
     editableChapter: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontSize: 20,
-        color: '#505050',
+        color: '#A47C69',
 
         width: width * 0.08,
         marginRight: width * 0.02,
@@ -415,40 +424,40 @@ const styles = StyleSheet.create({
     },
 
     editableVerse: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontSize: 20,
-        color: '#505050',
+        color: '#A47C69',
 
         width: width * 0.15,
         marginLeft: width * 0.02
     },
 
     text: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontSize: 14,
-        color: '#505050',
+        color: '#785444',
         // marginRight: width * 0.015,
-        width: width * 0.7,
-        height: height * 0.28,
+        width: width * 0.67,
+        height: height * 0.38,
     },
 
     textInput: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontSize: 14,
-        color: '#505050',
+        color: '#785444',
         marginRight: width * 0.015,
     },
 
     image: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
     },
 
     backButtonContainer: {
         marginLeft: width * 0.05,
         width: width * 0.05,
-        marginTop: height * 0.06,
+        // marginTop: height * 0.06,
     },
 
     bookAutofill: {
@@ -460,7 +469,7 @@ const styles = StyleSheet.create({
     },
 
     bookAutofillText: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontSize: 14,
         color: '#808080',
         textAlign: 'left',

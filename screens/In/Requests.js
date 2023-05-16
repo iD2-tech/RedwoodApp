@@ -220,12 +220,12 @@ const Requests = () => {
       <TouchableOpacity
         style={{justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444'}}
         onPress={sendRequest}
-      ><Text style={{fontFamily: 'Margarine', color: 'white', fontSize: 13}}>SEND</Text>
+      ><Text style={{fontFamily: 'Quicksand-Bold', color: 'white', fontSize: 13}}>SEND</Text>
       </TouchableOpacity>
       </View>
       <View style={styles.myFriends}>
         <View>
-          <Text style={{fontFamily: 'Margarine', color: '#505050'}}>
+          <Text style={{fontFamily: 'Quicksand-Bold', color: '#785444'}}>
             FRIEND REQUESTS
           </Text>
         </View>
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     color: '#FFE3D7',
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     width: width * 0.63,
     height: height * 0.05,
 
