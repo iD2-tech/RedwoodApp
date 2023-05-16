@@ -211,13 +211,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     color: '#785444',
-    fontWeight: '500'
+    fontWeight: '500',
+    fontFamily: 'Quicksand-Bold'
   },
 
   topBar: {
     height: height * 0.15,
     justifyContent: 'flex-end',
     paddingBottom: height * 0.02,
+    marginBottom: height * 0.01,
     fontFamily: 'Quicksand-Regular',
   },
 

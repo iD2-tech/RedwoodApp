@@ -21,7 +21,7 @@ const GroupDisplay = (props) => {
         <Text style={{
             marginTop: height * 0.01,
             fontFamily: 'Quicksand-Bold',
-            color: '#785444',
+            color: '#A47C69',
             fontSize: 15,
             width: width * 0.35,
         }}>

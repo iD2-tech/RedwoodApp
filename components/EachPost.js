@@ -103,12 +103,12 @@ const styles = StyleSheet.create({
         width: width,
         paddingLeft: width * 0.13,
         paddingRight: width * 0.13,
-        marginBottom: 0,
+        marginBottom: height * 0.015,
         paddingBottom: height * 0.015,
     },
 
     topBar: {
-        height: height * 0.05,
+        height: height * 0.058,
         width: width,
         marginLeft: width * -0.13,
         paddingLeft: width * 0.13,
@@ -119,21 +119,23 @@ const styles = StyleSheet.create({
     },
 
     titleContainer: {
-        width: width * 0.52,
+        width: width * 0.50,
         height: height * 0.04,
         justifyContent: 'center',
+
     },
 
     userContainer: {
-        width: width * 0.18,
-        marginLeft: width * 0.05,
+        width: width * 0.28,
+        // marginLeft: width * 0.01,
         textAlign: 'right',
         justifyContent: 'center',
+
     },
 
     name: {
         fontFamily: 'Quicksand-Medium',
-        fontSize: 13,
+        fontSize: 14,
         color: '#785444',
         textAlign: 'right',
         // borderWidth: 1,
@@ -149,46 +151,47 @@ const styles = StyleSheet.create({
 
     verseContainer: {
         height: height * 0.025,
-        marginTop: height * 0.005,
+        marginTop: height * 0.01,
         justifyContent: 'flex-end'
     },
 
     verse: {
         fontFamily: 'Quicksand-SemiBold',
-        fontSize: 14,
+        fontSize: 16,
         color: '#A47C69',
     },
 
     verseTextContainer: {
         maxHeight: height * 0.08,
         flexDirection: 'row',
+        marginTop: height * 0.01
         // borderWidth: 1,
     },
 
     quote: {
         fontFamily: 'Quicksand-Bold',
-        fontSize: 17,
+        fontSize: 19,
         color: '#505050',
     },
 
     verseText: {
         fontFamily: 'Quicksand-Regular',
-        fontSize: 14,
+        fontSize: 17,
         color: '#A47C69',
     },
 
     text: {
         fontFamily: 'Quicksand-Regular',
         fontWeight: '500',
-        fontSize: 14,
+        fontSize: 16,
         color: '#785444',
         marginTop: height * 0.01,
     },
 
     textContainer: {
         maxHeight: height * 0.35,
-        marginTop: height * 0.005,
-        marginBottom: height * 0.005,
+        marginTop: height * 0.01,
+        marginBottom: height * 0.02,
         //borderWidth: 1,
     },
 
