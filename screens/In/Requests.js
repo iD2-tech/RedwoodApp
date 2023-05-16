@@ -159,11 +159,16 @@ const Requests = () => {
     const userId = firebase.auth().currentUser.uid;
     const friendArray = [];
     const nameArray = [];
+    const idArray = [];
     friendArray.push(item.username);
     nameArray.push(item.name);
+    idArray.push(item.id);
     friendArray.push(user.username);
     nameArray.push(user.name);
+    idArray.push(userId);
+
     firestore().collection('Friends').add({
+      ids: idArray,
       relationship: friendArray,
       names: nameArray,
     })

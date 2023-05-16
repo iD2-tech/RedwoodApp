@@ -26,6 +26,7 @@ const SwipeableRow = (props) => {
 
     const deleteOP = (item) => { 
      firestore().collection('Posts').doc(userId).collection('userPosts').doc(item.id).delete().then(() => {
+      
      })     
     }
 

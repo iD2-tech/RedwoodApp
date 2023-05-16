@@ -7,7 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native';
 const { width, height } = Dimensions.get('window')
 
-const EachPost = (props) => {
+const EachGroupPost = (props) => {
     const postId = props.postId;
     const userId = props.userId;
     const username = props.username;
@@ -24,17 +24,17 @@ const EachPost = (props) => {
     }, [])
 
     const entryPressed = () => {
-        navigation.navigate("DisplayPostProfile", {
-            postId: props.postId,
-            postUserId: props.userId,
-            text: props.text,
-            username: props.username,
-            user: props.user,
-            title: props.title,
-            likes: props.likes,
-            verse: props.verse,
-            verseText: props.verseText
-          });
+        // navigation.navigate("DisplayPostGroup", {
+        //     postId: props.postId,
+        //     postUserId: props.userId,
+        //     text: props.text,
+        //     username: props.username,
+        //     user: props.user,
+        //     title: props.title,
+        //     likes: props.likes,
+        //     verse: props.verse,
+        //     verseText: props.verseText
+        //   });
     }
 
     const likePost = () => {
@@ -72,7 +72,7 @@ const EachPost = (props) => {
                 <Text style={styles.text} numberOfLines={8}>{props.text}</Text>
             </View>
 
-
+{/* 
             <View style={styles.interactionContainer}>
                 <View style={styles.iteractionButtonContainer}>
                     <TouchableOpacity onPress={() => likePost(props.item)}>
@@ -91,14 +91,14 @@ const EachPost = (props) => {
                         <Feather name="message-circle" size={23} color='#785444' />
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View> */}
 
 
         </TouchableOpacity>
     )
 }
 
-export default EachPost
+export default EachGroupPost;
 
 const styles = StyleSheet.create({
     container: {

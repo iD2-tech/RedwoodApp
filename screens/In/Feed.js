@@ -11,18 +11,40 @@ const { width, height } = Dimensions.get('window');
 
 const Feed = () => {
 
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
   const [friends, setFriends] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [dateTitle, setDateTitle] = useState('');
   const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const [username, setUsername] = useState('');
+  const userId = firebase.auth().currentUser.uid;
+  const [postsExist, setPostsExist] = useState(false);
+  let tempDate = new Date() + '';
+  let dateUnrendered = tempDate.split(' ')[1] + ' ' + tempDate.split(' ')[2];
+  
 
   useEffect(() => {
-    renderFriends();
-    console.log(friends);
-    renderPosts();
-    console.log(posts)
-  }, [friends])
+    if (username === '') {
+      setDateTitle(dateUnrendered);
+      const userRef = firebase.firestore().collection('Users').doc(userId);
+      const unsubscribe = userRef.onSnapshot((doc) => {
+        if (doc.exists) {
+          const { username } = doc.data();
+          setUsername(username);
+        }
+      });
+      return () => {
+        unsubscribe();
+      }
+    }
 
+    renderFriends().then(() => {
+      renderPosts().then(() => {
+        setPostsExist(true);
+      })
+    })
+
+  }, [friends, username, posts])
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -31,7 +53,7 @@ const Feed = () => {
     setRefreshing(false);
   };
 
-  const renderFriends = () => {
+  const renderFriends = async () => {
     const userId = firebase.auth().currentUser.uid;
     const friendCollection = firestore().collection('Friends');
     const friend1Query = friendCollection.where('ids', 'array-contains', userId);
@@ -47,56 +69,69 @@ const Feed = () => {
           friendArr.push({ username: relationshipArr[0], name: nameArr[0], ids: idArr[0] });
         }
       })
-      console.log(friendArr);
       if (friends === null) {
         setFriends(friendArr);
       }
-    })
 
+    })
     return () => unsubscribe();
   }
 
-
-  const renderPosts = () => {
+  const renderPosts = async () => {
     if (friends != null) {
-      const postArr = [];
+      let postArr = [];
       const unsubscribeFunctions = [];
       for (let i = 0; i < friends.length; i++) {
         const userPostRef = firestore().collection('Posts').doc(friends[i].ids).collection('userPosts').where('private', '==', '0').where('date', '>', getStartofToday());
         const unsubscribe = userPostRef.onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             var verses = doc.data().book + " " + doc.data().chapter + ":" + doc.data().verse;
-
             var dateObj = new Date(doc.data().date.seconds * 1000);
             const date = dateObj.getDate();
             const month = monthNames[dateObj.getMonth()];
             const year = dateObj.getFullYear();
-
             const dateString = date + " " + month + " " + year;
-
-            postArr.push({
-              user: friends[i].username,
-              id: friends[i].ids,
-              date: dateString,
-              title: doc.data().title,
-              verseText: doc.data().verses,
-              verse: verses,
-              text: doc.data().text,
-            })
+            
+            if (doc.data().anonymous === '1') {
+              postArr.push({
+                user: 'Anonymous',
+                userId: friends[i].ids,
+                date: dateString,
+                title: doc.data().title,
+                verseText: doc.data().verses,
+                verse: verses,
+                text: doc.data().text,
+                postId: doc.id,
+                username: username,
+                likes: doc.data().likes,
+              })
+            } else {
+              postArr.push({
+                user: friends[i].username,
+                userId: friends[i].ids,
+                date: dateString,
+                title: doc.data().title,
+                verseText: doc.data().verses,
+                verse: verses,
+                text: doc.data().text,
+                postId: doc.id,
+                username: username,
+                likes: doc.data().likes,
+              })
+            }
           })
-
         })
         unsubscribeFunctions.push(unsubscribe);
       }
-      setPosts(postArr);
+      if (posts === null) {
+        setPosts(postArr);
+      }
+      
       return () => {
         unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
       };
-
     }
   }
-
-
 
   function getStartofToday() {
     const now = new Date();
@@ -105,57 +140,91 @@ const Feed = () => {
     return timestamp;
   }
 
+  function CallBack(postId, postedUserId, likes) {
+    let correctLength = posts.length;
+    firestore().collection('Posts').doc(postedUserId).collection('userPosts').doc(postId).update({
+      likes: likes,
+    }).then(() => {
+      let updatedLength = posts.length;
+      let uniquePosts = [... new Set(posts)];
+      let narrowedPosts = [];
+      if (updatedLength === correctLength) {
+        narrowedPosts = uniquePosts;
+      } else {
+        for (let i = 0; i < uniquePosts.length / 2; i++) {
+          narrowedPosts.push(uniquePosts[i]);
+        }
+      }
+      setPosts(narrowedPosts);
+    })
+  }
 
   return (
-    <ImageBackground source={require("../../lake_tree_mountain.jpg")} resizeMode='cover' style={styles.background}>
-    <View style={styles.image}>
-      {/* <MaskedView
-        style={styles.flatContainer}
-        maskElement=
-        {<LinearGradient style={{ flex: 1, }} colors={['transparent', 'white']} locations={[0, 0.22]} />}
-      > */}
-      <View style={styles.flatContainer}>
-        <FlatList
-          data={posts}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) =>
-            <EachPost user={item.user} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
-          }
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          showsVerticalScrollIndicator={false}
-        />
+    <View style={styles.background}>
 
-      {/* </MaskedView> */}
+      <View style={styles.topBar}>
+        <Text style={styles.topText}>{dateTitle}</Text>
+      </View>
+
+
+      <View style={styles.flatContainer}>
+
+        {posts != null ?
+          <FlatList
+            data={posts}
+            keyExtractor={item => item.postId}
+            renderItem={({ item }) =>
+              <EachPost item={item} handleCallback={CallBack} user={item.user} likes={item.likes} username={item.username} postId={item.postId} userId={item.userId} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
+            }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            showsVerticalScrollIndicator={false}
+          />
+
+          :
+          <Text style={styles.noEntryText}>No entries yet, encourage your friends to reflect!</Text>
+        }
       </View>
     </View>
-    </ImageBackground>
-
   )
+
+
 }
 
-export default Feed
+export default Feed;
 
 const styles = StyleSheet.create({
-  background: {
-    height: height,
-    opacity: 1,
-  },
-
   flatContainer: {
-    // marginTop: height * 0.12,
-    // marginLeft: width * 0.095,
-    // justifyContent: 'center',
-    // alignContent: 'center'
-    // height: height,
-    width: width,
-  },
-  image: {
-    flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    // paddingBottom: height * 0.09,
+    height: height * 0.76,
+  },
+
+  noEntryText: {
+    textAlign: 'center',
+    color: '#785444',
+    fontFamily: 'Lato-Regular',
+  },
+
+  topText: {
+    textAlign: 'center',
+    fontSize: 30,
+    color: '#785444',
+    fontWeight: '500'
+  },
+
+  topBar: {
+    height: height * 0.15,
+    justifyContent: 'flex-end',
+    paddingBottom: height * 0.02,
+    fontFamily: 'Lato-Regular',
+  },
+
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#ECDCD1',
   },
 })

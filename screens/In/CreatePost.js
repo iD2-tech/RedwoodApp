@@ -105,7 +105,9 @@ const CreatePost = () => {
                 pinned: '0',
                 public: '1',
                 private: '0',
-                anonymous: '0'
+                anonymous: '0',
+                likes: [],
+                comments: [],
               }).then((docRef) => {
                 console.log("added" + docRef)
                 setTitle('');
@@ -132,7 +134,9 @@ const CreatePost = () => {
                 pinned: '0',
                 public: '0',
                 private: '1',
-                anonymous: '0'
+                anonymous: '0',
+                likes: [],
+                comments: [],
               }).then((docRef) => {
                 console.log("added" + docRef)
                 setTitle('');
@@ -159,7 +163,9 @@ const CreatePost = () => {
                 pinned: '0',
                 public: '0',
                 private: '0',
-                anonymous: '1'
+                anonymous: '1',
+                likes: [],
+                comments: [],
               }).then((docRef) => {
                 console.log("added" + docRef)
                 setTitle('');
@@ -298,6 +304,7 @@ const CreatePost = () => {
             onChangeText={text => { setTitle(text); }}
             style={styles.title}
             returnKeyType='next'
+            maxLength={20}
             onSubmitEditing={() => ref_input1.current.focus()}
           />
 

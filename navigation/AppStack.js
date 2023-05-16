@@ -5,9 +5,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-
-
 import Feed from '../screens/In/Feed';
+import DisplayPostFeed from '../screens/In/DisplayPostFeed';
+
 import CreatePost from '../screens/In/CreatePost';
 import Friends from '../screens/In/Friends';
 import Profile from '../screens/In/Profile';
@@ -21,21 +21,15 @@ import MyProfile from '../screens/In/MyProfile';
 import Privacy from '../screens/In/Privacy';
 import Settings from '../screens/In/Settings';
 
-
-
-
 import GroupMain from '../screens/In/Group/GroupMain';
 import CreateGroup from '../screens/In/Group/CreateGroup';
 import EachGroup from '../screens/In/Group/EachGroup';
 import Members from '../screens/In/Group/Members';
 
-
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 // const Tabb = createMaterialBottomTabNavigator();
 // ios-add-circle-outline
-
-
 
 const { width, height } = Dimensions.get('window')
 
@@ -130,20 +124,39 @@ const AppStack = () => {
     )
   }
 
+  const FeedStack = ({ navigation }) => (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Feed"
+        component={Feed}
+        options={{ headerShown: false }}
+        
+      />
+      <Stack.Screen
+        name="DisplayPostProfile"
+        component={DisplayPostFeed}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          borderTopWidth: 0,
+          // borderTopWidth: 0,
+          backgroundColor: '#ECDCD1',
+          paddingTop: height * 0.01,
+          height: height * 0.09
         }
       }}>
       <Tab.Screen
         name="Home"
-        component={Feed}
+        component={FeedStack}
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
             <Feather name="home" size={size} color={color} />
-          ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',
+          ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
         }}
       />
       <Tab.Screen
@@ -152,7 +165,7 @@ const AppStack = () => {
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
             <Feather name="zap" size={size} color={color} />
-          ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',
+          ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
         }}
       />
       <Tab.Screen
@@ -161,7 +174,7 @@ const AppStack = () => {
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
             <Feather name="plus-circle" size={size} color={color} />
-          ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',
+          ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
         }}
       />
       <Tab.Screen
@@ -170,7 +183,7 @@ const AppStack = () => {
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
             <Feather name="book-open" size={size} color={color} />
-          ), tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'gray',
+          ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
         }}
       />
     </Tab.Navigator>
