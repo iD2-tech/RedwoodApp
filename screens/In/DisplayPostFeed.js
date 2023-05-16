@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
 
     scrollContainer: {
         maxHeight: height * 0.45,
-        borderWidth: 1,
+        // borderWidth: 1,
     },
 
     backButton: {
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 
     commentsContainer: {
         height: height * 0.22, 
-        borderWidth: 1,
+        // borderWidth: 1,
     },
 
     userContainer: {
