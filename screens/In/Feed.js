@@ -16,6 +16,7 @@ const Feed = () => {
   const [dateTitle, setDateTitle] = useState('');
   const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const userId = firebase.auth().currentUser.uid;
   const [postsExist, setPostsExist] = useState(false);
   let tempDate = new Date() + '';
@@ -27,7 +28,8 @@ const Feed = () => {
       const userRef = firebase.firestore().collection('Users').doc(userId);
       const unsubscribe = userRef.onSnapshot((doc) => {
         if (doc.exists) {
-          const { username } = doc.data();
+          const { username, name } = doc.data();
+          setName(name);
           setUsername(username);
         }
       });
@@ -48,6 +50,7 @@ const Feed = () => {
     setRefreshing(true);
     // Fetch new data here and set it using setData
     renderPosts();
+    console.log(friends);
     setRefreshing(false);
   }
 
@@ -57,6 +60,7 @@ const Feed = () => {
     const friend1Query = friendCollection.where('ids', 'array-contains', userId);
     const unsubscribe = friend1Query.onSnapshot((querySnapshot) => {
       const friendArr = [];
+      friendArr.push({username: username, name: name, ids: userId})
       querySnapshot.forEach((doc) => {
         relationshipArr = doc.data().relationship;
         nameArr = doc.data().names;
@@ -66,8 +70,8 @@ const Feed = () => {
         } else {
           friendArr.push({ username: relationshipArr[0], name: nameArr[0], ids: idArr[0] });
         }
-      })
-      if (friends === null) {
+      }) 
+      if (friends === null) {   
         setFriends(friendArr);
       }
 
