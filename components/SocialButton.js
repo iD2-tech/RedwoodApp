@@ -23,7 +23,7 @@ const SocialButton = (props) => {
         <FontAwesome name={props.social} size={25} color="#505050"/>
         <Text style={
             {color: props.textColor,
-            fontFamily: 'Lato-Regular',
+            fontFamily: 'Quicksand-Bold',
             fontWeight:'500'
             }
         }>{props.text}</Text>

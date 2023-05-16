@@ -157,14 +157,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'black',
     opacity: 50,
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     color: '#785444'
   },
   su: {
     marginBottom: 30,
     fontSize: 28,
     fontWeight: '800',
-    fontFamily: 'Margarine',
+    fontFamily: 'Quicksand-Bold',
     color: '#505050',
     marginLeft: 0
   },

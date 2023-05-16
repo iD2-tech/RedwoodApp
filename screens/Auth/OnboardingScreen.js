@@ -32,18 +32,19 @@ const OnboardingScreen = () => {
       justifyContent: 'center',
       alignItems: 'center',
       flex: 1,
-      backgroundColor: 'white',
+      backgroundColor: '#ECDCD1',
       flexDirection: 'column',
       opacity: fadeAnim,
     }}>
       <View style={styles.logoContainer}>
-        <Text style={styles.text}>REDWOOD</Text>
+        <Image source={require('../../logo.jpg')} style={styles.logo} />
       </View>
       <Text style={styles.subText}>
         By clicking Log In or Sign Up, you agree to our Terms. Learn how we process your data in our Privacy Policy and Cookies Policy
       </Text>
-      <OnboardButton buttonColor="#505050" textColor="#FFFFFF" text="CREATE ACCOUNT" onPress={navToSignUp} />
-      <OnboardButton buttonColor="#FFFFFF" textColor="#5C4033" text="SIGN IN" onPress={navToLogin} />
+      <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="CREATE ACCOUNT" onPress={navToSignUp} />
+      <OnboardButton buttonColor="#C3A699" textColor="#FFE3D7" text="SIGN IN" onPress={navToLogin} />
+
     </Animated.View>
   )
 }
@@ -53,10 +54,8 @@ export default OnboardingScreen
 const styles = StyleSheet.create({
 
   logoContainer: {
-    marginBottom: height * 0.25,
-    marginTop: height * 0.3,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: height * 0.1,
+    marginBottom: height * 0.165,
   },
 
   subText: {
@@ -65,20 +64,13 @@ const styles = StyleSheet.create({
     width: width * 0.7,
     marginBottom: height * 0.025,
     lineHeight: 15,
-    fontFamily: 'Lato-Regular',
-    color: '#000000'
+    fontFamily: 'Quicksand-Regular',
+    color: '#505050'
   },
 
   logo: {
     resizeMode: 'contain',
     width: width * 0.65,
     height: height * 0.3,
-  },
-
-  text: {
-    color: '#505050',
-    fontFamily: 'Helvetica',
-    fontWeight: 'bold',
-    fontSize: 35
   }
 })

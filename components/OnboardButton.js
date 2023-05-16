@@ -12,14 +12,14 @@ const OnboardButton = (props) => {
             borderRadius: 40,
             alignItems: 'center',
             marginBottom: height * 0.01,
-            borderColor: '#5B5B5B',
+            borderColor: props.buttonColor,
             borderWidth: 1
         }
     }
     onPress ={() => {props.onPress()}}>
         <Text style={
             {color: props.textColor,
-            fontFamily: 'Lato-Regular',
+            fontFamily: 'Quicksand-Regular',
             fontWeight:'bold'
             }
         }>{props.text}</Text>
