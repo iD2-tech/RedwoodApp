@@ -11,8 +11,8 @@ const SocialButton = (props) => {
             borderRadius: 40,
             alignItems: 'center',
             marginBottom: '3%',
-            borderColor: '#5B5B5B',
-            // borderWidth: 1,
+            borderColor: '#785444',
+            borderWidth: 0.5,
             flexDirection: 'row',
             justifyContent:'space-evenly'
         }

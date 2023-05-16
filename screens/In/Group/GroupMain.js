@@ -105,39 +105,39 @@ const GroupMain = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginTop: height * 0.08, width: width * 0.9, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={{ fontFamily: 'Lato-Bold', fontSize: 30, color: "#505050", width: width * 0.82 }}>GROUPS</Text>
-        <TouchableOpacity onPress={showornoshow}>
-          {
-            show ? <Feather name="minus" size={30} color={'#505050'} /> : <Feather name="plus" size={30} color={'#505050'} />
-          }
-        </TouchableOpacity>
-      </View>
-      {
-        show ?
-          <View>
-            <View style={{ flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between', marginTop: height * 0.02 }}>
-              <View style={styles.searchContainer}>
-                <TextInput
-                  style={styles.textInputStyle}
-                  onChangeText={(text) => setGroupCode(text)}
-                  maxLength={5}
-                  value={groupCode}
-                  underlineColorAndroid="transparent"
-                  placeholder="Group Code..."
-                />
-              </View>
-              <TouchableOpacity
-                style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.17, borderRadius: 10, backgroundColor: '#505050' }}
-                onPress={join}
-              ><Text style={{ fontFamily: 'Lato-Regular', color: 'white', fontSize: 13 }}>JOIN</Text>
-              </TouchableOpacity>
+        <View style={{marginTop: height * 0.08, width: width * 0.9, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={{fontFamily: 'Margarine', fontSize: 30, color: "", width: width * 0.82}}>GROUPS</Text>
+            <TouchableOpacity onPress={showornoshow}>
+            {
+                show ? <Feather name="minus" size={30} color={'#785444'} />:<Feather name="plus" size={30} color={'#785444'} />
+            }
+            </TouchableOpacity>
+        </View>
+        {
+            show ? 
+            <View>
+            <View style={{flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between', marginTop: height * 0.02}}>
+            <View style={styles.searchContainer}>
+                    <TextInput
+                      style={styles.textInputStyle}
+                      onChangeText={(text) => setGroupCode(text)}
+                      value={groupCode}
+                      underlineColorAndroid="transparent"
+                      placeholder="ENTER CODE"
+                      placeholderTextColor={'#FFE3D7'}
+                    />
+            </View>
+            <TouchableOpacity
+              style={{justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444'}}
+            ><Text style={{fontFamily: 'Margarine', color: '#ECDCD1', fontSize: 13}}>JOIN</Text>
+            </TouchableOpacity>
             </View>
 
             <TouchableOpacity
-              style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.9, borderRadius: 10, backgroundColor: '#505050' }}
+
+              style={{justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.9, borderRadius: 10, backgroundColor: '#785444'}}
               onPress={navToCreate}
-            ><Text style={{ fontFamily: 'Lato-Regular', color: 'white', fontSize: 13 }}>CREATE</Text>
+            ><Text style={{fontFamily: 'Margarine', color: '#ECDCD1', fontSize: 13}}>CREATE</Text>
             </TouchableOpacity>
           </View>
           :
@@ -171,32 +171,40 @@ const GroupMain = () => {
 export default GroupMain
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: 'white',
-    alignItems: 'center'
-  },
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        backgroundColor: '#ECDCD1',
+        alignItems: 'center'
+    },
 
-  searchContainer: {
-    height: height * 0.05,
-    width: width * 0.70,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: height * 0.01,
-    overflow: 'hidden',
-    backgroundColor: '#F4F4F4',
-    padding: 15,
-    borderRadius: 10,
-  },
+    searchContainer: {
+        height: height * 0.05,
+        width: width * 0.70,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: height * 0.01,
+        overflow: 'hidden',
+        // borderWidth: 1,
+        backgroundColor:'#C3A699',
+        padding:15,
+        borderRadius: 10,
+      },
 
-  listContainer: {
-    height: height * 0.60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignContent: 'center',
-    marginTop: height * 0.03,
-  },
+      listContainer: {
+        height: height * 0.60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginTop: height * 0.03
+        // backgroundColor: 'black'
+      },
 
+      textInputStyle: {
+        color: '#FFE3D7',
+        fontFamily: 'Margarine',
+    },
+
+    
 })

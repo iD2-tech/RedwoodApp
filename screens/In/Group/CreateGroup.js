@@ -72,45 +72,44 @@ const CreateGroup = ({ route }) => {
         // alignItems: 'center'
       }}>
         <Text style={{
-          fontFamily: 'Lato-Bold',
-          fontSize: 25,
-          color: "black"
+            fontFamily:'Margarine',
+            fontSize: 25,
+            color:"#785444"
         }}>CREATE A CODE</Text>
         <Text style={{
-          fontFamily: 'Lato-Regular',
-          fontSize: 15,
-          color: "black",
-          marginTop: height * 0.005
+           fontFamily:'Margarine',
+           fontSize: 15,
+           color:"#785444",
+           marginTop: height * 0.005
         }}>
           to make a new group!
         </Text>
       </View>
       <View style={styles.inputContainer}>
-
-        <TextInput
-          placeholder="Group Name"
-          value={name}
-          onChangeText={text => { setName(text) }}
-          style={styles.input}
-        />
-
-        <TextInput
-          placeholder="Group Code (5 characters)"
-          maxLength={5}
-          value={code}
-          onChangeText={text => { setCode(text) }}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Group Description..."
-          multiline
-          numberOfLines={4}
-          style={styles.input2}
-          value={description}
-          onChangeText={text => { setDescription(text) }}
-        />
-      </View>
-      <OnboardButton buttonColor="#505050" textColor="#FFFFFF" text="CREATE" onPress={() => { createGroup() }} />
+                <TextInput 
+                    placeholder="Group Name"
+                    value={name}
+                    onChangeText={text => {setName(text)}}
+                    style={styles.input}                 
+                />
+                
+                <TextInput 
+                    placeholder="Group Code (5 characters)"
+                    maxLength={5}
+                    value={code}
+                    onChangeText={text => {setCode(text)}}
+                    style={styles.input}
+                />
+                <TextInput
+                    placeholder="Group Description..."
+                    multiline
+                    numberOfLines={4}
+                    style={styles.input2}
+                    value={description}
+                    onChangeText={text => { setDescription(text) }}
+                  />
+            </View>
+            <OnboardButton buttonColor="#785444" fontFamily= "Margarine" textColor="#FFFFFF" text="CREATE" onPress={() => {}}/>
     </View>
   )
 }
@@ -121,42 +120,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: 'white',
+    backgroundColor: '#ECDCD1',
     alignItems: 'center'
-  },
-  inputContainer: {
-    width: width * 0.8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: height * 0.05,
-    marginTop: height * 0.02
-  },
-  input: {
-    backgroundColor: 'white',
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-    marginTop: height * 0.02,
-    marginBottom: height * 0.008,
-    width: width * 0.77,
-    borderStyle: 'solid',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    borderColor: 'black',
-    opacity: 50,
-    fontFamily: 'Lato-Regular'
-  },
-  input2: {
-    backgroundColor: 'white',
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-    marginTop: height * 0.03,
-    marginBottom: height * 0.008,
-    width: width * 0.77,
-    borderStyle: 'solid',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    borderColor: 'black',
-    opacity: 50,
-    fontFamily: 'Lato-Regular'
-  },
+},
+inputContainer: {
+  width: width * 0.8,
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: height * 0.05,
+  marginTop: height * 0.02
+},
+input: {
+  backgroundColor: '#ECDCD1',
+  paddingHorizontal: 5,
+  paddingVertical: 10,
+  marginTop: height * 0.02,
+  marginBottom: height * 0.008,
+  width: width * 0.77,
+  borderStyle: 'solid',
+  borderBottomColor: '#785444',
+  borderBottomWidth: 1,
+  borderColor: 'black',
+  opacity: 50,
+  fontFamily: 'Margarine'
+},
+input2: {
+  backgroundColor: '#ECDCD1',
+  paddingHorizontal: 5,
+  paddingVertical: 10,
+  marginTop: height * 0.03,
+  marginBottom: height * 0.008,
+  width: width * 0.77,
+  borderStyle: 'solid',
+  borderBottomColor: '#785444',
+  borderBottomWidth: 1,
+  borderColor: 'black',
+  opacity: 50,
+  fontFamily: 'Margarine'
+},
+
 })

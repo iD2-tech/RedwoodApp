@@ -29,18 +29,18 @@ const Privacy = () => {
                 <Text style={styles.privacy}>Privacy</Text>
                 <View style = {styles.accountPrivacyContainer}>
                     <Text style={styles.accountPrivacy}>Account Privacy</Text>
-                    <View style={{ flexDirection: 'row'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                         <TouchableOpacity
                             >
-                                <Feather name="lock" size={20} color={'#505050'} />
+                                <Feather name="lock" size={25} color={'#505050'} />
                         </TouchableOpacity>
-                            <Text style={styles.privateAccount}>Private Account</Text>
+                        <Text style={styles.privateAccount}>Private Account</Text>
                     </View>
                     <View style = {styles.switch}> 
                         <Switch 
-                            trackColor={{false: '#767577', true: '#5C4033'}}
-                            thumbColor={isEnabled ? '#f4f3f4' : '#f4f3f4'}
-                            ios_backgroundColor="#A59E9E"
+                            trackColor={{false: '#DCC6BB', true: '#785444'}}
+                            thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
+                            ios_backgroundColor="#DCC6BB"
                             onValueChange={toggleSwitch}
                             value={isEnabled}
                         />
@@ -55,7 +55,7 @@ export default Privacy;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
     privacy: {
         marginTop: height * -0.055,
         marginBottom: height * 0.04,
-        fontSize: 25,
-        fontFamily: 'Helvetica',
+        fontSize: 29,
+        fontFamily: 'Margarine',
         fontWeight: 'bold',
-        color: '#505050',
+        color: '#785444',
         paddingBottom: '3%',
     },
     accountPrivacyContainer: {
@@ -81,24 +81,23 @@ const styles = StyleSheet.create({
         width: width * 0.9,
     },
     accountPrivacy: {
-        fontSize: 13,
-        fontFamily: 'Helvetica',
+        fontSize: 18,
+        fontFamily: 'Margarine',
         fontWeight: 600,
-        color: '#505050',
+        color: '#785444',
         marginBottom: height * 0.02,
     },
     privateAccount: {
-        fontSize: 14,
-        fontFamily: 'Helvetica',
+        fontSize: 16.5,
+        fontFamily: 'Margarine',
         fontWeight: 600,
-        color: '#505050',
-        marginBottom: height * 0.027,
+        color: '#785444',
         marginLeft: width * 0.09,
         marginRight: width * 0.2
     },
     switch: {
-        transform: [{ scaleX: 0.75 }, { scaleY: 0.75 }],
-        marginTop: -height * 0.056,
+        transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }],
+        marginTop: -height * 0.0315,
         marginLeft: width * 0.54,
     },
 })

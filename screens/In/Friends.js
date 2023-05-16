@@ -211,26 +211,27 @@ const Friends = ({ route }) => {
       <View style={styles.backContainer}>
         <TouchableOpacity onPress={navBack}><Feather name="arrow-right" size={30} color={'black'} /></TouchableOpacity>
       </View>
-      <View style={{ flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between' }}>
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.textInputStyle}
-            onChangeText={(text) => setUsername(text)}
-            value={username}
-            underlineColorAndroid="transparent"
-            placeholder="Add Friends"
-          />
-        </View>
-        <TouchableOpacity
-          style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#505050' }}
-          onPress={sendRequest}
-        ><Text style={{ fontFamily: 'Lato-Regular', color: 'white', fontSize: 13 }}>SEND</Text>
-        </TouchableOpacity>
+      <View style={{flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between'}}>
+      <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.textInputStyle}
+                onChangeText={(text) => setUsername(text)}
+                value={username}
+                underlineColorAndroid="transparent"
+                placeholder="Add Friends"
+                placeholderTextColor="#FFE3D7"
+              />
+      </View>
+      <TouchableOpacity
+        style={{justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444'}}
+        onPress={sendRequest}
+      ><Text style={{fontFamily: 'Margarine', color: 'white', fontSize: 13}}>SEND</Text>
+      </TouchableOpacity>
       </View>
 
       <View style={styles.myFriends}>
         <View>
-          <Text style={{ fontFamily: 'Lato-Bold', color: '#505050' }}>
+          <Text style={{fontFamily: 'Margarine', color: '#785444'}}>
             MY FRIENDS
           </Text>
         </View>
@@ -252,51 +253,46 @@ const Friends = ({ route }) => {
 export default Friends
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: 'white',
-    alignItems: 'center',
-    flexDirection: 'column',
-    // alignContent: 'center'
-  },
+    container: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      backgroundColor: '#ECDCD1',
+      alignItems: 'center',
+      flexDirection:'column',
+      // alignContent: 'center'
+    },
 
-  searchContainer: {
-    height: height * 0.06,
-    width: width * 0.70,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: height * 0.013,
-    overflow: 'hidden',
-    // borderWidth: 1,
-    backgroundColor: '#F4F4F4',
-    padding: 15,
-    borderRadius: 10
-  },
+    searchContainer: {
+      height: height * 0.06,
+      width: width * 0.70,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: height * 0.013,
+      overflow: 'hidden',
+      // borderWidth: 1,
+      backgroundColor:'#C3A699',
+      padding:15,
+      borderRadius: 10
+    },
 
-  backContainer: {
-    justifyContent: 'flex-end',
-    width: width * 0.89,
-    marginBottom: height * 0.02,
-    flexDirection: 'row',
-    marginTop: height * 0.08
-  },
+    backContainer: {
+      justifyContent:'flex-end',
+      width: width * 0.89,
+      marginBottom: height * 0.02,
+      flexDirection: 'row',
+      marginTop: height * 0.08
+    },
 
-  myFriends: {
-    width: width * 0.88,
-    marginTop: height * 0.01
-  }
+    textInputStyle: {
+      color: '#FFE3D7',
+      fontFamily: 'Margarine',
 
-  // friendsContainer: {
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   flexDirection: 'column',
-  // },
+    },
 
-  // text: {
-  //   fontFamily: 'Lato-Bold',
-  //   fontSize: 20
-  // }
+    myFriends: {
+      width: width * 0.88,
+      marginTop: height * 0.01
+    },
 
 })

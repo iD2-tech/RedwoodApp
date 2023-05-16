@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { Keyboard, StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, TextInput, ActivityIndicator } from 'react-native'
+import {SafeAreaView, StatusBar, LayoutAnimation, Button, Keyboard, StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, TextInput, ActivityIndicator } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import PageBackButton from '../../components/PageBackButton';
 import { useNavigation } from '@react-navigation/native'
@@ -24,26 +24,64 @@ const MyProfile = () => {
     const ref_input1 = useRef();
     const ref_input2 = useRef();
     const [cursorPosition, setCursorPosition] = useState(null);
-    
-    
+
+    const [show, setShow] = useState(false);
+
     const navToSettings = () => {
         navigation.navigate("Settings");
     }
 
-    const [editable, setEditable] = useState(false);
-    const [editable2, setEditable2] = useState(false);
-    const [text, setText] = useState('Johnslee');
-    const [text2,setText2] = useState('John Lee');
+    // const showornoshow = () => {
+    //     setShow(!show);
+    // }
 
-    const handleEditPress = () => {
-        //setEditable(true);
-        ref_input1.current.focus();
-    };
+    // const [editable, setEditable] = useState(false);
+    // const [editable2, setEditable2] = useState(false);
+    const [editableField, setEditableField] = useState(null);
 
-    const handleEditPress2 = () => {
-        //setEditable2(true);
-        ref_input2.current.focus();
-    };
+    useEffect(() => {
+        if (editableField === 'username') {
+            ref_input1.current.focus();
+        } else if (editableField === 'name') {
+            ref_input2.current.focus();
+        }
+      }, [editableField]);
+      
+      const handleEditPress = () => {
+        setEditableField('username');
+        setShow(true);
+      };
+      
+      const handleEditPress2 = () => {
+        setEditableField('name');
+        setShow(true);
+      };
+
+    
+    // const handleEditPress = () => {
+    //     //setEditable(true);
+    //     setShow(true);
+    //     ref_input1.current.focus();
+    //     editPress1 = true;
+    // };
+
+    // const handleEditPress2 = () => {
+    //     //setEditable2(true);
+    //     setShow(true);
+    //     ref_input2.current.focus();
+    //     editPress2 = true;
+    // };
+    useEffect(() => {
+        const keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', () => {
+            setShow(false);
+            setEditableField(false);
+            //setEditable2(false);
+        });
+    
+        return () => {
+            keyboardWillHideListener.remove();
+        };
+    }, []);
 
     useEffect(() => {
         // const {name, username} = route.params;
@@ -56,10 +94,14 @@ const MyProfile = () => {
             setUser({ name, username });
           }
         });
-        console.log(userId);
-        console.log("Hi");
+        return () => {
+          unsubscribe1();
+        };
+
       }, []);
 
+    const [text, setText] = useState('');
+    const [text2,setText2] = useState('');
 
     return (
         <View style = {styles.container}>
@@ -69,44 +111,54 @@ const MyProfile = () => {
             <View style = {styles.myProfileContainer}>
                 <Text style={styles.myProfile}>My Profile</Text>
                     <View style = {styles.UserNameInput}>
-                        <Text style={styles.Username}>Username</Text>
+                        <Text style={styles.names}>Username</Text>
                         <View style={{ flexDirection: 'row'}}>
                             <TextInput
                                 ref={ref_input1}
-                                value={text}
+                                defaultValue={user?.username}
                                 onChangeText={setText}
-                                //editable={editable}
-                                style={{width: width * 0.61, marginLeft: 3, fontSize: 16, fontFamily: 'Helvetica', color: '#505050', marginRight: width * 0.03}}
+                                editable={editableField === 'username'}
+                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Margarine', color: '#785444', marginRight: width * 0.03}}
                             />
                             <Feather
                                 name="edit"
-                                size={20}
-                                color={'#505050'}
+                                size={23}
+                                color={'#785444'}
                                 onPress={handleEditPress}
                             />
                         </View>
-                        <View style={{height: 2, backgroundColor: '#505050', marginTop: height * 0.009, marginBottom: height * 0.0288 }} />
+                        <View style={{height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
                     </View>
                     <View style = {styles.NameInput}>
-                    <Text style={styles.Name}>Name</Text>
+                    <Text style={styles.names}>Name</Text>
                         <View style={{ flexDirection: 'row'}}>
                         <TextInput 
-                                value={text2}
-                                onChangeText={setText2}
-                                //editable={editable2}
-                                style={{width: width * 0.61, marginLeft: 3, fontSize: 16, fontFamily: 'Helvetica', color: '#505050', marginRight: width * 0.03}}
                                 ref={ref_input2}
+                                defaultValue={user?.name}
+                                onChangeText={setText2}
+                                editable={editableField === 'name'}
+                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Margarine', color: '#785444', marginRight: width * 0.03}}
                             />
                             <Feather
                                 name="edit"
-                                size={20}
-                                color={'#505050'}
+                                size={23}
+                                color={'#785444'}
                                 onPress={handleEditPress2}
                             />
                         </View>
-                        <View style={{height: 2, backgroundColor: '#505050', marginTop: height * 0.009, marginBottom: height * 0.0288 }} />
+                        <View style={{height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
                     </View>
                 </View>
+                {
+                    show ? 
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.button} onPress={() => {setShow(!show); Keyboard.dismiss(); Alert.alert('Saved!'); setEditableField(false)}}>
+                            <Text style={styles.buttonText}>SAVE CHANGES</Text>
+                        </TouchableOpacity>
+                    </View>
+                    :
+                    <View></View>
+                }
             </View>
     )
 };
@@ -115,7 +167,7 @@ export default MyProfile;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -130,24 +182,40 @@ const styles = StyleSheet.create({
     myProfile: {
         marginTop: height * -0.055,
         marginBottom: height * 0.04,
-        fontSize: 25,
-        fontFamily: 'Helvetica',
+        fontSize: 29,
+        fontFamily: 'Margarine',
         fontWeight: 'bold',
         color: '#505050',
         paddingBottom: '3%',
     },
-    Username: {
-        fontSize: 13,
-        fontFamily: 'Helvetica',
+    names: {
+        fontSize: 18,
+        fontFamily: 'Margarine',
         fontWeight: 800,
-        color: '#505050',
-        marginBottom: height * 0.01,
+        color: '#A47C69',
+        marginBottom: height * 0.015,
     },
-    Name: {
-        fontSize: 13,
-        fontFamily: 'Helvetica',
-        fontWeight: 800,
-        color: '#505050',
-        marginBottom: height * 0.01,
+    buttonContainer: {
+        alignItems: 'center',
+    },
+    button: {
+        backgroundColor: '#785444',
+        height: height * 0.05,
+        width: width * 0.72,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        marginBottom: height * 0.32,
+        borderRadius: 35,
+        shadowColor: 'rgba(60, 60, 60, 0.4)',
+        shadowOpacity: 2,
+        elevation: 2,
+        shadowRadius: 10,
+        shadowOffset : { width: 1, height: 13},
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+        fontFamily: 'Margarine',
+        fontWeight: 'bold',
     },
 })

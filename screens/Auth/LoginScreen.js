@@ -36,7 +36,7 @@ const LoginScreen = () => {
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
         opacity: fadeAnim
       }}>
         <KeyboardAvoidingView style={{ width: '100%', alignItems: 'center', }}>
@@ -76,8 +76,8 @@ const LoginScreen = () => {
             <View style={{ flex: 1, height: 2, backgroundColor: '#5C4033' }} />
           </View>
           <View style={styles.socialContainer}>
-            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Google" social="google" onPress={() => google()} />
-            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Apple" social="apple" onPress={() => apple()} />
+            <SocialButton buttonColor="#ECDCD1" textColor="#785444" text="Continue with Google" social="google" onPress={() => google()} />
+            <SocialButton buttonColor="#ECDCD1" textColor="#785444" text="Continue with Apple" social="apple" onPress={() => apple()} />
           </View>
 
           <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="SIGN IN" onPress={() => login(email, password)} />
@@ -101,23 +101,24 @@ const styles = StyleSheet.create({
     width: width * 0.5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: height * 0.06,
-    marginTop: height * 0.1
+    marginBottom: height * 0.035,
+    marginTop: height * 0.012
   },
   letterContainer: {
     display: 'flex',
     justifyContent: 'flex-start',
     width: width * 0.76,
-    marginBottom: height * 0.0005
+    marginBottom: height * 0.0005,
+    marginTop: -height * 0.02
   },
 
   socialContainer: {
-    marginBottom: height * 0.05
+    marginBottom: height * 0.024
   },
 
 
   input: {
-    backgroundColor: 'white',
+    backgroundColor: '#ECDCD1',
     paddingHorizontal: 5,
     paddingVertical: 10,
     marginTop: height * 0.005,
@@ -128,22 +129,22 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'black',
     opacity: 50,
-    fontFamily: 'Lato-Regular'
+    fontFamily: 'Margarine',
+    color: '#785444'
   },
   su: {
     marginBottom: height * 0.01,
     fontSize: 30,
     fontWeight: '800',
-    fontFamily: 'Lato-Regular',
-    color: '#5C4033',
-    marginLeft: 0
+    fontFamily: 'Margarine',
+    color: '#785444',
   },
 
   lineContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     width: width * 0.865,
-    marginBottom: height * 0.0575,
+    marginBottom: height * 0.03,
     opacity: 0.5,
   },
 

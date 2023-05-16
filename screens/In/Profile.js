@@ -34,17 +34,20 @@ const Profile = ( {route} ) => {
     {
       id: '1', // acts as primary key, should be unique and non-empty string
       label: 'Search by Title',
-      value: 'title'
+      value: 'title',
+      labelStyle: { fontFamily: 'Margarine', fontSize: 14.5, color: '#785444'}
     },
     {
       id: '2',
       label: 'Search by Date',
-      value: 'date'
+      value: 'date',
+      labelStyle: { fontFamily: 'Margarine', fontSize: 14.5, color: '#785444'}
     },
     {
       id: '3',
       label: 'Search by Bible Verse',
-      value: 'bible'
+      value: 'bible',
+      labelStyle: { fontFamily: 'Margarine', fontSize: 14.5, color: '#785444'}
     }
   ]);
 
@@ -198,19 +201,20 @@ const Profile = ( {route} ) => {
           onChangeText={(text) => searchFilterFunction(text)}
           value={search}
           underlineColorAndroid="transparent"
-          placeholder="Search Here"
+          placeholderTextColor={'#FFE3D7'}
+          placeholder="Search"
         />
         <TouchableOpacity onPress={handleModal}>
-          <Feather name="menu" size={25} color={'black'} />
+          <Feather name="menu" size={25} color={'black'} marginRight={width * 0.04}/>
         </TouchableOpacity>
       </View>
       <View style={styles.listContainer}>
         <FlatList
           data={filtered}
           keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) =>
+          renderItem={({ item }) => (
             <SwipeableRow item={item} />
-          }
+          )}
           showsVerticalScrollIndicator={false}
         />
       </View>
@@ -218,7 +222,7 @@ const Profile = ( {route} ) => {
       <Modal
         isVisible={isModalVisible}
       >
-        <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: 'white', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: '#ECDCD1', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Text style={styles.filterText}>Filter</Text>
 
           <RadioGroup
@@ -231,7 +235,7 @@ const Profile = ( {route} ) => {
           <TouchableOpacity onPress={handleModal} style={styles.filterButton}>
             <Text style={{
               color: "#505050",
-              fontFamily: 'Lato-Regular',
+              fontFamily: 'Margarine',
               fontWeight: '500'
             }}>OK</Text>
           </TouchableOpacity>
@@ -248,7 +252,7 @@ export default Profile
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#ECDCD1',
     height: '100%',
     flex: 1,
     justifyContent: 'center',
@@ -280,15 +284,15 @@ const styles = StyleSheet.create({
     // marginBottom: 30,
     fontSize: 30,
     fontWeight: '800',
-    fontFamily: 'Lato-Regular',
-    color: '#505050',
+    fontFamily: 'Margarine',
+    color: '#785444',
     // marginLeft: 0
   },
 
   userText: {
     fontSize: 20,
     fontWeight: '500',
-    fontFamily: 'Lato-Regular',
+    fontFamily: 'Margarine',
     color: '#ABABAB',
   },
 
@@ -319,13 +323,10 @@ const styles = StyleSheet.create({
     borderColor: "#D2D2D2",
     borderRadius: 7,
     fontSize: 12,
-    fontFamily: 'Lato-Regular'
-    //   shadowColor: '#000',
-    //       shadowOffset: { width: 1, height: 1 },
-    //       shadowOpacity:  0.4,
-    //       shadowRadius: 3,
-    //       elevation: 5,
-
+    fontFamily: 'Margarine',
+    backgroundColor: '#C3A699',
+    color: '#FFE3D7',
+    borderRadius: 20,
   },
 
   filterButton: {
@@ -336,15 +337,15 @@ const styles = StyleSheet.create({
     // marginBottom: height * 0.01,
     borderColor: '#E4E4E4',
     borderWidth: 1,
-    backgroundColor: '#E4E4E4',
-    marginTop: height * 0.05
+    backgroundColor: '#C3A699',
+    marginTop: height * 0.05,
   },
 
   filterText: {
     fontSize: 27,
     fontWeight: '800',
-    fontFamily: 'Lato-Regular',
-    color: '#505050',
+    fontFamily: 'Margarine',
+    color: '#785444',
     textAlign: 'left',
     width: width * 0.44,
     marginBottom: height * 0.03
@@ -353,7 +354,5 @@ const styles = StyleSheet.create({
   buttons: {
     alignItems: 'flex-start',
     fontFamily: 'Lato-Regular',
-  }
-
-
+  },
 })

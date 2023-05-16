@@ -49,7 +49,7 @@ const SignupScreen = ({route}) => {
               flex:1,
               justifyContent: 'flex-start',
               alignItems: 'center',
-              backgroundColor: 'white',
+              backgroundColor: '#ECDCD1',
               opacity: fadeAnim
             }}>
         <KeyboardAvoidingView style={{width: '100%', alignItems: 'center',}}> 
@@ -98,8 +98,8 @@ const SignupScreen = ({route}) => {
               <View style={{flex: 1, height: 2, backgroundColor: '#5C4033'}} />
             </View>
           <View style= {styles.socialContainer}>
-            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Google" social="google" onPress={() => google(name, username)}/>
-            <SocialButton buttonColor="#F2F2F2" textColor="#B6B6B6" text="Continue with Apple" social="apple" onPress={() => apple(name, username)}/>
+            <SocialButton buttonColor="#ECDCD1" textColor="#785444" text="Continue with Google" social="google" onPress={() => google(name, username)}/>
+            <SocialButton buttonColor="#ECDCD1" textColor="#785444" text="Continue with Apple" social="apple" onPress={() => apple(name, username)}/>
           </View>
             <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="SIGN UP" onPress={() => register(email, password, name, username)}/>
             
@@ -116,25 +116,22 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
       },
       inputContainer: {
         width: width * 0.8,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: height * 0.05,
-        marginTop: height * 0.000955
+        marginBottom: height * 0.02,
       },
       letterContainer: {
         display: 'flex',
         justifyContent: 'flex-start',
         width: width * 0.76,
-        marginBottom: height * 0.06
       },
 
-      
       input: {
-        backgroundColor: 'white',
+        backgroundColor: '#ECDCD1',
         paddingHorizontal: 5,
         paddingVertical: 10,
         marginTop: height * 0.0005,
@@ -145,7 +142,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: 'black',
         opacity: 50,
-        fontFamily: 'Lato-Regular'
+        fontFamily: 'Margarine',
+        color: '#785444'
       },
 
       lineContainer: {
@@ -154,16 +152,17 @@ const styles = StyleSheet.create({
         // flex: 1,
         width: width * 0.865,
         marginTop: height * 0.005,
-        marginBottom: height * 0.06,
+        marginBottom: height * 0.025,
         opacity: 0.5,
 
       },
       su: {
         marginBottom: height * 0.025,
+        marginTop: -height * 0.03,
         fontSize: 30,
         fontWeight: '800',
-        fontFamily: 'Lato-Regular',
-        color: '#5C4033',
+        fontFamily: 'Margarine',
+        color: '#785444',
         marginLeft: 0
       },
 
@@ -177,7 +176,7 @@ const styles = StyleSheet.create({
       },
 
       socialContainer: {
-        marginBottom: height * 0.05
+        marginBottom: height * 0.03
       },
 
 })

@@ -27,6 +27,7 @@
 		C1746460BE894249B20E2182 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 483789DA18FB4CD38523E276 /* Lato-Thin.ttf */; };
 		F0B0DFB9062E40658138E0EB /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DEE4F55B0C34A348932EFC5 /* Lato-Light.ttf */; };
 		F4367A0797D446999B9CB2AC /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 081DCA15CC424741A6AF021B /* Lato-Italic.ttf */; };
+		BE99C06CF1C9426EA6B0F224 /* Margarine-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32896E33819746B4BBC1D186 /* Margarine-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		E60B4DF50C074AD2A1FBEB15 /* Lato-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Regular.ttf"; path = "../assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; };
 		E79D80A0B600B62628AAEB30 /* Pods-RedwoodApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedwoodApp.release.xcconfig"; path = "Target Support Files/Pods-RedwoodApp/Pods-RedwoodApp.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		32896E33819746B4BBC1D186 /* Margarine-Regular.ttf */ = {isa = PBXFileReference; name = "Margarine-Regular.ttf"; path = "../assets/fonts/Margarine-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				E60B4DF50C074AD2A1FBEB15 /* Lato-Regular.ttf */,
 				483789DA18FB4CD38523E276 /* Lato-Thin.ttf */,
 				ACEC82BE30AA4687A16A8001 /* Lato-ThinItalic.ttf */,
+				32896E33819746B4BBC1D186 /* Margarine-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				C1746460BE894249B20E2182 /* Lato-Thin.ttf in Resources */,
 				BDCD258AB232432D90237F2D /* Lato-ThinItalic.ttf in Resources */,
 				3E5A7B0929E28E070037BAF7 /* GoogleService-Info.plist in Resources */,
+				BE99C06CF1C9426EA6B0F224 /* Margarine-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

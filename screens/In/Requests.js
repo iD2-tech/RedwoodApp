@@ -203,25 +203,26 @@ const Requests = () => {
       <View style={styles.backContainer}>
         <TouchableOpacity onPress={navBack}><Feather name="arrow-right" size={30} color={'black'} /></TouchableOpacity>
       </View>
-      <View style={{ flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between' }}>
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.textInputStyle}
-            onChangeText={(text) => setUsername(text)}
-            value={username}
-            underlineColorAndroid="transparent"
-            placeholder="Add Friends"
-          />
-        </View>
-        <TouchableOpacity
-          style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#505050' }}
-          onPress={sendRequest}
-        ><Text style={{ fontFamily: 'Lato-Regular', color: 'white', fontSize: 13 }}>SEND</Text>
-        </TouchableOpacity>
+      <View style={{flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between'}}>
+      <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.textInputStyle}
+                onChangeText={(text) => setUsername(text)}
+                value={username}
+                underlineColorAndroid="transparent"
+                placeholder="Add Friends"
+                placeholderTextColor="#FFE3D7"
+              />
+      </View>
+      <TouchableOpacity
+        style={{justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444'}}
+        onPress={sendRequest}
+      ><Text style={{fontFamily: 'Margarine', color: 'white', fontSize: 13}}>SEND</Text>
+      </TouchableOpacity>
       </View>
       <View style={styles.myFriends}>
         <View>
-          <Text style={{ fontFamily: 'Lato-Bold', color: '#505050' }}>
+          <Text style={{fontFamily: 'Margarine', color: '#505050'}}>
             FRIEND REQUESTS
           </Text>
         </View>
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: 'white',
+    backgroundColor: '#ECDCD1',
     alignItems: 'center',
     flexDirection: 'column',
     // alignContent: 'center'
@@ -262,11 +263,15 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.013,
     overflow: 'hidden',
     // borderWidth: 1,
-    backgroundColor: '#F4F4F4',
-    padding: 15,
+    backgroundColor:'#C3A699',
+    padding:15,
     borderRadius: 10
   },
+  textInputStyle: {
+    color: '#FFE3D7',
+    fontFamily: 'Margarine',
 
+  },
   backContainer: {
     justifyContent: 'flex-end',
     width: width * 0.89,
