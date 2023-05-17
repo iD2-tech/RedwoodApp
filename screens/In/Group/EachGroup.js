@@ -172,7 +172,7 @@ const EachGroup = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.individualButton}>
-          <TouchableOpacity >
+          <TouchableOpacity  onPress={leaveGroup}>
           <View style={{alignItems: 'center'}}>
             <Feather name="x-circle" size={22} color={'#785444'} />
             </View>
