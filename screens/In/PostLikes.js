@@ -1,41 +1,30 @@
 import { StyleSheet, Text, View, Dimensions, FlatList, Share } from 'react-native'
 import React, { useEffect } from 'react'
-import PageBackButton from '../../../components/PageBackButton'
+import PageBackButton from '../../components/PageBackButton'
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation } from '@react-navigation/native'
-import EachFriend from '../../../components/EachFriend'
+import EachFriend from '../../components/EachFriend'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
 const { width, height } = Dimensions.get('window')
-const Members = (props) => {
+const PostLikes = (props) => {
 
   const navigation = useNavigation();
   const navBack = () => {
-    console.log(props);
-    navigation.navigate("Home")
+    navigation.navigate("DisplayPost", {
+        date: props.route.params.date,
+        id: props.route.params.id,
+        text: props.route.params.text,
+        title: props.route.params.title,
+        user: props.route.params.user,
+        verse: props.route.params.verse,
+        verseText: props.route.params.verseText,
+        likes: props.route.params.likes,
+        comments: props.route.params.comments,
+      });
   }
 
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          'Donwload Redwood and join my group! My group code is ' + props.item.id + '!',
-        url: 'https://google.com'
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-  }
 
 
   return (
@@ -45,17 +34,11 @@ const Members = (props) => {
       </View>
 
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>{props.item.numMembers} Members</Text>
-        <TouchableOpacity
-          onPress={onShare}
-          style={{marginLeft: width * 0.1}}
-        >
-          <Feather name="share" size={28} color={'#C3A699'} />
-        </TouchableOpacity>
+        <Text style={styles.title}>Likes</Text>
       </View>
       <View style={{ height: height * 0.57, marginTop: height * 0.02 }}>
         <FlatList
-          data={props.item.members}
+          data={props.route.params.likes}
           // keyExtractor={item => item.id}
           renderItem={({ item }) =>
             <EachFriend name={item} onPress={() => { }} showX={false} />
@@ -68,7 +51,7 @@ const Members = (props) => {
   )
 }
 
-export default Members
+export default PostLikes
 
 const styles = StyleSheet.create({
   container: {
@@ -91,7 +74,8 @@ const styles = StyleSheet.create({
   titleContainer: {
     width: width * 0.85,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: height * 0.02
   },
   title: {
     fontFamily: 'Quicksand-Bold',

@@ -16,7 +16,7 @@ const DisplayPostProfile = ({ route }) => {
     const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const userId = firebase.auth().currentUser.uid;
     const navigation = useNavigation();
-    const { date, id, text, title, user, verse, verseText } = route.params;
+    const { date, id, text, title, user, verse, verseText, likes, comments} = route.params;
     const ref_input1 = useRef();
     const [editedTitle, setEditedTitle] = useState(title);
     const [editedText, setEditedText] = useState(text);
@@ -102,7 +102,7 @@ const DisplayPostProfile = ({ route }) => {
             try {
                 ref_input1.current.focus();
             } catch (error) {
-                console.log(editMode);
+                console.log(editMode); 
                 console.log(error);
             }
             setEditMode(!editMode);
@@ -199,13 +199,35 @@ const DisplayPostProfile = ({ route }) => {
         setShowBookAutofill(false);
     }
 
-    const EditablePage = () => {
-        return (
-            <View>
-
-            </View>
-        )
+    const navToLike = () => {
+        navigation.navigate("PostLikes", {
+            date: date,
+            id: id,
+            text: text,
+            title: title,
+            user: user,
+            verse: verse,
+            verseText: verseText,
+            likes: likes,
+            comments: comments,
+          });
     }
+
+    const navToComment = () => {
+        navigation.navigate("PostComments", {
+            date: date,
+            id: id,
+            text: text,
+            title: title,
+            user: user,
+            verse: verse,
+            verseText: verseText,
+            likes: likes,
+            comments: comments,
+          });
+    }
+
+
 
 
 
@@ -232,6 +254,20 @@ const DisplayPostProfile = ({ route }) => {
                                 onFocus={() => setEditMode(true)}
                                 onBlur={() => setEditMode(false)}
                             />
+                            {
+                                likes === undefined ? <></>:  <View style={styles.socialContainer}>
+                                    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={navToLike}>
+                                        <Feather name='heart' size={27} color={'#785444'}/>
+                                        <Text style={styles.likeText}>{likes.length}</Text>
+                                    </TouchableOpacity>
+                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={navToComment}> 
+                                    <Feather name='message-circle' size={27} color={'#785444'}/>
+                                    <Text style={styles.likeText}>{comments.length}</Text> 
+                                </TouchableOpacity>
+                            </View>
+                            }
+                           
+                            
                         </View>
 
                         <View style={styles.editVerseContainer}>
@@ -277,7 +313,7 @@ const DisplayPostProfile = ({ route }) => {
                         }
 
                         <View style={styles.verseTextContainer}>
-                            <ScrollView persistentScrollbar={true} ref={scrollViewRef}>
+                            <ScrollView persistentScrollbar={true} ref={scrollViewRef} showsVerticalScrollIndicator={false}>
                                 <Text style={styles.verseText}>{"\"" + editedVerseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
                             </ScrollView>
                         </View>
@@ -343,8 +379,16 @@ const styles = StyleSheet.create({
         fontFamily: 'Quicksand-Bold',
         fontSize: 25,
         color: '#785444',
-        width: width * 0.7
+        width: width * 0.57
 
+    },
+
+    likeText: {
+        fontFamily: 'Quicksand-Regular',
+        fontSize: 20,
+        marginRight: width * 0.03,
+        marginLeft: width * 0.02,
+        color: "#785444"
     },
 
     colon: {
@@ -361,15 +405,22 @@ const styles = StyleSheet.create({
 
     titleInputContainer: {
         color: '#A47C69',
-        width: width * 0.62,
+        width: width * 0.57,
         marginBottom: height * 0.022,
         marginTop: height * 0.01,
-
         flexDirection: 'row',
+        // borderWidth: 1
+    },
+
+    socialContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        // borderWidth:1,
     },
 
     titleContainer: {
         marginBottom: height * 0.022,
+
     },
 
     quote: {
