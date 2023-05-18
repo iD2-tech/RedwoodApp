@@ -11,8 +11,29 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import SwipeableRow from '../../components/SwipeableRow';
 import Modal from "react-native-modal";
 import RadioGroup from 'react-native-radio-buttons-group';
+import DropDownMenu from '../../components/DropDownMenu';
 
 const { width, height } = Dimensions.get('window')
+const DATA = [
+  {
+    id: '1', // acts as primary key, should be unique and non-empty string
+    label: 'By Title',
+    value: 'title',
+    icon: 'type'
+  },
+  {
+    id: '2',
+    label: 'By Date',
+    value: 'date',
+    icon: 'calendar'
+  },
+  {
+    id: '3',
+    label: 'By Verse',
+    value: 'bible',
+    icon: 'book'
+  }
+];
 
 const Profile = ( {route} ) => {
   var userId = firebase.auth().currentUser.uid;
@@ -26,31 +47,8 @@ const Profile = ( {route} ) => {
   const [search, setSearch] = useState('');
   const [user, setUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selected, setSelected] = useState('title');
+  const [selected, setSelected] = useState(DATA[0]);
   
-
-
-
-  const [radioButtons, setRadioButtons] = useState([
-    {
-      id: '1', // acts as primary key, should be unique and non-empty string
-      label: 'Search by Title',
-      value: 'title',
-      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
-    },
-    {
-      id: '2',
-      label: 'Search by Date',
-      value: 'date',
-      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
-    },
-    {
-      id: '3',
-      label: 'Search by Bible Verse',
-      value: 'bible',
-      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
-    }
-  ]);
 
 
   
@@ -93,6 +91,8 @@ const Profile = ( {route} ) => {
     };
   }, []);
 
+  
+
 
   const navToSettings = () => {
     navigation.navigate("Settings");
@@ -111,7 +111,7 @@ const Profile = ( {route} ) => {
       const newData = posts.filter(function (item) {
         // Applying filter for the inserted text in search bar
 
-        if (selected === 'date') {
+        if (selected.value === 'date') {
           const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
           var dateObj = new Date(item.date.seconds * 1000);
@@ -126,7 +126,7 @@ const Profile = ( {route} ) => {
             : ''.toUpperCase();
           const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
-        } else if (selected === 'bible') {
+        } else if (selected.value === 'bible') {
           const itemData = item.verse
             ? item.verse.toUpperCase()
             : ''.toUpperCase();
@@ -156,9 +156,13 @@ const Profile = ( {route} ) => {
 
 
   const handleModal = () => {
-    let selectedButton = radioButtons.find(e => e.selected == true);
-    selectedButton = selectedButton ? selectedButton.value : radioButtons[0].label;
-    setSelected(selectedButton);
+    setIsModalVisible(() =>
+      !isModalVisible
+    )
+  }
+
+  const onPressItem = (data) => {
+    setSelected(data);
     setIsModalVisible(() =>
       !isModalVisible
     )
@@ -217,7 +221,7 @@ const Profile = ( {route} ) => {
           placeholder="Search"
         />
         <TouchableOpacity onPress={handleModal}>
-          <Feather name="menu" size={27} color={'black'} marginRight={width * 0.04}/>
+          <Feather name={selected.icon} size={27} color={'black'} marginRight={width * 0.04}/>
         </TouchableOpacity>
       </View>
       <View style={styles.listContainer}>
@@ -230,29 +234,21 @@ const Profile = ( {route} ) => {
           showsVerticalScrollIndicator={false}
         />
       </View>
+      {
+          isModalVisible ? 
+          <View style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            // flex: 1,
+            top: height * 0.33,
+            right: width * 0.3,
+            position: 'absolute',
+          }}>
+          <DropDownMenu onPressItem={onPressItem} data={DATA}/>
+          </View>
+          : <></>
+        }
 
-      <Modal
-        isVisible={isModalVisible}
-      >
-        <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: '#ECDCD1', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={styles.filterText}>Filter</Text>
-
-          <RadioGroup
-            radioButtons={radioButtons}
-            onPress={onPressRadioButton}
-            containerStyle={styles.buttons}
-          />
-
-
-          <TouchableOpacity onPress={handleModal} style={styles.filterButton}>
-            <Text style={{
-              color: "#505050",
-              fontFamily: 'Quicksand-Regular',
-              fontWeight: '500'
-            }}>OK</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
       </ImageBackground>
     </View>
    

@@ -11,6 +11,7 @@ import { makeMutable } from 'react-native-reanimated';
 import Feather from 'react-native-vector-icons/Feather';
 import Modal from "react-native-modal";
 import RadioGroup from 'react-native-radio-buttons-group';
+import DropDownMenu from '../../components/DropDownMenu';
 
 const { width, height } = Dimensions.get('window')
 
@@ -19,30 +20,30 @@ const CreatePost = () => {
   var userId = firebase.auth().currentUser.uid;
 
   const navigation = useNavigation();
-  const [radioButtons, setRadioButtons] = useState([
+  const DATA = [
     {
       id: '1', // acts as primary key, should be unique and non-empty string
-      label: 'Post Public',
+      label: 'Public',
       value: 'public',
-      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
+      icon: 'globe'
     },
     {
       id: '2',
-      label: 'Post Private',
+      label: 'Private',
       value: 'private',
-      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
+      icon: 'lock'
     },
     {
       id: '3',
-      label: 'Post Anonymous',
+      label: 'Anonymous',
       value: 'anonymous',
-      labelStyle: { fontFamily: 'Quicksand-Regular', fontSize: 14.5, color: '#785444'}
+      icon: 'eye-off'
     }
-  ]);
+  ];
 
 
   const [verses, setVerses] = useState('');
-  const [selected, setSelected] = useState('public');
+  const [selected, setSelected] = useState(DATA[0]);
   const [book, setBook] = useState('');
   const [chapter, setChapter] = useState('');
   const [verse, setVerse] = useState('');
@@ -100,7 +101,7 @@ const CreatePost = () => {
             setVerses(responseJson.text);
             console.log("Test2")
 
-            if (selected === 'public') {
+            if (selected.value === 'public') {
               firestore().collection('Posts').doc(userId).collection('userPosts').add({
                 title: title,
                 book: book,
@@ -123,13 +124,13 @@ const CreatePost = () => {
                 setVerse('');
                 setText('');
                 setVerseText('');
-                setSelected('public')
+                setSelected(DATA[0])
                 setShowVerse(false);
                 navigation.navigate("ProfileStack")
               }).catch((error) => {
                 console.log(error);
               })
-            } else if (selected === 'private') {
+            } else if (selected.value === 'private') {
               firestore().collection('Posts').doc(userId).collection('userPosts').add({
                 title: title,
                 book: book,
@@ -152,7 +153,7 @@ const CreatePost = () => {
                 setVerse('');
                 setText('');
                 setVerseText('');
-                setSelected('public')
+                setSelected(DATA[0])
                 setShowVerse(false);
                 navigation.navigate("ProfileStack")
               }).catch((error) => {
@@ -181,7 +182,7 @@ const CreatePost = () => {
                 setVerse('');
                 setText('');
                 setVerseText('');
-                setSelected('public')
+                setSelected(DATA[0])
                 setShowVerse(false);
                 navigation.navigate("ProfileStack")
               }).catch((error) => {
@@ -292,9 +293,17 @@ const CreatePost = () => {
   }
 
   const handleModal = () => {
-    let selectedButton = radioButtons.find(e => e.selected == true);
-    selectedButton = selectedButton ? selectedButton.value : radioButtons[0].label;
-    setSelected(selectedButton);
+    // let selectedButton = radioButtons.find(e => e.selected == true);
+    // selectedButton = selectedButton ? selectedButton.value : radioButtons[0].label;
+    // setSelected(selectedButton);
+
+    setIsModalVisible(() =>
+      !isModalVisible
+    )
+  }
+
+  const onPressItem = (data) => {
+    setSelected(data);
     setIsModalVisible(() =>
       !isModalVisible
     )
@@ -386,7 +395,8 @@ const CreatePost = () => {
                 showsVerticalScrollIndicator={false}
                 >
                 <View>
-                  <Text style={{ fontFamily: 'Quicksand-Regular',color: 'black' }}>{verseText}</Text>
+                  {/* <Text style={{ fontFamily: 'Quicksand-Regular',color: 'black' }}>{verseText}</Text> */}
+                  <TextInput multiline style={{fontFamily: 'Quicksand-Regular',color: 'black'}} value={verseText} editable={false}/>
                 </View>
               </ScrollView>
 
@@ -412,8 +422,8 @@ const CreatePost = () => {
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: width * 0.9} }>
         
-        <TouchableOpacity onPress={handleModal}>
-          <Feather name="lock" size={25} color="#785444" />
+        <TouchableOpacity style={{ marginRight: width * 0.02}}onPress={handleModal}>
+          <Feather name={selected.icon} size={27} color="#785444" />
         </TouchableOpacity>
 
         <TouchableOpacity style={
@@ -435,7 +445,21 @@ const CreatePost = () => {
           }>Post</Text>
         </TouchableOpacity>
         </View>
-        <Modal
+        {
+          isModalVisible ? 
+          <View style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            // flex: 1,
+            top: height * 0.655,
+            left: width * 0.25,
+            position: 'absolute',
+          }}>
+          <DropDownMenu onPressItem={onPressItem} data={DATA}/>
+          </View>
+          : <></>
+        }
+        {/* <Modal
         isVisible={isModalVisible}
       >
         <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: '#ECDCD1', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -456,7 +480,7 @@ const CreatePost = () => {
             }}>OK</Text>
           </TouchableOpacity>
         </View>
-      </Modal>
+      </Modal> */}
       </View>
       
 
@@ -571,7 +595,7 @@ const styles = StyleSheet.create({
 
   filledButton: {
     backgroundColor: '#785444',
-    width: width * 0.75,
+    width: width * 0.70,
     padding: 12,
     borderRadius: 10,
     alignItems: 'center',
@@ -579,7 +603,7 @@ const styles = StyleSheet.create({
 
   normalButton: {
     backgroundColor: '#C3A699',
-    width: width * 0.75,
+    width: width * 0.70,
     padding: 12,
     borderRadius: 10,
     alignItems: 'center',
