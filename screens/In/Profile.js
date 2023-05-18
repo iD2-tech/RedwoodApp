@@ -69,7 +69,7 @@ const Profile = ( {route} ) => {
     const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
       const postsData = [];
       querySnapshot.forEach((doc) => {
-        const { title, book, chapter, verse, verses, date, text, pinned } = doc.data();
+        const { title, book, chapter, verse, verses, date, text, pinned, likes, comments } = doc.data();
         postsData.push({
           id: doc.id,
           user: user ? user.name : 'Loading...',
@@ -78,7 +78,9 @@ const Profile = ( {route} ) => {
           verseText: verses,
           verse: book + " " + chapter + ":" + verse,
           text: text,
-          pinned: pinned
+          pinned: pinned,
+          likes: likes,
+          comments: comments,
         })
       })
 
