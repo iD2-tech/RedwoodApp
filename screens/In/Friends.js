@@ -244,7 +244,7 @@ const Friends = ({ route }) => {
             data={friendData}
             // keyExtractor={item => item.id}
             renderItem={({ item }) =>
-              <EachFriend name={item.name} username={item.username} onPress={() => deleteFriend(item)} />
+              <EachFriend name={item.name} username={item.username} showX={true} onPress={() => deleteFriend(item)} />
             }
             showsVerticalScrollIndicator={false}
           />

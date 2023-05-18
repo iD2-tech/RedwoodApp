@@ -27,6 +27,7 @@ const Profile = ( {route} ) => {
   const [user, setUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selected, setSelected] = useState('title');
+  
 
 
 
@@ -325,7 +326,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: height * 0.013,
-    overflow: 'hidden',
+
 
   },
 
@@ -335,11 +336,11 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 20,
     height: height * 0.042,
-    borderColor: "#D2D2D2",
+    borderColor: "#C3A699",
     fontSize: 12,
     fontFamily: 'Quicksand-Bold',
     backgroundColor: '#C3A699',
-    color: '#FFE3D7',
+    // color: '#FFE3D7',
     borderRadius: 15,
   },
 

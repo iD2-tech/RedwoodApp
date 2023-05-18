@@ -218,6 +218,9 @@ searchContainer: {
   textInputStyle: {
     color: 'white',
     fontFamily: 'Quicksand-Bold',
+    // borderWidth: 1,
+    width: width * 0.63,
+    height: height * 0.035
 },
 
 })

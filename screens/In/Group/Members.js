@@ -48,6 +48,7 @@ const Members = (props) => {
         <Text style={styles.title}>{props.item.numMembers} Members</Text>
         <TouchableOpacity
           onPress={onShare}
+          style={{marginLeft: width * 0.1}}
         >
           <Feather name="share" size={28} color={'#C3A699'} />
         </TouchableOpacity>
@@ -57,7 +58,7 @@ const Members = (props) => {
           data={props.item.members}
           // keyExtractor={item => item.id}
           renderItem={({ item }) =>
-            <EachFriend name={item} onPress={() => { }} />
+            <EachFriend name={item} onPress={() => { }} showX={false} />
           }
           showsVerticalScrollIndicator={false}
         />

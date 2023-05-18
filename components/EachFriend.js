@@ -18,11 +18,13 @@ const EachFriend = (props) => {
         }
         {/* <Text style={{fontFamily: 'Quicksand-Regular', fontSize: height * 0.015, color: '#898989'}}>{props.username}</Text> */}
     </View>
-    <View style={styles.xContainer}>
+    {props.showX ? <View style={styles.xContainer}>
         <TouchableOpacity onPress={props.onPress}>
         <Feather name="x-circle" size={height * 0.026} color="#C3A699"/> 
         </TouchableOpacity>
-    </View>
+    </View> : null
+    }
+    
       
     </View>
   )

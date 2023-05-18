@@ -7,16 +7,17 @@ import { firebase } from "@react-native-firebase/auth";
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import DismissKeyBoard from '../../../components/DissmisskeyBoard';
 import PageBackButton from '../../../components/PageBackButton';
-import EachComment from '../../../components/EachComment';
 
 const { width, height } = Dimensions.get('window')
 
-const DisplayPostGroup = ({ route }) => {
+const DisplayPostProfile = ({ route }) => {
     const userId = firebase.auth().currentUser.uid;
     const navigation = useNavigation();
     const { postId, postUserId, text, username, user, title, verse, verseText } = route.params;
     const [commentEntry, setCommentEntry] = useState('');
-    const [comments, setComments] = useState([]);
+
+
+
 
     // back button
     const navBack = () => {
@@ -27,6 +28,7 @@ const DisplayPostGroup = ({ route }) => {
         <DismissKeyBoard>
             <View style={styles.container}>
                 <View style={styles.topBar}>
+                   
                     <View style={styles.backButton}>
                         <PageBackButton onPress={navBack} />
                     </View>
@@ -34,27 +36,34 @@ const DisplayPostGroup = ({ route }) => {
                         <Text adjustsFontSizeToFit style={styles.title} numberOfLines={1}>{title}</Text>
                     </View>
                     <View style={styles.userContainer}>
-                        <Text adjustsFontSizeToFit style={styles.name} numberOfLines={2}>{user}</Text>
+                        <Text adjustsFontSizeToFit style={styles.name} numberOfLines={1}>{user}</Text>
                     </View>
+                    
                 </View>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.verseContainer}>
-                        <Text style={styles.verse}>{verse}</Text>
-                    </View>
-                    <View style={styles.verseTextContainer}>
-                        <Text style={styles.verseText}>{"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
-                    </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.text}>{text}</Text>
-                    </View>
-                </ScrollView>
+
+                <View style={styles.scrollContainer}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <View style={styles.verseContainer}>
+                            <Text style={styles.verse}>{verse}</Text>
+                        </View>
+                        <View style={styles.verseTextContainer}>
+                            <Text style={styles.verseText}>{"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
+                        </View>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.text}>{text}</Text>
+                        </View>
+
+
+                    </ScrollView>
+                </View>
+               
             </View>
         </DismissKeyBoard>
 
     )
 }
 
-export default DisplayPostGroup
+export default DisplayPostProfile
 
 const styles = StyleSheet.create({
     container: {
@@ -63,16 +72,22 @@ const styles = StyleSheet.create({
         paddingLeft: width * 0.13,
         paddingRight: width * 0.13,
         height: height,
-        backgroundColor: '#ECDCD1'
+        backgroundColor: '#ECDCD1',
+    },
+
+    scrollContainer: {
+        maxHeight: height * 0.45,
+        // borderWidth: 1,
     },
 
     backButton: {
-        marginLeft: width * -0.1,
-        marginRight: width * 0.03,
+        marginLeft: width * -0.13,
+        paddingLeft: width * 0.025,
+        width: width * 0.13,
     },
 
     topBar: {
-        height: height * 0.05,
+        height: height * 0.065,
         width: width,
         marginLeft: width * -0.13,
         paddingLeft: width * 0.13,
@@ -80,6 +95,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: height * 0.1,
+        marginBottom: height * 0.02
     },
 
     titleContainer: {
@@ -120,6 +136,11 @@ const styles = StyleSheet.create({
 
     },
 
+    commentsContainer: {
+        height: height * 0.22, 
+        // borderWidth: 1,
+    },
+
     userContainer: {
         width: width * 0.25,
         textAlign: 'right',
@@ -127,16 +148,16 @@ const styles = StyleSheet.create({
     },
 
     name: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 16.5,
+        fontFamily: 'Quicksand-Bold',
+        fontSize: 15,
         color: '#785444',
         textAlign: 'right',
     },
 
     title: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 500,
-        fontSize: 23,
+        fontSize: 27,
         color: '#785444',
     },
 
@@ -146,8 +167,8 @@ const styles = StyleSheet.create({
     },
 
     verse: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 16,
+        fontFamily: 'Quicksand-Bold',
+        fontSize: 20,
         color: '#A47C69',
     },
 
@@ -155,21 +176,21 @@ const styles = StyleSheet.create({
     },
 
     quote: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 17,
+        fontFamily: 'Quicksand-Bold',
+        fontSize: 19,
         color: '#505050',
     },
 
     verseText: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 14,
+        fontFamily: 'Quicksand-Regular',
+        fontSize: 17,
         color: '#A47C69',
     },
 
     text: {
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Quicksand-Regular',
         fontWeight: 500,
-        fontSize: 14,
+        fontSize: 17,
         color: '#785444',
     },
 
