@@ -277,7 +277,7 @@ const DisplayPostProfile = ({ route }) => {
                         }
 
                         <View style={styles.verseTextContainer}>
-                            <ScrollView persistentScrollbar={true} ref={scrollViewRef}>
+                            <ScrollView persistentScrollbar={true} ref={scrollViewRef} showsVerticalScrollIndicator={false}>
                                 <Text style={styles.verseText}>{"\"" + editedVerseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
                             </ScrollView>
                         </View>

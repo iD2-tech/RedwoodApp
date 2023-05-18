@@ -142,14 +142,12 @@ const EachGroup = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
-        <View style={styles.backButtonContainer}>
+        <PageBackButton onPress={() => navBack()} />
+      </View>
 
-
-          <PageBackButton onPress={() => navBack()} />
-        </View>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{props.item.name}</Text>
-        </View>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>{props.item.name}</Text>
+        <Text style={styles.code}>{props.item.id}</Text>
       </View>
 
       <View style={styles.buttonContainer}>
@@ -222,31 +220,34 @@ const styles = StyleSheet.create({
   },
 
   topBar: {
-    width: width,
+    width: width * 0.85,
     flexDirection: 'row',
-    height: height * 0.13,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    paddingLeft: width * 0.03,
-    paddingRight: width * 0.03,
+    justifyContent: 'flex-start',
+    marginTop: height * 0.08
   },
-
   titleContainer: {
-    width: width * 0.86,
+    width: width * 0.85,
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    height: height * 0.045,
+    justifyContent: 'center'
   },
-
-  backButtonContainer: {
-    width: width * 0.04,
-    height: height * 0.045,
+  title: {
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 30,
+    color: '#785444'
   },
 
   title: {
     fontFamily: 'Quicksand-Bold',
     color: '#785444',
     fontSize: 30
+  },
+
+  code: {
+    fontFamily: 'Quicksand-Regular',
+    color: '#505050',
+    fontSize: 20,
+    marginTop: height * 0.01
   },
 
   buttonContainer: {

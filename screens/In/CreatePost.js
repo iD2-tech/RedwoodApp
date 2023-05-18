@@ -75,6 +75,10 @@ const CreatePost = () => {
       setData(bookNames);
     }
 
+    if (verseText.length > 0) {
+      setShowVerse(true);
+    }
+
   }, [text, invalidVerse, verse, chapter, book, title])
 
 
@@ -196,6 +200,7 @@ const CreatePost = () => {
 
   // navigate to next page
   const navAndSend = () => {
+    setBtnColor(false);
     fetchVerses();
   }
 
@@ -337,7 +342,10 @@ const CreatePost = () => {
               {showBookDropdown ?
                 <View style={styles.item}>
                   <TouchableOpacity style={styles.itemText} onPress={() => { bookSelected(bookAutofill); getVerses(); }}>
-                    <Text>{bookAutofill}</Text>
+                    <Text style={{
+                      // fontFamily: 'Quicksand-Regular',
+                      // fontSize: 20
+                    }}>{bookAutofill}</Text>
                   </TouchableOpacity>
                 </View>
                 : <></>}
@@ -368,23 +376,17 @@ const CreatePost = () => {
               ref={ref_input3}
               onSubmitEditing={(text) => getVerses().then(() => { ref_input4.current.focus() })}
             />
-
-            <TouchableOpacity
-              style={styles.showVerseButton}
-              onPress={() => { setShowVerse(!showVerse); getVerses() }}>
-              <Text style={styles.showVerseText}>
-                {showVerse ? "ʌ" : "v"}
-              </Text>
-            </TouchableOpacity>
           </View>
 
 
 
           {showVerse ?
             <View style={styles.verseTextContainer}>
-              <ScrollView>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                >
                 <View>
-                  <Text style={{ fontFamily: 'Lato-Regular', }}>{verseText}</Text>
+                  <Text style={{ fontFamily: 'Quicksand-Regular',color: 'black' }}>{verseText}</Text>
                 </View>
               </ScrollView>
 

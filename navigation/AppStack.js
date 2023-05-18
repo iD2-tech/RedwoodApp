@@ -156,10 +156,10 @@ const AppStack = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          // borderTopWidth: 0,
+          // borderTopWidth: 2,
           backgroundColor: '#ECDCD1',
-          paddingTop: height * 0.01,
-          height: height * 0.09
+          // paddingTop: height * 0.01,
+          height: height * 0.12
         }
       }}>
       <Tab.Screen
