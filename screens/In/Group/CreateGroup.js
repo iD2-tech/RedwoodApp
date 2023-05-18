@@ -26,6 +26,20 @@ const CreateGroup = ({ route }) => {
 
 
   const createGroup = () => {
+    const nameTrim = name.trim();
+    const codeTrim = code.trim();
+    const descriptionTrim = description.trim();
+
+    if (nameTrim.length === 0 || codeTrim.length === 0 || descriptionTrim.length === 0) {
+      Alert.alert("Please fill out all fields!");
+      return;
+    }
+
+    if (codeTrim.length != 5) {
+      Alert.alert("Please make sure group code is 5 characters!");
+      return;
+    }
+
     const userId = firebase.auth().currentUser.uid;
     const groupRef = firebase.firestore().collection('Groups').doc(code);
     groupRef.get().then((docSnapshot) => {

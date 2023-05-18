@@ -152,7 +152,9 @@ const SwipeableRow = (props) => {
           title: item.title,
           user: item.user,
           verse: item.verse,
-          verseText: item.verseText
+          verseText: item.verseText,
+          likes: item.likes,
+          comments: item.comments,
         });
       }
 

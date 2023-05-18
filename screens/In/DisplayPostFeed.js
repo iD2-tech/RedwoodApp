@@ -80,13 +80,16 @@ const DisplayPostProfile = ({ route }) => {
                 <View style={styles.scrollContainer}>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={styles.verseContainer}>
-                            <Text style={styles.verse}>{verse}</Text>
+                            {/* <Text style={styles.verse}>{verse}</Text> */}
+                            <TextInput style={styles.verse} editable={false} value={verse}/>
                         </View>
                         <View style={styles.verseTextContainer}>
-                            <Text style={styles.verseText}>{"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
+                            {/* <Text style={styles.verseText}>{"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text> */}
+                            <TextInput style={styles.verseText} editable={false} multiline value={"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}/>
                         </View>
                         <View style={styles.textContainer}>
-                            <Text style={styles.text}>{text}</Text>
+                            {/* <Text style={styles.text}>{text}</Text> */}
+                            <TextInput style={styles.text} editable={false} value={text} multiline/>
                         </View>
 
                     </ScrollView>
@@ -247,7 +250,7 @@ const styles = StyleSheet.create({
 
     text: {
         fontFamily: 'Quicksand-Regular',
-        fontWeight: 500,
+        // fontWeight: 500,
         fontSize: 17,
         color: '#785444',
     },

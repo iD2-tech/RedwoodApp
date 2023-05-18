@@ -27,6 +27,8 @@ import CreateGroup from '../screens/In/Group/CreateGroup';
 import EachGroup from '../screens/In/Group/EachGroup';
 import Members from '../screens/In/Group/Members';
 import DisplayPostGroup from '../screens/In/Group/DisplayPostGroup';
+import PostComments from '../screens/In/PostComments';
+import PostLikes from '../screens/In/PostLikes';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -47,6 +49,16 @@ const AppStack = () => {
       <Stack.Screen
         name="DisplayPost"
         component={DisplayPostProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PostLikes"
+        component={PostLikes}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PostComments"
+        component={PostComments}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -156,10 +168,10 @@ const AppStack = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          // borderTopWidth: 0,
+          // borderTopWidth: 2,
           backgroundColor: '#ECDCD1',
-          paddingTop: height * 0.01,
-          height: height * 0.09
+          // paddingTop: height * 0.01,
+          height: height * 0.12
         }
       }}>
       <Tab.Screen
@@ -176,7 +188,7 @@ const AppStack = () => {
         component={GroupStack}
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
-            <Feather name="zap" size={size} color={color} />
+            <Feather name="users" size={size} color={color} />
           ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
         }}
       />
