@@ -190,15 +190,17 @@ const Profile = ( {route} ) => {
       }}>
       <View style={styles.nameContainer}>
         <View style={styles.nameTop}>
-        <TouchableOpacity onPress={navToFriends}><Feather name="users" size={25} color={'black'} /></TouchableOpacity>
+        <TouchableOpacity onPress={navToFriends} style={styles.buttonContainer}>
+          <Feather name="users" size={25} color={'black'} style={styles.button} />
+          <View style={styles.touchableArea} />
+      </TouchableOpacity>
           <Text style={styles.nameText}>
             {user ? user.name : 'Loading...'}
           </Text>
-          <TouchableOpacity
-            onPress={() => navToSettings()}
-          >
-            <Feather name="settings" size={25} color={'black'} />
-          </TouchableOpacity>
+          <TouchableOpacity onPress={navToSettings} style={styles.buttonContainer}>
+            <Feather name="settings" size={25} color={'black'} style={styles.button} />
+            <View style={styles.touchableArea} />
+        </TouchableOpacity>
         </View>
         <View style={styles.nameBot}>
           <Text style={styles.userText}>{user ? `@${user.username}` : 'Loading...'}</Text>
@@ -372,5 +374,23 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: 'center',
-},
+  },
+
+  buttonContainer: {
+    position: 'relative',
+  },
+  
+  button: {
+    zIndex: 1,
+  },
+  
+  touchableArea: {
+    position: 'absolute',
+    top: -height * 0.01,
+    left: -width * 0.035,
+    right: -width * 0.035,
+    bottom: -height * 0.01,
+    zIndex: 2,
+    opacity: 0,
+  }
 })

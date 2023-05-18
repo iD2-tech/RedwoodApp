@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Animated, Dimensions, ImageBackground, Alert, Scrollview, TextInput, TouchableOpacity, Keyboard } from 'react-native'
+import {KeyboardAvoidingView, StyleSheet, Text, View, Animated, Dimensions, ImageBackground, Alert, Scrollview, TextInput, TouchableOpacity, Keyboard} from 'react-native'
 import React, { useState, useEffect, useRef } from 'react';
+//import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 import firestore from '@react-native-firebase/firestore';
@@ -60,6 +61,7 @@ const DisplayPostProfile = ({ route }) => {
     }
 
     return (
+        <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }} behavior="padding" enabled>
         <DismissKeyBoard>
             <View style={styles.container}>
                 <View style={styles.topBar}>
@@ -75,7 +77,6 @@ const DisplayPostProfile = ({ route }) => {
                     </View>
                     
                 </View>
-
                 <View style={styles.scrollContainer}>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={styles.verseContainer}>
@@ -87,7 +88,6 @@ const DisplayPostProfile = ({ route }) => {
                         <View style={styles.textContainer}>
                             <Text style={styles.text}>{text}</Text>
                         </View>
-
 
                     </ScrollView>
                 </View>
@@ -117,7 +117,7 @@ const DisplayPostProfile = ({ route }) => {
                 </View>
             </View>
         </DismissKeyBoard>
-
+    </KeyboardAvoidingView>
     )
 }
 
