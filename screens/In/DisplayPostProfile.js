@@ -102,7 +102,7 @@ const DisplayPostProfile = ({ route }) => {
             try {
                 ref_input1.current.focus();
             } catch (error) {
-                console.log(editMode);
+                console.log(editMode); 
                 console.log(error);
             }
             setEditMode(!editMode);
@@ -199,13 +199,35 @@ const DisplayPostProfile = ({ route }) => {
         setShowBookAutofill(false);
     }
 
-    const EditablePage = () => {
-        return (
-            <View>
-
-            </View>
-        )
+    const navToLike = () => {
+        navigation.navigate("PostLikes", {
+            date: date,
+            id: id,
+            text: text,
+            title: title,
+            user: user,
+            verse: verse,
+            verseText: verseText,
+            likes: likes,
+            comments: comments,
+          });
     }
+
+    const navToComment = () => {
+        navigation.navigate("PostComments", {
+            date: date,
+            id: id,
+            text: text,
+            title: title,
+            user: user,
+            verse: verse,
+            verseText: verseText,
+            likes: likes,
+            comments: comments,
+          });
+    }
+
+
 
 
 
@@ -234,11 +256,11 @@ const DisplayPostProfile = ({ route }) => {
                             />
                             {
                                 likes === undefined ? <></>:  <View style={styles.socialContainer}>
-                                    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}>
+                                    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={navToLike}>
                                         <Feather name='heart' size={27} color={'#785444'}/>
                                         <Text style={styles.likeText}>{likes.length}</Text>
                                     </TouchableOpacity>
-                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}> 
+                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={navToComment}> 
                                     <Feather name='message-circle' size={27} color={'#785444'}/>
                                     <Text style={styles.likeText}>{comments.length}</Text> 
                                 </TouchableOpacity>
