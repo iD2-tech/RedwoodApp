@@ -39,7 +39,7 @@ const LoginScreen = () => {
         backgroundColor: '#ECDCD1',
         opacity: fadeAnim
       }}>
-        <KeyboardAvoidingView style={{ width: '100%', alignItems: 'center', }}>
+       <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }} behavior="padding" enabled>
           <View style={styles.backButtonContainer}>
             <PageBackButton onPress={navBack} />
           </View>
@@ -81,8 +81,8 @@ const LoginScreen = () => {
           </View>
 
           <OnboardButton buttonColor="#5C4033" textColor="#FFFFFF" text="SIGN IN" onPress={() => login(email, password)} />
-
         </KeyboardAvoidingView>
+        
       </Animated.View>
     </DismissKeyBoard>
   )
@@ -99,10 +99,11 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: width * 0.5,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: height * 0.035,
     marginTop: height * 0.012
+  
   },
   letterContainer: {
     display: 'flex',

@@ -213,7 +213,10 @@ const Friends = ({ route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.backContainer}>
-        <TouchableOpacity onPress={navBack}><Feather name="arrow-right" size={30} color={'black'} /></TouchableOpacity>
+      <TouchableOpacity onPress={navBack} style={styles.buttonContainer}>
+          <Feather name="arrow-right" size={30} color={'black'} style={styles.button} />
+          <View style={styles.touchableArea} />
+      </TouchableOpacity>
       </View>
       <View style={{ flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between' }}>
         <View style={styles.searchContainer}>
@@ -300,4 +303,21 @@ const styles = StyleSheet.create({
     marginTop: height * 0.01
   },
 
+  buttonContainer: {
+    position: 'relative',
+  },
+  
+  button: {
+    zIndex: 1,
+  },
+  
+  touchableArea: {
+    position: 'absolute',
+    top: -15,
+    left: -15,
+    right: -15,
+    bottom: -15,
+    zIndex: 2,
+    opacity: 0,
+  }
 })

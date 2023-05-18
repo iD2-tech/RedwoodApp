@@ -149,9 +149,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECDCD1',
     paddingHorizontal: 10,
     paddingVertical: 10,
-    marginTop: 5,
-    marginBottom: 10,
-    width: '95%',
+    marginTop: height * 0.005,
+    marginBottom: height * 0.01,
+    width: width * 0.75,
     borderStyle: 'solid',
     borderBottomColor: '#785444',
     borderBottomWidth: 1,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     color: '#785444'
   },
   su: {
-    marginBottom: 30,
+    marginBottom: height * 0.02,
     fontSize: 28,
     fontWeight: '800',
     fontFamily: 'Quicksand-Bold',
