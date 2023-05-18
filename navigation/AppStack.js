@@ -176,7 +176,7 @@ const AppStack = () => {
         component={GroupStack}
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
-            <Feather name="zap" size={size} color={color} />
+            <Feather name="users" size={size} color={color} />
           ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
         }}
       />
