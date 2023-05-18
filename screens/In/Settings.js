@@ -17,7 +17,7 @@ const Settings = () => {
         try {
             const result = await Share.share({
               message:
-                'Donwload Redwood and join my community!',
+                'Download Redwood and join my community!',
                 url: 'https://google.com'
             });
             if (result.action === Share.sharedAction) {
@@ -80,14 +80,13 @@ const Settings = () => {
                 <Text style={styles.settings}>Settings</Text>
                     <View style={styles.personalContainer}>
                         <Text style={styles.title}>PERSONAL SECTION</Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
-                                <TouchableOpacity
-                                    onPress={() =>  navToMyProfile()}
-                                >
-                                    <Feather name="user" size={28} color={'#C3A699'}/>
-                                </TouchableOpacity>
-                                <Text style={styles.text}>My Profile</Text>
-                            </View>
+                        <TouchableOpacity
+                            onPress={navToMyProfile}
+                            style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05 }}
+                        >
+                            <Feather name="user" size={28} color={'#C3A699'} />
+                            <Text style={styles.text}>My Profile</Text>
+                        </TouchableOpacity>
                             {/* <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
                                 <TouchableOpacity
                                     onPress={() =>  navToDeletedPosts()}
@@ -107,49 +106,44 @@ const Settings = () => {
                     </View>
                     <View style = {styles.aboutContainer}>
                         <Text style={styles.title}>ABOUT</Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
-                                <TouchableOpacity
-                                onPress={onShare}
-                                    >
-                                        <Feather name="share" size={28} color={'#C3A699'} />
-                                </TouchableOpacity>
-                                <Text style={styles.text}>Share Redwood</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
-                                <TouchableOpacity
-                                onPress={StoreReview.requestReview}
-                                    >
-                                        <Feather name="star" size={28} color={'#C3A699'}/>
-                                </TouchableOpacity>
-                                <Text style={styles.text}>Rate Redwood</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
-                                <TouchableOpacity
-                                        onPress={() =>  navToFAQ()}
-                                >
-                                        <Feather name="help-circle" size={28} color={'#C3A699'}/>
-                                </TouchableOpacity>
-                                <Text style={styles.text}>Help</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
-                                <TouchableOpacity
-                                        onPress={() =>  navToAboutUs()}
-                                >
-                                        <Feather name="info" size={28} color={'#C3A699'}/>
-                                </TouchableOpacity>
-                                <Text style={styles.text}>About Us</Text>
-                            </View>
+                        <TouchableOpacity
+                            onPress={onShare}
+                            style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05 }}
+                        >
+                            <Feather name="share" size={28} color={'#C3A699'} />
+                            <Text style={styles.text}>Share Redwood</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={StoreReview.requestReview}
+                            style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05 }}
+                        >
+                            <Feather name="star" size={28} color={'#C3A699'} />
+                            <Text style={styles.text}>Rate Redwood</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={navToFAQ}
+                            style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05 }}
+                        >
+                            <Feather name="help-circle" size={28} color={'#C3A699'} />
+                            <Text style={styles.text}>Help</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={navToAboutUs}
+                            style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05 }}
+                        >
+                            <Feather name="info" size={28} color={'#C3A699'} />
+                            <Text style={styles.text}>About Us</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style = {styles.logoutContainer}>
                         <Text style={styles.title}>LOG OUT</Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05}}>
-                                    <TouchableOpacity
-                                        onPress={() =>  logout()}
-                                    >
-                                        <Feather name="log-out" size={28} color={'#C3A699'}/>
-                                    </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => logout()}
+                                style={{ flexDirection: 'row', alignItems: 'center', height: height * 0.05 }}
+                            >
+                                <Feather name="log-out" size={28} color={'#C3A699'} />
                                 <Text style={styles.text}>Log Out</Text>
-                            </View>
+                            </TouchableOpacity>
                     </View>
             </View>
             </ImageBackground>

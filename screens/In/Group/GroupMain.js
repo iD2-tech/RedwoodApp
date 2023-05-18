@@ -119,11 +119,17 @@ const GroupMain = () => {
       }}>
       <View style={{ marginTop: height * 0.1, width: width * 0.9, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
         <Text style={{ fontFamily: 'Quicksand-Bold', fontSize: 30, color: "#785444", width: width * 0.82 }}>GROUPS</Text>
-        <TouchableOpacity onPress={showornoshow}>
+        {<TouchableOpacity onPress={showornoshow} style={styles.buttonContainer}>
+          {
+            show ? <Feather name="minus" size={30} color={'#785444'} style={styles.button} /> : <Feather name="plus" size={30} color={'#785444'} style={styles.button} />
+          }
+          <View style={styles.touchableArea} />
+        </TouchableOpacity>}
+        {/* <TouchableOpacity onPress={showornoshow}>
           {
             show ? <Feather name="minus" size={30} color={'#785444'} /> : <Feather name="plus" size={30} color={'#785444'} />
           }
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       {
         show ?
@@ -223,4 +229,21 @@ searchContainer: {
     height: height * 0.035
 },
 
+buttonContainer: {
+  position: 'relative',
+},
+
+button: {
+  zIndex: 1,
+},
+
+touchableArea: {
+  position: 'absolute',
+  top: -height * 0.01,
+  left: -width * 0.035,
+  right: -width * 0.035,
+  bottom: -height * 0.01,
+  zIndex: 2,
+  opacity: 0,
+}
 })
