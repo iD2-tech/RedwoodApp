@@ -9,6 +9,7 @@ import { firebase } from "@react-native-firebase/auth";
 import { ScrollView } from 'react-native-gesture-handler';
 import DismissKeyBoard from '../../components/DissmisskeyBoard';
 import { bookNames } from '../../assets/bibleBookNames';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 const { width, height } = Dimensions.get('window')
 
