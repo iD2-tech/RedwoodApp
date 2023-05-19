@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         paddingBottom: height * 0.013,
         borderBottomColor: '#C3A699',
+        // width: width,
     },
     username: {
         fontFamily: 'Lato-Bold',

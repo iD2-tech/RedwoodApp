@@ -9,6 +9,7 @@ import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import DismissKeyBoard from '../../components/DissmisskeyBoard';
 import PageBackButton from '../../components/PageBackButton';
 import EachComment from '../../components/EachComment';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 const { width, height } = Dimensions.get('window')
 
@@ -61,8 +62,13 @@ const DisplayPostProfile = ({ route }) => {
     }
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }} behavior="padding" enabled>
-        <DismissKeyBoard>
+        <KeyboardAwareScrollView
+            extraScrollHeight={-(height * 0.06)}
+            // contentContainerStyle={{flexGrow:1}}
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={false}
+        >
+        {/* <DismissKeyBoard> */}
             <View style={styles.container}>
                 <View style={styles.topBar}>
                     
@@ -94,33 +100,33 @@ const DisplayPostProfile = ({ route }) => {
 
                     </ScrollView>
                 </View>
+                <View style={styles.commentsContainer}>
+                    <FlatList
+                        data={comments}
+                        showsVerticalScrollIndicator={false}
+                        // showsVerticalScrollIndicator={false}
+                        keyExtractor={item => item.key}
+                        renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
+                    />
+                </View>
                 <View style={styles.commentSection}>
                     <View style={styles.commentEntryContainer}>
                         <TextInput
-                            placeholder='write your comment here'
+                            placeholder='Add a comment...'
                             style={styles.commentEntry}
                             placeholderTextColor='#C3A699'
                             value={commentEntry}
                             onChangeText={(text) => setCommentEntry(text)}
                         />
                         <TouchableOpacity style={styles.sendCommentButtonContainer} onPress={() => commentSent()}>
-                            <Feather name='send' color='#C3A699' size={18} style={styles.sendCommentButton} />
+                            <Feather name='send' color='#C3A699' size={23} style={styles.sendCommentButton} />
                         </TouchableOpacity>
                     </View>
 
                 </View>
-                <View style={styles.commentsContainer}>
-
-                
-                <FlatList
-                    data={comments}
-                    keyExtractor={item => item.key}
-                    renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
-                />
-                </View>
             </View>
-        </DismissKeyBoard>
-    </KeyboardAvoidingView>
+        {/* </DismissKeyBoard> */}
+        </KeyboardAwareScrollView>
     )
 }
 
@@ -133,6 +139,7 @@ const styles = StyleSheet.create({
         paddingLeft: width * 0.13,
         paddingRight: width * 0.13,
         height: height,
+        // alignItems: 'center',.
         backgroundColor: '#ECDCD1',
     },
 
@@ -167,25 +174,36 @@ const styles = StyleSheet.create({
 
     commentSection: {
         marginTop: height * 0.03,
+        alignItems: 'center'
+        // borderWidth: 1
     },
 
     commentEntry: {
         color: '#785444',
-        width: width * 0.65
+        fontSize:17,
+        width: width * 0.85,
+        height: height * 0.03,
+        // borderWidth:1
     },
 
     commentEntryContainer: {
-        marginBottom: height * 0.03,
-        paddingBottom: height * 0.005,
+        // marginBottom: height * 0.03,
+        // paddingBottom: height * 0.01,
+        // paddingTop: height * 0.01,
         borderColor: '#C3A699',
-        borderBottomWidth: 1,
-        flexDirection: 'row'
+        // borderWidth:1,
+        flexDirection: 'row',
+        padding: height * 0.016,
+        width: width,
+        borderTopWidth:1,
+        alignItems: 'center'
     },
 
     sendCommentButtonContainer: {
-        width: width * 0.09,
+        width: width * 0.06,
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
+        // marginRight: width * 0.03,
         // borderWidth: 1,
         // justifyContent: 'center',
     },
@@ -193,12 +211,18 @@ const styles = StyleSheet.create({
     sendCommentButton: {
         // marginTop: height * 0.01,
         transform: [{ rotate: '45deg' }],
-        marginRight: width * 0.01,
+        // marginRight: width * 0.01,
 
     },
 
     commentsContainer: {
-        height: height * 0.22, 
+        height: height * 0.23, 
+        marginTop: height * 0.02,
+        // width: width,
+    
+        // alignItems: 'center',
+        // alignContent: 'center',
+        // justifyContent: 'center'
         // borderWidth: 1,
     },
 
