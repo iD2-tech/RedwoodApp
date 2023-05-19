@@ -13,6 +13,7 @@ import Modal from "react-native-modal";
 import RadioGroup from 'react-native-radio-buttons-group';
 import DropDownMenu from '../../components/DropDownMenu';
 
+
 const { width, height } = Dimensions.get('window')
 
 
@@ -310,6 +311,7 @@ const CreatePost = () => {
   }
 
   return (
+    // <KeyboardAwareScrollView   contentContainerStyle={{flexGrow:1}}>
     <DismissKeyBoard>
       <View style={styles.container}>
 
@@ -485,6 +487,7 @@ const CreatePost = () => {
       
 
     </DismissKeyBoard>
+    // </KeyboardAwareScrollView>
   )
 }
 
@@ -493,7 +496,7 @@ export default CreatePost
 const styles = StyleSheet.create({
 
   container: {
-    backgroundColor: '#ECDCD1', height: '100%', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: '#ECDCD1',  justifyContent: 'center', alignItems: 'center', height: '100%'
   },
 
   backButtonContainer: {
@@ -646,7 +649,7 @@ const styles = StyleSheet.create({
 
   verseTextContainer: {
     position: 'absolute',
-    top: height * 0.12,
+    top: height * 0.105,
     height: height * 0.08,
     width: '100%',
     flex: 1,
