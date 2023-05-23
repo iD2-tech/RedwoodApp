@@ -108,14 +108,6 @@ const DisplayPostProfile = ({ route }) => {
                     </View>
                 </KeyboardAwareScrollView>
             </View>
-            <View style={styles.commentsContainer}>
-                <FlatList
-                    data={comments}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={item => item.key}
-                    renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
-                />
-            </View>
             <View style={styles.commentSection}>
                 <View style={styles.commentEntryContainer}>
                     <TextInput
