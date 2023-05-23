@@ -435,12 +435,12 @@ const CreatePost = () => {
           onPress={navAndSend}>
           <Text style={
             btnColor ? {
-              color: "#FFFFFF",
+              color: "#FFE3D7",
               fontFamily: 'Quicksand-Bold',
               fontSize: 18
             } :
               {
-                color: "#FFFFFF",
+                color: "#FFE3D7",
                 fontFamily: 'Quicksand-Bold',
                 fontSize: 18
               }

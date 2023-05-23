@@ -324,8 +324,9 @@ const DisplayPostProfile = ({ route }) => {
                             height: height * 0.2,
                             borderColor: '#D3D3D3',
                             // paddingLeft: width * 0.02
+                            // borderWidth: 1,
                             
-                        }}>
+                        }}>                            
                             <TextInput
                                 style={styles.text}
                                 value={editedText}
@@ -336,6 +337,7 @@ const DisplayPostProfile = ({ route }) => {
                                 onBlur={() => setEditMode(false)}
                                 onFocus={() => setEditMode(true)}
                                 blurOnSubmit
+                                // scrollEnabled={false}
                             />
                         </View>
                     </View>
@@ -355,6 +357,7 @@ const styles = StyleSheet.create({
         marginLeft: width * 0.1,
         height: height * 0.7,
         // borderWidth: 1,
+        backgroundColor: '#ECDCD1'
     },
 
     editButton: {
