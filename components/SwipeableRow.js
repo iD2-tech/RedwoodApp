@@ -31,7 +31,7 @@ const SwipeableRow = (props) => {
     }
 
     const deletePost = (item) => {
-        Alert.alert('DELETING POST', 'Are you sure?', [
+        Alert.alert('Your post will be permanently deleted.', 'Are you sure?', [
             {
                 text: 'Cancel',
                 onPress: () => console.log('canceled'),

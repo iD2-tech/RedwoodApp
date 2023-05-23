@@ -185,8 +185,9 @@ const EachGroup = (props) => {
 
 
       </View>
-      <View style={{ height: height * 0.62, marginTop: height * 0.05, }}>
+      <View style={{ height: height * 0.62, marginTop: height * 0.05 }}>
         <FlatList
+          contentContainerStyle={{ paddingBottom: height * 0.05 }}
           data={posts}
           keyExtractor={item => item.postId}
           renderItem={({ item }) =>
@@ -198,8 +199,6 @@ const EachGroup = (props) => {
           showsVerticalScrollIndicator={false}
         />
       </View>
-
-
 
     </View>
   )

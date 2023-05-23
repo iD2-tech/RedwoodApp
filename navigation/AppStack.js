@@ -184,20 +184,20 @@ const AppStack = () => {
         }}
       />
       <Tab.Screen
-        name="Groups"
-        component={GroupStack}
-        options={{
-          headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
-            <Feather name="users" size={size} color={color} />
-          ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
-        }}
-      />
-      <Tab.Screen
         name="Post"
         component={CreatePost}
         options={{
           headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
             <Feather name="plus-circle" size={size} color={color} />
+          ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
+        }}
+      />
+      <Tab.Screen
+        name="Groups"
+        component={GroupStack}
+        options={{
+          headerShown: false, tabBarLabel: '', tabBarIcon: ({ color, size }) => (
+            <Feather name="users" size={size} color={color} />
           ), tabBarActiveTintColor: '#5C4033', tabBarInactiveTintColor: '#A47C69',
         }}
       />

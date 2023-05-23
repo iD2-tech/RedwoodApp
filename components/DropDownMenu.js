@@ -12,15 +12,15 @@ const DropDownMenu = (props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => onPressItem(data[0])} style={styles.eachView1}>
-        <Feather name={data[0].icon} size={25} color="#505050"/>
+        <Feather name={data[0].icon} size={25} color="#785444"/>
         <Text style={styles.text}>{data[0].label}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => onPressItem(data[1])} style={styles.eachView1}>
-        <Feather name={data[1].icon} size={25} color="#505050"/>
+        <Feather name={data[1].icon} size={25} color="#785444"/>
         <Text style={styles.text}>{data[1].label}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => onPressItem(data[2])} style={styles.eachView1}>
-        <Feather name={data[2].icon} size={25} color="#505050"/>
+        <Feather name={data[2].icon} size={25} color="#785444"/>
         <Text style={styles.text}>{data[2].label}</Text>
       </TouchableOpacity>
     </View>

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Animated, Dimensions, TouchableOpacity, Pressable } from 'react-native'
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef} from 'react'
 import Feather from 'react-native-vector-icons/Feather';
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
@@ -14,7 +14,8 @@ const EachPost = (props) => {
     const likes = props.likes;
     const [liked, setLiked] = useState(false);
     const navigation = useNavigation();
-
+    const messageInputRef = useRef(null);
+    //const [messageButtonPressed, setMessageButtonPressed] = useState(false);
     useEffect(() => {
         if (likes.includes(username)) {
             setLiked(true);
@@ -23,7 +24,26 @@ const EachPost = (props) => {
         }
     }, [])
 
-    const entryPressed = () => {
+    const messageEntryPress = () => {
+        //setMessageButtonPressed(true);
+        console.log("message");
+        navigation.navigate("DisplayPostProfile", {
+            messageInputRef: messageInputRef,
+            postId: props.postId,
+            postUserId: props.userId,
+            text: props.text,
+            username: props.username,
+            user: props.user,
+            title: props.title,
+            likes: props.likes,
+            verse: props.verse,
+            verseText: props.verseText,
+        });
+    }
+
+    const normEntryPress = () => {
+        console.log("normal");
+        //setMessageButtonPressed(false);
         navigation.navigate("DisplayPostProfile", {
             postId: props.postId,
             postUserId: props.userId,
@@ -33,7 +53,8 @@ const EachPost = (props) => {
             title: props.title,
             likes: props.likes,
             verse: props.verse,
-            verseText: props.verseText
+            verseText: props.verseText,
+            // messageInputRef: messageInputRef,
         });
     }
 
@@ -49,7 +70,7 @@ const EachPost = (props) => {
     }
 
     return (
-        <TouchableOpacity onPress={() => entryPressed()} style={styles.container} activeOpacity={0.5}>
+        <TouchableOpacity onPress={() => normEntryPress() } style={styles.container} activeOpacity={0.5}>
             <View style={styles.topBar}>
                 <View style={styles.titleContainer}>
                     <Text adjustsFontSizeToFit style={styles.title} numberOfLines={1}>{props.title}</Text>
@@ -85,7 +106,7 @@ const EachPost = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.iteractionButtonContainer}>
-                    <TouchableOpacity onPress={() => entryPressed()} style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity onPress={() => messageEntryPress()} style={{ flexDirection: 'row' }}>
                         <Feather name="message-circle" size={23} color='#785444' />
                     </TouchableOpacity>
                 </View>

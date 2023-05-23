@@ -31,6 +31,7 @@ const DisplayPostProfile = ({ route }) => {
     const [showBookAutofill, setShowBookAutofill] = useState(false);
     const [invalidVerse, setInvalidVerse] = useState(false);
     const scrollViewRef = useRef();
+    const { messageInputRef } = route.params;
 
     useEffect(() => {
         setTimeout(() => {
