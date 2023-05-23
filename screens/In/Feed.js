@@ -26,12 +26,6 @@ const Feed = () => {
     if (username === '') {
       getUsername();
     }
-
-    // renderFriends().then(() => {
-    //   renderPosts().then(() => {
-    //     setPostsExist(true);
-    //   })
-    // })
     renderFriends();
     renderPosts();
 
@@ -56,7 +50,6 @@ const Feed = () => {
     setRefreshing(true);
     // Fetch new data here and set it using setData
     renderPosts();
-    console.log(friends);
     setRefreshing(false);
   } 
 
@@ -80,7 +73,6 @@ const Feed = () => {
       if (friends === null) {   
         setFriends(friendArr);
       }
-
     })
     return () => unsubscribe();
   }
@@ -197,7 +189,6 @@ const styles = StyleSheet.create({
   flatContainer: {
     justifyContent: 'center',
     alignContent: 'center',
-    // paddingBottom: height * 0.09,
     height: height * 0.76,
   },
 

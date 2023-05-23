@@ -35,9 +35,8 @@ const DATA = [
   }
 ];
 
-const Profile = ( {route} ) => {
+const Profile = ({ route }) => {
   var userId = firebase.auth().currentUser.uid;
-
   const navigation = useNavigation();
   const { logout } = useContext(AuthContext);
   const [name, setName] = useState('');
@@ -48,13 +47,8 @@ const Profile = ( {route} ) => {
   const [user, setUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selected, setSelected] = useState(DATA[0]);
-  
 
-
-  
   useEffect(() => {
-    // const {name, username} = route.params;
-    // setUser({name,username})
     const userId = firebase.auth().currentUser.uid;
     const userRef = firebase.firestore().collection('Users').doc(userId);
     const unsubscribe1 = userRef.onSnapshot((doc) => {
@@ -63,7 +57,6 @@ const Profile = ( {route} ) => {
         setUser({ name, username });
       }
     });
-
     const postCollection = firestore().collection('Posts').doc(userId).collection('userPosts');
     const postQuery = postCollection.orderBy('pinned', 'desc').orderBy('date', 'desc');
     const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
@@ -83,7 +76,6 @@ const Profile = ( {route} ) => {
           comments: comments,
         })
       })
-
       setPosts(postsData);
       setFiltered(postsData);
     })
@@ -93,13 +85,9 @@ const Profile = ( {route} ) => {
     };
   }, []);
 
-  
-
-
   const navToSettings = () => {
     navigation.navigate("Settings");
   }
-
 
   const navToFeed = () => {
     navigation.navigate("Post");
@@ -119,7 +107,7 @@ const Profile = ( {route} ) => {
           var dateObj = new Date(item.date.seconds * 1000);
           const date = dateObj.getDate();
           const month = monthNames[dateObj.getMonth()];
-          const year = dateObj.getFullYear(); 
+          const year = dateObj.getFullYear();
 
           const dateString = date + " " + month + " " + year;
 
@@ -156,7 +144,6 @@ const Profile = ( {route} ) => {
     setRadioButtons(radioButtonsArray);
   }
 
-
   const handleModal = () => {
     setIsModalVisible(() =>
       !isModalVisible
@@ -174,17 +161,9 @@ const Profile = ( {route} ) => {
     navigation.navigate("FriendStack")
   }
 
-  // if (loading) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //       <ActivityIndicator size="large" color="#0000ff" />
-  //     </View>
-  //   );
-  // }
-
   return (
 
-    
+
     <View style={styles.container}>
       <ImageBackground source={require('../../FeatherLeft.png')} resizeMode="cover" style={{
         justifyContent: 'center',
@@ -195,69 +174,64 @@ const Profile = ( {route} ) => {
       }} imageStyle={{
         marginTop: height * 0.02
       }}>
-      <View style={styles.nameContainer}>
-        <View style={styles.nameTop}>
-        <TouchableOpacity onPress={navToFriends} style={styles.buttonContainer}>
-          <Feather name="users" size={25} color={'#785444'} style={styles.button} />
-          <View style={styles.touchableArea} />
-      </TouchableOpacity>
-          <Text style={styles.nameText}>
-            {user ? user.name : 'Loading...'}
-          </Text>
-          <TouchableOpacity onPress={navToSettings} style={styles.buttonContainer}>
-            <Feather name="settings" size={25} color={'#785444'} style={styles.button} />
-            <View style={styles.touchableArea} />
-        </TouchableOpacity>
-        </View>
-        <View style={styles.nameBot}>
-          <Text style={styles.userText}>{user ? `@${user.username}` : 'Loading...'}</Text>
-        </View>
-      </View>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.textInputStyle}
-          onChangeText={(text) => searchFilterFunction(text)}
-          value={search}
-          underlineColorAndroid="transparent"
-          placeholderTextColor={'#FFE3D7'}
-          placeholder="Search"
-        />
-        <TouchableOpacity onPress={handleModal}>
-          <Feather name={selected.icon} size={27} color={'#785444'} marginRight={width * 0.04}/>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.listContainer}>
-        <FlatList
-          data={filtered}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) => (
-            <SwipeableRow item={item} />
-          )}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
-      {
-          isModalVisible ? 
-          <View style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            // flex: 1,
-            top: height * 0.33,
-            right: width * 0.3,
-            position: 'absolute',
-          }}>
-          <DropDownMenu onPressItem={onPressItem} data={DATA}/>
+        <View style={styles.nameContainer}>
+          <View style={styles.nameTop}>
+            <TouchableOpacity onPress={navToFriends} style={styles.buttonContainer}>
+              <Feather name="users" size={25} color={'#785444'} style={styles.button} />
+              <View style={styles.touchableArea} />
+            </TouchableOpacity>
+            <Text style={styles.nameText}>
+              {user ? user.name : 'Loading...'}
+            </Text>
+            <TouchableOpacity onPress={navToSettings} style={styles.buttonContainer}>
+              <Feather name="settings" size={25} color={'#785444'} style={styles.button} />
+              <View style={styles.touchableArea} />
+            </TouchableOpacity>
           </View>
-          : <></>
+          <View style={styles.nameBot}>
+            <Text style={styles.userText}>{user ? `@${user.username}` : 'Loading...'}</Text>
+          </View>
+        </View>
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.textInputStyle}
+            onChangeText={(text) => searchFilterFunction(text)}
+            value={search}
+            underlineColorAndroid="transparent"
+            placeholderTextColor={'#FFE3D7'}
+            placeholder="Search"
+          />
+          <TouchableOpacity onPress={handleModal}>
+            <Feather name={selected.icon} size={27} color={'#785444'} marginRight={width * 0.04} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.listContainer}>
+          <FlatList
+            data={filtered}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({ item }) => (
+              <SwipeableRow item={item} />
+            )}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+        {
+          isModalVisible ?
+            <View style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              // flex: 1,
+              top: height * 0.33,
+              right: width * 0.3,
+              position: 'absolute',
+            }}>
+              <DropDownMenu onPressItem={onPressItem} data={DATA} />
+            </View>
+            : <></>
         }
-
       </ImageBackground>
     </View>
-   
-
-
   )
-
 }
 
 export default Profile
@@ -265,7 +239,6 @@ export default Profile
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ECDCD1',
-    // height: '100%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -277,7 +250,6 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.04,
     marginTop: height * 0.06,
     justifyContent: 'center',
-    // backgroundColor: 'black'
   },
 
   nameTop: {
@@ -340,7 +312,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Quicksand-Bold',
     backgroundColor: '#C3A699',
-    // color: '#FFE3D7',
     borderRadius: 15,
   },
 
@@ -349,7 +320,6 @@ const styles = StyleSheet.create({
     padding: width * 0.02,
     borderRadius: 40,
     alignItems: 'center',
-    // marginBottom: height * 0.01,
     borderColor: '#E4E4E4',
     borderWidth: 1,
     backgroundColor: '#C3A699',
@@ -378,11 +348,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'relative',
   },
-  
+
   button: {
     zIndex: 1,
   },
-  
+
   touchableArea: {
     position: 'absolute',
     top: -height * 0.01,

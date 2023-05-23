@@ -8,8 +8,6 @@ import { firebase } from "@react-native-firebase/auth";
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import EachGroupPost from '../../../components/EachGroupPost'
 
-
-
 const { width, height } = Dimensions.get('window')
 const EachGroup = (props) => {
   const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -49,7 +47,7 @@ const EachGroup = (props) => {
     Alert.alert('LEAVING GROUP', 'Are you sure?', [
       {
         text: 'Cancel',
-        onPress: () => console.log('canceled'),
+        onPress: () => {},
         style: 'cancel'
       },
       {
@@ -86,14 +84,11 @@ const EachGroup = (props) => {
       const unsubscribe = userPostRef.onSnapshot((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var verses = doc.data().book + " " + doc.data().chapter + ":" + doc.data().verse;
-
           var dateObj = new Date(doc.data().date.seconds * 1000);
           const date = dateObj.getDate();
           const month = monthNames[dateObj.getMonth()];
           const year = dateObj.getFullYear();
-
           const dateString = date + " " + month + " " + year;
-
           if (doc.data().anonymous === '1') {
             postArr.push({
               user: 'Anonymous',
@@ -129,7 +124,6 @@ const EachGroup = (props) => {
     return () => {
       unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
     };
-
   }
 
   function getStartofToday() {
@@ -153,45 +147,52 @@ const EachGroup = (props) => {
       <View style={styles.buttonContainer}>
         <View style={styles.individualButton}>
           <TouchableOpacity onPress={navToMembers}>
-            <View style={{alignItems: 'center'}}>
-            <Feather name="users" size={22} color={'#785444'} />
+            <View style={{ alignItems: 'center' }}>
+              <Feather name="users" size={22} color={'#785444'} />
             </View>
-            
+
             <Text style={styles.buttonLogo}>members</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.individualButton}>
           <TouchableOpacity onPress={() => Alert.alert('coming soon!')}>
-          <View style={{alignItems: 'center'}}>
-            <Feather name="message-circle" size={22} color={'#785444'} />
+            <View style={{ alignItems: 'center' }}>
+              <Feather name="message-circle" size={22} color={'#785444'} />
             </View>
             <Text style={styles.buttonLogo}>chat</Text>
-            
+
           </TouchableOpacity>
         </View>
         <View style={styles.individualButton}>
-          <TouchableOpacity  onPress={leaveGroup}>
-          <View style={{alignItems: 'center'}}>
-            <Feather name="x-circle" size={22} color={'#785444'} />
+          <TouchableOpacity onPress={leaveGroup}>
+            <View style={{ alignItems: 'center' }}>
+              <Feather name="x-circle" size={22} color={'#785444'} />
             </View>
             <Text style={styles.buttonLogo}>leave</Text>
-            
+
           </TouchableOpacity>
         </View>
-
-
-
-
-
-
       </View>
+
       <View style={{ height: height * 0.62, marginTop: height * 0.05 }}>
         <FlatList
           contentContainerStyle={{ paddingBottom: height * 0.05 }}
           data={posts}
           keyExtractor={item => item.postId}
           renderItem={({ item }) =>
-            <EachGroupPost item={item} user={item.user} likes={item.likes} username={item.username} postId={item.postId} userId={item.userId} date={item.date} title={item.title} verseText={item.verseText} verse={item.verse} text={item.text} />
+            <EachGroupPost
+              item={item}
+              user={item.user}
+              likes={item.likes}
+              username={item.username}
+              postId={item.postId}
+              userId={item.userId}
+              date={item.date}
+              title={item.title}
+              verseText={item.verseText}
+              verse={item.verse}
+              text={item.text}
+            />
           }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -199,7 +200,6 @@ const EachGroup = (props) => {
           showsVerticalScrollIndicator={false}
         />
       </View>
-
     </View>
   )
 }

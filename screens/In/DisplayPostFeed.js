@@ -1,5 +1,5 @@
 
-import {KeyboardAvoidingView, StyleSheet, Text, View, Animated, Dimensions, ImageBackground, Alert, Scrollview, TextInput, TouchableOpacity, Keyboard} from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, View, Animated, Dimensions, ImageBackground, Alert, Scrollview, TextInput, TouchableOpacity, Keyboard } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react';
 //import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native';
@@ -10,7 +10,7 @@ import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import DismissKeyBoard from '../../components/DissmisskeyBoard';
 import PageBackButton from '../../components/PageBackButton';
 import EachComment from '../../components/EachComment';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const { width, height } = Dimensions.get('window')
 
@@ -20,7 +20,6 @@ const DisplayPostProfile = ({ route }) => {
     const { postId, postUserId, text, username, user, title, verse, verseText, messageInputRef } = route.params;
     const [commentEntry, setCommentEntry] = useState('');
     const [comments, setComments] = useState([]);
-    //const [messageButtonPressed, setMessageButtonPressed] = useState(false);
 
     useEffect(() => {
         const subscriber = firestore()
@@ -34,10 +33,10 @@ const DisplayPostProfile = ({ route }) => {
 
         return () => subscriber();
     }, []);
-  
+
     useEffect(() => {
         if (messageInputRef && messageInputRef.current) {
-        messageInputRef.current.focus();
+            messageInputRef.current.focus();
         }
     }, []);
 
@@ -70,78 +69,71 @@ const DisplayPostProfile = ({ route }) => {
     }
 
     return (
-            <KeyboardAwareScrollView behavior='padding' scrollEnabled={false} extraScrollHeight={-(height * 0.06)} style={styles.container}>
-                <View style={styles.topBar}>
-                    
-                    <View style={styles.backButton}>
-                        <PageBackButton onPress={navBack} />
-                    </View>
-                    
-                    <View style={styles.titleContainer}>
-                        <Text adjustsFontSizeToFit style={styles.title} numberOfLines={1}>{title}</Text>
-                    </View>
-                    <View style={styles.userContainer}>
-                        <Text adjustsFontSizeToFit style={styles.name} numberOfLines={1}>{user}</Text>
-                    </View>
-                    
+        <KeyboardAwareScrollView behavior='padding' scrollEnabled={false} extraScrollHeight={-(height * 0.06)} style={styles.container}>
+            <View style={styles.topBar}>
+
+                <View style={styles.backButton}>
+                    <PageBackButton onPress={navBack} />
                 </View>
-                <View style={styles.scrollContainer}>
+
+                <View style={styles.titleContainer}>
+                    <Text adjustsFontSizeToFit style={styles.title} numberOfLines={1}>{title}</Text>
+                </View>
+                <View style={styles.userContainer}>
+                    <Text adjustsFontSizeToFit style={styles.name} numberOfLines={1}>{user}</Text>
+                </View>
+
+            </View>
+            <View style={styles.scrollContainer}>
                 <KeyboardAwareScrollView
                     extraScrollHeight={-(height * 0.06)}
-                    // contentContainerStyle={{flexGrow:1}}
                     showsVerticalScrollIndicator={false}
-                    //scrollEnabled={false}
                 >
-                        <View style={styles.verseContainer}>
-                            {/* <Text style={styles.verse}>{verse}</Text> */}
-                            <TextInput style={styles.verse} editable={false} value={verse}/>
-                        </View>
-                        <View style={styles.verseTextContainer}>
-                            {/* <Text style={styles.verseText}>{"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text> */}
-                            <TextInput style={styles.verseText} editable={false} multiline value={"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}/>
-                        </View>
-                        <View style={styles.textContainer}>
-                            {/* <Text style={styles.text}>{text}</Text> */}
-                            <TextInput style={styles.text} editable={false} value={text} multiline/>
-                        </View>
-                        <View style={styles.commentsContainer}>
-                            <FlatList
-                                data={comments}
-                                showsVerticalScrollIndicator={false}
-                                // showsVerticalScrollIndicator={false}
-                                keyExtractor={item => item.key}
-                                renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
-                            />
-                        </View>
-                    </KeyboardAwareScrollView>
-                </View>
-                <View style={styles.commentsContainer}>
-                    <FlatList
-                        data={comments}
-                        showsVerticalScrollIndicator={false}
-                        // showsVerticalScrollIndicator={false}
-                        keyExtractor={item => item.key}
-                        renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
-                    />
-                </View>
-                <View style={styles.commentSection}>
-                    <View style={styles.commentEntryContainer}>
-                        <TextInput
-                            placeholder='Add a comment...'
-                            style={styles.commentEntry}
-                            placeholderTextColor='#C3A699'
-                            value={commentEntry}
-                            onChangeText={(text) => setCommentEntry(text)}
-                            multiline
-                            scrollEnabled
-                            ref={messageInputRef}
-                        />
-                        <TouchableOpacity style={styles.sendCommentButtonContainer} onPress={() => commentSent()}>
-                            <Feather name='send' color='#C3A699' size={23} style={styles.sendCommentButton} />
-                        </TouchableOpacity>
+                    <View style={styles.verseContainer}>
+                        <TextInput style={styles.verse} editable={false} value={verse} />
                     </View>
+                    <View style={styles.verseTextContainer}>
+                        <TextInput style={styles.verseText} editable={false} multiline value={"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""} />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <TextInput style={styles.text} editable={false} value={text} multiline />
+                    </View>
+                    <View style={styles.commentsContainer}>
+                        <FlatList
+                            data={comments}
+                            showsVerticalScrollIndicator={false}
+                            keyExtractor={item => item.key}
+                            renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
+                        />
+                    </View>
+                </KeyboardAwareScrollView>
+            </View>
+            <View style={styles.commentsContainer}>
+                <FlatList
+                    data={comments}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={item => item.key}
+                    renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
+                />
+            </View>
+            <View style={styles.commentSection}>
+                <View style={styles.commentEntryContainer}>
+                    <TextInput
+                        placeholder='Add a comment...'
+                        style={styles.commentEntry}
+                        placeholderTextColor='#C3A699'
+                        value={commentEntry}
+                        onChangeText={(text) => setCommentEntry(text)}
+                        multiline
+                        scrollEnabled
+                        ref={messageInputRef}
+                    />
+                    <TouchableOpacity style={styles.sendCommentButtonContainer} onPress={() => commentSent()}>
+                        <Feather name='send' color='#C3A699' size={23} style={styles.sendCommentButton} />
+                    </TouchableOpacity>
                 </View>
-            </KeyboardAwareScrollView>
+            </View>
+        </KeyboardAwareScrollView>
     )
 }
 
@@ -150,18 +142,15 @@ export default DisplayPostProfile
 const styles = StyleSheet.create({
     container: {
         width: width,
-        //marginBottom: height * 0.015,
         paddingLeft: width * 0.13,
         paddingRight: width * 0.13,
         height: height,
-        // alignItems: 'center',.
         backgroundColor: '#ECDCD1',
     },
 
     scrollContainer: {
         maxHeight: height * 0.6,
         height: height * 0.6,
-        // borderWidth: 1,
     },
 
     backButton: {
@@ -189,61 +178,38 @@ const styles = StyleSheet.create({
     },
 
     commentSection: {
-        //marginTop: height * 0.12,
         alignItems: 'center',
-        //borderWidth: 1
     },
 
     commentEntry: {
         color: '#785444',
-        fontSize:17,
+        fontSize: 17,
         width: width * 0.85,
-        //height: height * 0.02,
-        //marginBottom: height * 0.123,
-        flexDirection: 'row', 
+        flexDirection: 'row',
         alignItems: 'flex-end',
-
-        // borderWidth:1
     },
 
     commentEntryContainer: {
-        //marginBottom: height * 0.03,
-        //paddingBottom: height * 0.01,
-        // paddingTop: height * 0.01,
         borderColor: '#C3A699',
-        // borderWidth:1,
         flexDirection: 'row',
         padding: height * 0.016,
         width: width,
-        borderTopWidth:1,
+        borderTopWidth: 1,
         alignItems: 'center',
     },
 
     sendCommentButtonContainer: {
         width: width * 0.06,
-        //marginBottom: height * 0.123,
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        // marginRight: width * 0.03,
-        // borderWidth: 1,
-        // justifyContent: 'center',
     },
 
     sendCommentButton: {
-        // marginTop: height * 0.01,
         transform: [{ rotate: '45deg' }],
-        // marginRight: width * 0.01,
     },
 
     commentsContainer: {
-        //height: height * 0.23, 
         marginTop: height * 0.025,
-        // width: width,
-    
-        // alignItems: 'center',
-        // alignContent: 'center',
-        // justifyContent: 'center'
-        // borderWidth: 1,
     },
 
     userContainer: {
@@ -294,7 +260,6 @@ const styles = StyleSheet.create({
 
     text: {
         fontFamily: 'Quicksand-Regular',
-        // fontWeight: 500,
         fontSize: 17,
         color: '#785444',
     },

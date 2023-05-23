@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Animated, Dimensions} from 'react-native'
-import React, {useState} from 'react'
+import { StyleSheet, Text, View, Animated, Dimensions } from 'react-native'
+import React, { useState } from 'react'
 import PageBackButton from '../../components/PageBackButton'
 import { useNavigation } from '@react-navigation/native'
 
@@ -7,24 +7,17 @@ const { width, height } = Dimensions.get('window')
 
 const DisplayPost = (props) => {
     const navigation = useNavigation();
-    
+
     const navBack = () => {
         navigation.navigate("Home")
     }
-  return (
-    <View 
-        style={styles.container }
-        >
-     <PageBackButton onPress={navBack}/>
-      {/* <Text style={styles.name}>{props.user}</Text>
-      <Text style={styles.date}>{props.date}</Text>
-      <Text style={styles.title}>{props.title}</Text>
-      <Text style={styles.verseText}>" {props.verseText} "</Text>
-      <Text style={styles.verse}>{props.verse}</Text>
-      <Text style={styles.text}>{props.text}</Text> */}
-      <Text>{props}</Text>
-    </View>
-  )
+
+    return (
+        <View style={styles.container}>
+            <PageBackButton onPress={navBack} />
+            <Text>{props}</Text>
+        </View>
+    )
 }
 
 export default DisplayPost
@@ -33,8 +26,6 @@ const styles = StyleSheet.create({
     container: {
         width: width * 0.8,
         marginBottom: width * 0.2,
-
-        // alignItems: 'center' 
     },
 
     name: {
@@ -43,6 +34,7 @@ const styles = StyleSheet.create({
         color: '#505050',
         marginBottom: '1%'
     },
+
     date: {
         fontFamily: 'Lato-Regular',
         fontSize: 10,
@@ -60,21 +52,21 @@ const styles = StyleSheet.create({
     quote: {
         fontFamily: 'Lato-Bold',
         fontSize: 17,
-        color: '#505050', 
+        color: '#505050',
 
     },
 
     verseText: {
         fontFamily: 'Lato-Bold',
         fontSize: 14,
-        color: '#505050', 
+        color: '#505050',
         marginBottom: '3%'
     },
 
     verse: {
         fontFamily: 'Lato-Bold',
         fontSize: 14,
-        color: '#505050', 
+        color: '#505050',
         textAlign: 'right',
         marginBottom: '5%',
     },
@@ -82,9 +74,6 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: 'Lato-Regular',
         fontSize: 14,
-        color: '#505050', 
+        color: '#505050',
     }
-
-    
-
 })

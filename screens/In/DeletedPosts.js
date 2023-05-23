@@ -1,4 +1,3 @@
-//deletedposts
 import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, TextInput, ActivityIndicator } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'

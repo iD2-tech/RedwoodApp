@@ -6,13 +6,10 @@ import { useNavigation } from '@react-navigation/native'
 import EachFriend from '../../../components/EachFriend'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-
 const { width, height } = Dimensions.get('window')
 const Members = (props) => {
-
   const navigation = useNavigation();
   const navBack = () => {
-    console.log(props);
     navigation.navigate("Home")
   }
 
@@ -36,7 +33,6 @@ const Members = (props) => {
       Alert.alert(error.message);
     }
   }
-
 
   return (
     <View style={styles.container}>

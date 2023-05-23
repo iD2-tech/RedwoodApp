@@ -14,11 +14,9 @@ const GroupMain = () => {
   const [show, setShow] = useState(false);
   const [groups, setGroups] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log('run')
     const userId = firebase.auth().currentUser.uid;
     const userRef = firebase.firestore().collection('Users').doc(userId);
     const unsubscribe1 = userRef.onSnapshot((doc) => {
@@ -29,9 +27,7 @@ const GroupMain = () => {
         }
       }
     });
-
     groupRender();
-
     return () => unsubscribe1();
   }, [user])
 
@@ -44,13 +40,12 @@ const GroupMain = () => {
 
   const groupRender = () => {
     if (user != null) {
-
       const groupCollection = firestore().collection('Groups');
       const groupQuery = groupCollection.where('members', 'array-contains', user.username);
       const unsubscribe2 = groupQuery.onSnapshot((querySnapshot) => {
         const groupArr = [];
         querySnapshot.forEach((doc) => {
-          const {description, members, moderators, name, memberIds } = doc.data();
+          const { description, members, moderators, name, memberIds } = doc.data();
           groupArr.push({
             id: doc.id,
             description: description,
@@ -62,19 +57,14 @@ const GroupMain = () => {
             memberIds: memberIds,
           })
         })
-
         setGroups(groupArr);
       })
-
       return () => unsubscribe2();
     }
   }
 
   const navToGroup = (item) => {
-    navigation.navigate('EachGroup',
-      { item: item,
-      }
-    );
+    navigation.navigate('EachGroup', { item: item, });
   }
 
   const showornoshow = () => {
@@ -94,7 +84,7 @@ const GroupMain = () => {
       if (docSnapshot.exists) {
         groupRef.update({
           members: firebase.firestore.FieldValue.arrayUnion(user.username),
-          memberIds:  firebase.firestore.FieldValue.arrayUnion(userId),
+          memberIds: firebase.firestore.FieldValue.arrayUnion(userId),
           numMembers: firebase.firestore.FieldValue.increment(1)
         })
       } else {
@@ -105,84 +95,74 @@ const GroupMain = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../../FeatherGroup.png')}  resizeMode="cover" style={{
-        // justifyContent: 'center',
-        alignItems: 'center',
-        // flex: 1,
-        width: '100%',
-        height: '100%',
-      }} imageStyle={{
-        marginTop: height * 0.02,
-        transform: [
-          { scaleX: -1 }
-        ]
-      }}>
-      <View style={{ marginTop: height * 0.1, width: width * 0.9, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={{ fontFamily: 'Quicksand-Bold', fontSize: 30, color: "#785444", width: width * 0.82 }}>GROUPS</Text>
-        {<TouchableOpacity onPress={showornoshow} style={styles.buttonContainer}>
-          {
-            show ? <Feather name="minus" size={30} color={'#785444'} style={styles.button} /> : <Feather name="plus" size={30} color={'#785444'} style={styles.button} />
-          }
-          <View style={styles.touchableArea} />
-        </TouchableOpacity>}
-        {/* <TouchableOpacity onPress={showornoshow}>
-          {
-            show ? <Feather name="minus" size={30} color={'#785444'} /> : <Feather name="plus" size={30} color={'#785444'} />
-          }
-        </TouchableOpacity> */}
-      </View>
-      {
-        show ?
-          <View>
-            <View style={{ flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between', marginTop: height * 0.02 }}>
-              <View style={styles.searchContainer}>
-                <TextInput
-                  style={styles.textInputStyle}
-                  onChangeText={(text) => setGroupCode(text)}
-                  maxLength={5}
-                  value={groupCode}
-                  placeholderTextColor='#FFE3D7'
-                  underlineColorAndroid="transparent"
-                  placeholder="Group Code..."
-                />
+      <ImageBackground
+        source={require('../../../FeatherGroup.png')}
+        resizeMode="cover"
+        style={styles.background}
+        imageStyle={styles.backgroundImage}>
+        <View style={styles.subContainer}>
+          <Text style={styles.groupTitle}>GROUPS</Text>
+          {<TouchableOpacity onPress={showornoshow} style={styles.buttonContainer}>
+            {
+              show ?
+                <Feather name="minus" size={30} color={'#785444'} style={styles.button} />
+                :
+                <Feather name="plus" size={30} color={'#785444'} style={styles.button} />
+            }
+            <View style={styles.touchableArea} />
+          </TouchableOpacity>}
+        </View>
+        {
+          show ?
+            <View>
+              <View style={styles.topContainer}>
+                <View style={styles.searchContainer}>
+                  <TextInput
+                    style={styles.textInputStyle}
+                    onChangeText={(text) => setGroupCode(text)}
+                    maxLength={5}
+                    value={groupCode}
+                    placeholderTextColor='#FFE3D7'
+                    underlineColorAndroid="transparent"
+                    placeholder="Group Code..."
+                  />
+                </View>
+                <TouchableOpacity
+                  style={styles.join}
+                  onPress={join}
+                ><Text style={styles.joinText}>JOIN</Text>
+                </TouchableOpacity>
               </View>
+
               <TouchableOpacity
-                style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444' }}
-                onPress={join}
-              ><Text style={{ fontFamily: 'Quicksand-Bold', color: 'white', fontSize: 13 }}>JOIN</Text>
+                style={styles.createButton}
+                onPress={navToCreate}
+              ><Text style={styles.createText}>CREATE</Text>
               </TouchableOpacity>
             </View>
+            :
+            <View></View>
+        }
 
-            <TouchableOpacity
-              style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.05, width: width * 0.9, borderRadius: 10, backgroundColor: '#785444' }}
-              onPress={navToCreate}
-            ><Text style={{ fontFamily: 'Quicksand-Bold', color: 'white', fontSize: 13 }}>CREATE</Text>
-            </TouchableOpacity>
-          </View>
-          :
-          <View></View>
-      }
-
-      <View style={styles.listContainer}>
-        <FlatList
-          data={groups}
-          columnWrapperStyle={{
-            flex: 0.5,
-            justifyContent: 'flex-start'
-          }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          //   keyExtractor={item => item.id.toString()}
-          numColumns={2}
-          renderItem={({ item }) =>
-            <TouchableOpacity onPress={() => navToGroup(item)}>
-              <GroupDisplay name={item.name} numMembers={item.numMembers} description={item.description} />
-            </TouchableOpacity>
-          }
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+        <View style={styles.listContainer}>
+          <FlatList
+            data={groups}
+            columnWrapperStyle={{
+              flex: 0.5,
+              justifyContent: 'flex-start'
+            }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            numColumns={2}
+            renderItem={({ item }) =>
+              <TouchableOpacity onPress={() => navToGroup(item)}>
+                <GroupDisplay name={item.name} numMembers={item.numMembers} description={item.description} />
+              </TouchableOpacity>
+            }
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
       </ImageBackground>
     </View>
   )
@@ -191,14 +171,42 @@ const GroupMain = () => {
 export default GroupMain
 
 const styles = StyleSheet.create({
+  background: {
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
+
+  backgroundImage: {
+    marginTop: height * 0.02,
+    transform: [
+      { scaleX: -1 }
+    ]
+  },
+
   container: {
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: '#ECDCD1',
     alignItems: 'center'
-},
+  },
 
-searchContainer: {
+  subContainer: {
+    marginTop: height * 0.1,
+    width: width * 0.9,
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  topContainer: {
+    flexDirection: 'row',
+    width: width * 0.89,
+    justifyContent: 'space-between',
+    marginTop: height * 0.02
+  },
+
+  searchContainer: {
     height: height * 0.05,
     width: width * 0.70,
     flexDirection: 'row',
@@ -206,10 +214,16 @@ searchContainer: {
     alignItems: 'center',
     marginBottom: height * 0.01,
     overflow: 'hidden',
-    // borderWidth: 1,
-    backgroundColor:'#C3A699',
-    padding:15,
+    backgroundColor: '#C3A699',
+    padding: 15,
     borderRadius: 10,
+  },
+
+  groupTitle: {
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 30,
+    color: "#785444",
+    width: width * 0.82
   },
 
   listContainer: {
@@ -218,32 +232,61 @@ searchContainer: {
     justifyContent: 'center',
     alignContent: 'center',
     marginTop: height * 0.03
-    // backgroundColor: 'black'
   },
 
   textInputStyle: {
     color: 'white',
     fontFamily: 'Quicksand-Bold',
-    // borderWidth: 1,
     width: width * 0.63,
     height: height * 0.035
-},
+  },
 
-buttonContainer: {
-  position: 'relative',
-},
+  buttonContainer: {
+    position: 'relative',
+  },
 
-button: {
-  zIndex: 1,
-},
+  button: {
+    zIndex: 1,
+  },
 
-touchableArea: {
-  position: 'absolute',
-  top: -height * 0.01,
-  left: -width * 0.035,
-  right: -width * 0.035,
-  bottom: -height * 0.01,
-  zIndex: 2,
-  opacity: 0,
-}
+  touchableArea: {
+    position: 'absolute',
+    top: -height * 0.01,
+    left: -width * 0.035,
+    right: -width * 0.035,
+    bottom: -height * 0.01,
+    zIndex: 2,
+    opacity: 0,
+  },
+
+  join: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: height * 0.05,
+    width: width * 0.17,
+    borderRadius: 10,
+    backgroundColor: '#785444'
+  },
+
+  joinText: {
+    fontFamily: 'Quicksand-Bold',
+    color: 'white',
+    fontSize: 13
+  },
+
+  createButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: height * 0.05,
+    width: width * 0.9,
+    borderRadius: 10,
+    backgroundColor: '#785444'
+  },
+
+  createText: {
+    fontFamily: 'Quicksand-Bold',
+    color: 'white',
+    fontSize: 13
+  },
+
 })
