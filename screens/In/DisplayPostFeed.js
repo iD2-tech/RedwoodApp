@@ -89,56 +89,43 @@ const DisplayPostProfile = ({ route }) => {
                     extraScrollHeight={-(height * 0.06)}
                     showsVerticalScrollIndicator={false}
                 >
-                        <View style={styles.verseContainer}>
-                            {/* <Text style={styles.verse}>{verse}</Text> */}
-                            <TextInput style={styles.verse} editable={false} value={verse}/>
-                        </View>
-                        <View style={styles.verseTextContainer}>
-                            {/* <Text style={styles.verseText}>{"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text> */}
-                            <TextInput style={styles.verseText} editable={false} multiline value={"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}/>
-                        </View>
-                        <View style={styles.textContainer}>
-                            {/* <Text style={styles.text}>{text}</Text> */}
-                            <TextInput style={styles.text} editable={false} value={text} multiline/>
-                        </View>
-                        <View style={styles.commentsContainer}>
-                            <FlatList
-                                data={comments}
-                                showsVerticalScrollIndicator={false}
-                                // showsVerticalScrollIndicator={false}
-                                keyExtractor={item => item.key}
-                                renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
-                            />
-                        </View>
-                    </KeyboardAwareScrollView>
-                </View>
-                <View style={styles.commentsContainer}>
-                    <FlatList
-                        data={comments}
-                        showsVerticalScrollIndicator={false}
-                        // showsVerticalScrollIndicator={false}
-                        keyExtractor={item => item.key}
-                        renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
-                    />
-                </View>
-                <View style={styles.commentSection}>
-                    <View style={styles.commentEntryContainer}>
-                        <TextInput
-                            placeholder='Add a comment...'
-                            style={styles.commentEntry}
-                            placeholderTextColor='#C3A699'
-                            value={commentEntry}
-                            onChangeText={(text) => setCommentEntry(text)}
-                            multiline
-                            scrollEnabled
-                            ref={messageInputRef}
-                        />
-                        <TouchableOpacity style={styles.sendCommentButtonContainer} onPress={() => commentSent()}>
-                            <Feather name='send' color='#C3A699' size={23} style={styles.sendCommentButton} />
-                        </TouchableOpacity>
+                    <View style={styles.verseContainer}>
+                        <TextInput style={styles.verse} editable={false} value={verse} />
                     </View>
+                    <View style={styles.verseTextContainer}>
+                        <TextInput style={styles.verseText} editable={false} multiline value={"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""} />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <TextInput style={styles.text} editable={false} value={text} multiline />
+                    </View>
+                    <View style={styles.commentsContainer}>
+                        <FlatList
+                            data={comments}
+                            showsVerticalScrollIndicator={false}
+                            keyExtractor={item => item.key}
+                            renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
+                        />
+                    </View>
+                </KeyboardAwareScrollView>
+            </View>
+            <View style={styles.commentSection}>
+                <View style={styles.commentEntryContainer}>
+                    <TextInput
+                        placeholder='Add a comment...'
+                        style={styles.commentEntry}
+                        placeholderTextColor='#C3A699'
+                        value={commentEntry}
+                        onChangeText={(text) => setCommentEntry(text)}
+                        multiline
+                        scrollEnabled
+                        ref={messageInputRef}
+                    />
+                    <TouchableOpacity style={styles.sendCommentButtonContainer} onPress={() => commentSent()}>
+                        <Feather name='send' color='#C3A699' size={23} style={styles.sendCommentButton} />
+                    </TouchableOpacity>
                 </View>
-            </KeyboardAwareScrollView>
+            </View>
+        </KeyboardAwareScrollView>
     )
 }
 
