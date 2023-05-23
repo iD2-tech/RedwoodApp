@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Alert, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react';
 import PageBackButton from '../../components/PageBackButton';
 import DismissKeyBoard from '../../components/DissmisskeyBoard'
@@ -304,21 +304,29 @@ const CreatePost = () => {
   }
 
   const onPressItem = (data) => {
+
     setSelected(data);
     setIsModalVisible(() =>
       !isModalVisible
     )
+    
+  }
+
+  const onPressScreen = () => {
+    console.log('hi')
   }
 
   return (
     // <KeyboardAwareScrollView   contentContainerStyle={{flexGrow:1}}>
-    <DismissKeyBoard>
+    
+    <DismissKeyBoard >
       <View style={styles.container}>
 
         {/* holds the inputs up until post button */}
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Title"
+            placeholder="Entry Title"
+            placeholderTextColor={"#C3A699"}
             value={title}
             onChangeText={text => { setTitle(text); }}
             style={styles.title}
@@ -337,6 +345,7 @@ const CreatePost = () => {
 
               <TextInput
                 placeholder="Book"
+                placeholderTextColor={"#C3A699"}
                 value={book}
                 onChangeText={text => { setBook(text); autofillBook(text); }}
                 style={invalidVerse ? styles.bookInputInvalid : styles.bookInputValid}
@@ -365,6 +374,7 @@ const CreatePost = () => {
 
             <TextInput
               placeholder="Chapter"
+              placeholderTextColor={"#C3A699"}
               textAlign='right'
               value={chapter}
               onChangeText={text => { setChapter(text); adjustBookNameSize(text); getVersesFromNumber(text, 0); }}
@@ -379,6 +389,7 @@ const CreatePost = () => {
 
             <TextInput
               placeholder="Verse(s)"
+              placeholderTextColor={"#C3A699"}
               value={verse}
               onChangeText={text => { setVerse(text); getVersesFromNumber(text, 1); }}
               style={invalidVerse ? styles.verseInputInvalid : styles.verseInputValid}
@@ -397,8 +408,8 @@ const CreatePost = () => {
                 showsVerticalScrollIndicator={false}
                 >
                 <View>
-                  {/* <Text style={{ fontFamily: 'Quicksand-Regular',color: 'black' }}>{verseText}</Text> */}
-                  <TextInput multiline style={{fontFamily: 'Quicksand-Regular',color: 'black'}} value={verseText} editable={false}/>
+                  {/* <Text style={{ fontFamily: 'Quicksand-Medium',color: '#785444' }}>{verseText}</Text> */}
+                  <TextInput multiline style={{fontFamily: 'Quicksand-Medium',color: '#785444'}} value={verseText} editable={false}/>
                 </View>
               </ScrollView>
 
@@ -410,6 +421,7 @@ const CreatePost = () => {
 
           <TextInput
             placeholder="Reflection..."
+            placeholderTextColor={"#C3A699"}
             multiline
             numberOfLines={4}
             value={text}
@@ -484,10 +496,8 @@ const CreatePost = () => {
         </View>
       </Modal> */}
       </View>
-      
-
     </DismissKeyBoard>
-    // </KeyboardAwareScrollView>
+    
   )
 }
 
@@ -543,17 +553,17 @@ const styles = StyleSheet.create({
     color: '#785444',
     marginLeft: width * 0.3,
     position: 'absolute',
-    width: width * 0.19,
+    width: width * 0.2,
   },
 
   chapterInputInvalid: {
     fontSize: 20,
     fontFamily: 'Quicksand-Bold',
-    marginRight: width * 0.04,
+    marginRight: width * 0.08,
     color: 'red',
-    marginLeft: width * 0.3,
-    position: 'absolute',
-    width: width * 0.19,
+    marginLeft: width * 0.293,
+    position: 'absolute', 
+    width: width * 0.2,
   },
 
   semiColon: {

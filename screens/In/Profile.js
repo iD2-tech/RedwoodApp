@@ -198,14 +198,14 @@ const Profile = ( {route} ) => {
       <View style={styles.nameContainer}>
         <View style={styles.nameTop}>
         <TouchableOpacity onPress={navToFriends} style={styles.buttonContainer}>
-          <Feather name="users" size={25} color={'black'} style={styles.button} />
+          <Feather name="users" size={25} color={'#785444'} style={styles.button} />
           <View style={styles.touchableArea} />
       </TouchableOpacity>
           <Text style={styles.nameText}>
             {user ? user.name : 'Loading...'}
           </Text>
           <TouchableOpacity onPress={navToSettings} style={styles.buttonContainer}>
-            <Feather name="settings" size={25} color={'black'} style={styles.button} />
+            <Feather name="settings" size={25} color={'#785444'} style={styles.button} />
             <View style={styles.touchableArea} />
         </TouchableOpacity>
         </View>
@@ -223,7 +223,7 @@ const Profile = ( {route} ) => {
           placeholder="Search"
         />
         <TouchableOpacity onPress={handleModal}>
-          <Feather name={selected.icon} size={27} color={'black'} marginRight={width * 0.04}/>
+          <Feather name={selected.icon} size={27} color={'#785444'} marginRight={width * 0.04}/>
         </TouchableOpacity>
       </View>
       <View style={styles.listContainer}>
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     fontFamily: 'Quicksand-Regular',
-    color: '#ABABAB',
+    color: '#785444',
   },
 
   listContainer: {
