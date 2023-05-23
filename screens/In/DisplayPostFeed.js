@@ -1,3 +1,4 @@
+
 import {KeyboardAvoidingView, StyleSheet, Text, View, Animated, Dimensions, ImageBackground, Alert, Scrollview, TextInput, TouchableOpacity, Keyboard} from 'react-native'
 import React, { useState, useEffect, useRef } from 'react';
 //import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -114,6 +115,15 @@ const DisplayPostProfile = ({ route }) => {
                         </View>
                     </KeyboardAwareScrollView>
                 </View>
+                <View style={styles.commentsContainer}>
+                    <FlatList
+                        data={comments}
+                        showsVerticalScrollIndicator={false}
+                        // showsVerticalScrollIndicator={false}
+                        keyExtractor={item => item.key}
+                        renderItem={({ item }) => <EachComment username={item.username} comment={item.comment} />}
+                    />
+                </View>
                 <View style={styles.commentSection}>
                     <View style={styles.commentEntryContainer}>
                         <TextInput
@@ -192,6 +202,7 @@ const styles = StyleSheet.create({
         //marginBottom: height * 0.123,
         flexDirection: 'row', 
         alignItems: 'flex-end',
+
         // borderWidth:1
     },
 

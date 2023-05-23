@@ -161,7 +161,7 @@ const EachGroup = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.individualButton}>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={() => Alert.alert('coming soon!')}>
           <View style={{alignItems: 'center'}}>
             <Feather name="message-circle" size={22} color={'#785444'} />
             </View>

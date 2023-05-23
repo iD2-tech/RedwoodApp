@@ -294,10 +294,6 @@ const CreatePost = () => {
   }
 
   const handleModal = () => {
-    // let selectedButton = radioButtons.find(e => e.selected == true);
-    // selectedButton = selectedButton ? selectedButton.value : radioButtons[0].label;
-    // setSelected(selectedButton);
-
     setIsModalVisible(() =>
       !isModalVisible
     )
@@ -317,9 +313,7 @@ const CreatePost = () => {
   }
 
   return (
-    // <KeyboardAwareScrollView   contentContainerStyle={{flexGrow:1}}>
-    
-    <DismissKeyBoard >
+    <DismissKeyBoard>
       <View style={styles.container}>
 
         {/* holds the inputs up until post button */}
@@ -447,12 +441,12 @@ const CreatePost = () => {
           onPress={navAndSend}>
           <Text style={
             btnColor ? {
-              color: "#FFFFFF",
+              color: "#FFE3D7",
               fontFamily: 'Quicksand-Bold',
               fontSize: 18
             } :
               {
-                color: "#FFFFFF",
+                color: "#FFE3D7",
                 fontFamily: 'Quicksand-Bold',
                 fontSize: 18
               }
@@ -473,31 +467,8 @@ const CreatePost = () => {
           </View>
           : <></>
         }
-        {/* <Modal
-        isVisible={isModalVisible}
-      >
-        <View style={{ height: height * 0.4, width: width * 0.7, backgroundColor: '#ECDCD1', alignSelf: 'center', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={styles.filterText}>Filter</Text>
-
-          <RadioGroup
-            radioButtons={radioButtons}
-            onPress={onPressRadioButton}
-            containerStyle={styles.buttons}
-          />
-
-
-          <TouchableOpacity onPress={handleModal} style={styles.filterButton}>
-            <Text style={{
-              color: "#505050",
-              fontFamily: 'Quicksand-Regular',
-              fontWeight: '500'
-            }}>OK</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal> */}
       </View>
     </DismissKeyBoard>
-    
   )
 }
 

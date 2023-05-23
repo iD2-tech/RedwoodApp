@@ -100,6 +100,18 @@ const MyProfile = () => {
 
       }, []);
 
+      const pressHandle = () => {
+        const userId = firebase.auth().currentUser.uid;
+        firestore().collection('Users').doc(userId).update({
+            username: text
+        }).then(() => {
+            setShow(!show); 
+            Keyboard.dismiss(); 
+            Alert.alert('Saved!'); 
+            setEditableField(false)
+        })
+      }
+
     const [text, setText] = useState('');
     const [text2,setText2] = useState('');
 
@@ -120,12 +132,12 @@ const MyProfile = () => {
                                 editable={editableField === 'username'}
                                 style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Quicksand-Regular', color: '#785444', marginRight: width * 0.03}}
                             />
-                            <Feather
+                            {/* <Feather
                                 name="edit"
                                 size={23}
                                 color={'#785444'}
                                 onPress={handleEditPress}
-                            />
+                            /> */}
                         </View>
                         <View style={{height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
                     </View>
@@ -139,12 +151,12 @@ const MyProfile = () => {
                                 editable={editableField === 'name'}
                                 style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Quicksand-Regular', color: '#785444', marginRight: width * 0.03}}
                             />
-                            <Feather
+                            {/* <Feather
                                 name="edit"
                                 size={23}
                                 color={'#785444'}
                                 onPress={handleEditPress2}
-                            />
+                            /> */}
                         </View>
                         <View style={{height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
                     </View>
@@ -152,9 +164,9 @@ const MyProfile = () => {
                 {
                     show ? 
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.button} onPress={() => {setShow(!show); Keyboard.dismiss(); Alert.alert('Saved!'); setEditableField(false)}}>
+                        {/* <TouchableOpacity style={styles.button} onPress={pressHandle}>
                             <Text style={styles.buttonText}>SAVE CHANGES</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     :
                     <View></View>
@@ -185,7 +197,7 @@ const styles = StyleSheet.create({
         fontSize: 29,
         fontFamily: 'Quicksand-Regular',
         fontWeight: 'bold',
-        color: '#505050',
+        color: '#785444',
         paddingBottom: '3%',
     },
     names: {
