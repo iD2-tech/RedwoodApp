@@ -9,7 +9,7 @@ import { firebase } from "@react-native-firebase/auth";
 import { ScrollView } from 'react-native-gesture-handler';
 import DismissKeyBoard from '../../components/DissmisskeyBoard';
 import { bookNames } from '../../assets/bibleBookNames';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const { width, height } = Dimensions.get('window')
 
@@ -17,7 +17,7 @@ const DisplayPostProfile = ({ route }) => {
     const monthNames = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const userId = firebase.auth().currentUser.uid;
     const navigation = useNavigation();
-    const { date, id, text, title, user, verse, verseText, likes, comments} = route.params;
+    const { date, id, text, title, user, verse, verseText, likes, comments } = route.params;
     const ref_input1 = useRef();
     const [editedTitle, setEditedTitle] = useState(title);
     const [editedText, setEditedText] = useState(text);
@@ -39,17 +39,6 @@ const DisplayPostProfile = ({ route }) => {
         }, 500);
     }, []);
 
-    // var dateObj = new Date(date.seconds * 1000);
-    // var dateNum = dateObj.getDate();
-    // if (dateNum < 10) {
-    //     dateNum = "0" + dateNum;
-    // }
-    // var month = dateObj.getMonth() + 1;
-    // if (month < 10) {
-    //     month = "0" + month;
-    // }
-    // const year = dateObj.getFullYear();
-    // const dateString = month + "/" + dateNum + "/" + year;
     var dateObj = new Date(date.seconds * 1000);
     const datee = dateObj.getDate();
     const month = monthNames[dateObj.getMonth()];
@@ -75,58 +64,6 @@ const DisplayPostProfile = ({ route }) => {
 
     }
 
-    // deletes the post from firestore
-    const deleteOP = () => {
-        firestore().collection('Posts').doc(userId).collection('userPosts').doc(id).delete().then(() => {
-            navigation.navigate("Profile");
-        })
-    }
-
-    // prompts user to verify they want to delete post
-    const deletePost = () => {
-        Alert.alert('DELETING POST', 'Are you sure?', [
-            {
-                text: 'Cancel',
-                onPress: () => console.log('canceled'),
-                style: 'cancel'
-            },
-            {
-                text: 'Ok',
-                onPress: deleteOP,
-            }
-        ])
-    }
-
-    // allows/disallows editing
-    const editButtonPressed = () => {
-        console.log(editMode);
-        if (!editMode) {
-            try {
-                ref_input1.current.focus();
-            } catch (error) {
-                console.log(editMode); 
-                console.log(error);
-            }
-            setEditMode(!editMode);
-        } else {
-            if (!invalidVerse) {
-                firestore().collection('Posts').doc(userId).collection('userPosts').doc(id).update({
-                    title: editedTitle,
-                    book: editedBook,
-                    verse: editedVerse,
-                    chapter: editedChapter,
-                    verses: editedVerseText,
-                    text: editedText
-                })
-                setEditMode(!editMode);
-            } else {
-                Alert.alert("Please enter a valid verse");
-            }
-
-        }
-
-    }
-
     // gets verses each time verse input is changed
     const getVerses = async () => {
         if (bookAutofill != '' && editedChapter != '' && editedVerse != '' && !isNaN(editedChapter)) {
@@ -134,7 +71,7 @@ const DisplayPostProfile = ({ route }) => {
                 await fetch(`https://bible-api.com/${bookAutofill}${editedChapter}:${editedVerse}`)
                     .then((response) => response.json())
                     .then((responseJson) => {
-    
+
                         if (!responseJson.text) {
                             setInvalidVerse(true);
                         } else {
@@ -144,10 +81,9 @@ const DisplayPostProfile = ({ route }) => {
                     });
             } catch (error) {
                 Alert.alert("Please enter valid bible verse(s)");
-                console.error(error);
             }
         }
-        
+
     }
 
     // gets verses from chapter or verse
@@ -161,13 +97,11 @@ const DisplayPostProfile = ({ route }) => {
             chapter = editedChapter;
             verse = number;
         }
-        console.log(editedBook)
         if (chapter != '' && verse != '' && !isNaN(chapter)) {
             try {
                 await fetch(`https://bible-api.com/${editedBook}${chapter}:${verse}`)
                     .then((response) => response.json())
                     .then((responseJson) => {
-                        console.log(responseJson.text);
 
                         if (!responseJson.text) {
                             setInvalidVerse(true);
@@ -178,7 +112,6 @@ const DisplayPostProfile = ({ route }) => {
                     });
             } catch (error) {
                 Alert.alert("Please enter valid bible verse(s)");
-                console.error(error);
             }
         } else if (isNaN(chapter) || chapter == '' || verse == '') {
             setInvalidVerse(true);
@@ -212,7 +145,7 @@ const DisplayPostProfile = ({ route }) => {
             verseText: verseText,
             likes: likes,
             comments: comments,
-          });
+        });
     }
 
     const navToComment = () => {
@@ -226,18 +159,16 @@ const DisplayPostProfile = ({ route }) => {
             verseText: verseText,
             likes: likes,
             comments: comments,
-          });
+        });
     }
-
-
-
-
 
     return (
         <DismissKeyBoard>
-            <ImageBackground source={require('../../FeatherLeft.png')} resizeMode="cover" style={styles.image} imageStyle={{ marginTop: height * 0.02,  transform: [
-    { scaleX: -1 }
-  ]}}>
+            <ImageBackground source={require('../../FeatherLeft.png')} resizeMode="cover" style={styles.image} imageStyle={{
+                marginTop: height * 0.02, transform: [
+                    { scaleX: -1 }
+                ]
+            }}>
                 {/* back button */}
                 <View style={styles.backButtonContainer}>
                     <PageBackButton onPress={navBack} />
@@ -245,9 +176,7 @@ const DisplayPostProfile = ({ route }) => {
                 {/* screen container */}
                 <View style={styles.container}>
                     <Text style={styles.date}>{month + ' ' + datee + ', ' + year}</Text>
-
                     <View>
-
                         <View style={styles.titleInputContainer}>
                             <TextInput
                                 style={styles.title}
@@ -257,42 +186,38 @@ const DisplayPostProfile = ({ route }) => {
                                 onBlur={() => setEditMode(false)}
                             />
                             {
-                                likes === undefined ? <></>:  <View style={styles.socialContainer}>
-                                    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={navToLike}>
-                                        <Feather name='heart' size={27} color={'#785444'}/>
+                                likes === undefined ? <></> : <View style={styles.socialContainer}>
+                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={navToLike}>
+                                        <Feather name='heart' size={27} color={'#785444'} />
                                         <Text style={styles.likeText}>{likes.length}</Text>
                                     </TouchableOpacity>
-                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={navToComment}> 
-                                    <Feather name='message-circle' size={27} color={'#785444'}/>
-                                    <Text style={styles.likeText}>{comments.length}</Text> 
-                                </TouchableOpacity>
-                            </View>
+                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={navToComment}>
+                                        <Feather name='message-circle' size={27} color={'#785444'} />
+                                        <Text style={styles.likeText}>{comments.length}</Text>
+                                    </TouchableOpacity>
+                                </View>
                             }
-                           
-                            
                         </View>
 
                         <View style={styles.editVerseContainer}>
                             <View>
-                                <View style={{flexDirection: 'column'}}>
-
-                                
-                                <TextInput
-                                    value={editedBook}
-                                    onChangeText={text => { setEditedBook(text); autofillBook(text) }}
-                                    style={styles.editableBook}
-                                    returnKeyType='done'
-                                    onSubmitEditing={() => setAutofilledBook()}
-                                    onBlur={() => { setAutofilledBook(); getVerses(); setEditMode(false); }}
-                                    onFocus={() => setShowBookAutofill(true)}
-                                />
-                                {showBookAutofill ?
-                                    <TouchableOpacity style={styles.bookAutofill} onPress={() => setAutofilledBook()}>
-                                        <Text style={styles.bookAutofillText}>{bookAutofill}</Text>
-                                    </TouchableOpacity>
-                                    :
-                                    <></>
-                                }
+                                <View style={{ flexDirection: 'column' }}>
+                                    <TextInput
+                                        value={editedBook}
+                                        onChangeText={text => { setEditedBook(text); autofillBook(text) }}
+                                        style={styles.editableBook}
+                                        returnKeyType='done'
+                                        onSubmitEditing={() => setAutofilledBook()}
+                                        onBlur={() => { setAutofilledBook(); getVerses(); setEditMode(false); }}
+                                        onFocus={() => setShowBookAutofill(true)}
+                                    />
+                                    {showBookAutofill ?
+                                        <TouchableOpacity style={styles.bookAutofill} onPress={() => setAutofilledBook()}>
+                                            <Text style={styles.bookAutofillText}>{bookAutofill}</Text>
+                                        </TouchableOpacity>
+                                        :
+                                        <></>
+                                    }
                                 </View>
                             </View>
                             <Text> </Text>
@@ -313,21 +238,16 @@ const DisplayPostProfile = ({ route }) => {
                             :
                             <></>
                         }
-
                         <View style={styles.verseTextContainer}>
                             <ScrollView persistentScrollbar={true} ref={scrollViewRef} showsVerticalScrollIndicator={false}>
                                 <Text style={styles.verseText}>{"\"" + editedVerseText.replace(/(\r\n|\n|\r)/gm, "") + "\""}</Text>
                             </ScrollView>
                         </View>
-
-
                         <View style={{
                             height: height * 0.2,
                             borderColor: '#D3D3D3',
-                            // paddingLeft: width * 0.02
-                            // borderWidth: 1,
-                            
-                        }}>                            
+
+                        }}>
                             <TextInput
                                 style={styles.text}
                                 value={editedText}
@@ -338,7 +258,6 @@ const DisplayPostProfile = ({ route }) => {
                                 onBlur={() => setEditMode(false)}
                                 onFocus={() => setEditMode(true)}
                                 blurOnSubmit
-                                // scrollEnabled={false}
                             />
                         </View>
                     </View>
@@ -521,7 +440,7 @@ const styles = StyleSheet.create({
         width: width * 0.3,
         alignSelf: 'flex-start',
         marginTop: height * 0.035,
-        
+
     },
 
     bookAutofillText: {

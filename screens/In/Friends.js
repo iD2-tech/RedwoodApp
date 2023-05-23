@@ -7,40 +7,11 @@ import OnboardingScreen from '../Auth/OnboardingScreen';
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation } from '@react-navigation/native';
 import EachFriend from '../../components/EachFriend';
-
 LogBox.ignoreAllLogs();
 
-
-friendsdata = [
-  {
-    id: '1',
-    username: 'ckim'
-  },
-  {
-    id: '2',
-    username: 'jxhanara'
-  },
-]
-
-// requestsdata = [
-//   {
-//     id: '1',
-//     username: 'nicolejoe'
-//   },
-//   {
-//     id: '2',
-//     username: 'johnslee'
-//   },
-//   {
-//     id: '3',
-//     username: 'irisgkim'
-//   },
-// ]
 const { width, height } = Dimensions.get('window')
 const Friends = ({ route }) => {
-
   const navigation = useNavigation();
-
   const [username, setUsername] = useState('');
   const [requests, setRequests] = useState([]);
   const [user, setUser] = useState(null);
@@ -50,8 +21,6 @@ const Friends = ({ route }) => {
   const [counter, setCounter] = useState(0);
   const [unique, setUnique] = useState(false);
   const [requestUser, setRequestUser] = useState([]);
-  // const [requestSent, setRequestSent] = useState([]);
-
   const [search, setSearch] = useState('');
 
   useEffect(() => {
@@ -71,11 +40,8 @@ const Friends = ({ route }) => {
         }
       }
     });
-
     return () => unsubscribe1();
   }
-
-
 
   const friendsRender = () => {
     if (user != null) {
@@ -99,8 +65,6 @@ const Friends = ({ route }) => {
         setFriends(friendSet);
       })
       return () => unsubscribe();
-    } else {
-      console.log('hi')
     }
   }
 
@@ -186,11 +150,10 @@ const Friends = ({ route }) => {
               targetName: name + '',
               status: '0'
             }).then(() => {
+              Alert.alert("Successfully requested!");
               unsubscribe();
             })
           })
-          // unsubscribe();
-
         } else if (unique && usernameCase) {
         } else {
           Alert.alert('User does not exist!');
@@ -204,19 +167,16 @@ const Friends = ({ route }) => {
 
   const deleteFriend = (item) => {
     firestore().collection('Friends').doc(item.id).delete().then(() => {
-      console.log("Friend removed")
     })
   }
-
-
 
   return (
     <View style={styles.container}>
       <View style={styles.backContainer}>
-      <TouchableOpacity onPress={navBack} style={styles.buttonContainer}>
+        <TouchableOpacity onPress={navBack} style={styles.buttonContainer}>
           <Feather name="arrow-right" size={30} color={'black'} style={styles.button} />
           <View style={styles.touchableArea} />
-      </TouchableOpacity>
+        </TouchableOpacity>
       </View>
       <View style={{ flexDirection: 'row', width: width * 0.89, justifyContent: 'space-between' }}>
         <View style={styles.searchContainer}>
@@ -230,7 +190,7 @@ const Friends = ({ route }) => {
           />
         </View>
         <TouchableOpacity
-          style={{ justifyContent: 'center', alignItems: 'center', height: height * 0.06, width: width * 0.17, borderRadius: 10, backgroundColor: '#785444' }}
+          style={styles.sendRequestButton}
           onPress={sendRequest}
         ><Text style={{ fontFamily: 'Quicksand-Bold', color: 'white', fontSize: 13 }}>SEND</Text>
         </TouchableOpacity>
@@ -245,7 +205,6 @@ const Friends = ({ route }) => {
         <View style={{ height: height * 0.57 }}>
           <FlatList
             data={friendData}
-            // keyExtractor={item => item.id}
             renderItem={({ item }) =>
               <EachFriend name={item.name} username={item.username} showX={true} onPress={() => deleteFriend(item)} />
             }
@@ -266,7 +225,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECDCD1',
     alignItems: 'center',
     flexDirection: 'column',
-    // alignContent: 'center'
   },
 
   searchContainer: {
@@ -277,7 +235,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: height * 0.013,
     overflow: 'hidden',
-    // borderWidth: 1,
     backgroundColor: '#C3A699',
     padding: 15,
     borderRadius: 10
@@ -306,11 +263,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'relative',
   },
-  
+
   button: {
     zIndex: 1,
   },
-  
+
   touchableArea: {
     position: 'absolute',
     top: -15,
@@ -319,5 +276,15 @@ const styles = StyleSheet.create({
     bottom: -15,
     zIndex: 2,
     opacity: 0,
-  }
+  },
+
+  sendRequestButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: height * 0.06,
+    width: width * 0.17,
+    borderRadius: 10,
+    backgroundColor: '#785444'
+  },
+
 })

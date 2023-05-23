@@ -16,9 +16,6 @@ const DisplayPostProfile = ({ route }) => {
     const { postId, postUserId, text, username, user, title, verse, verseText } = route.params;
     const [commentEntry, setCommentEntry] = useState('');
 
-
-
-
     // back button
     const navBack = () => {
         navigation.goBack();
@@ -28,7 +25,6 @@ const DisplayPostProfile = ({ route }) => {
         <DismissKeyBoard>
             <View style={styles.container}>
                 <View style={styles.topBar}>
-                   
                     <View style={styles.backButton}>
                         <PageBackButton onPress={navBack} />
                     </View>
@@ -38,7 +34,6 @@ const DisplayPostProfile = ({ route }) => {
                     <View style={styles.userContainer}>
                         <Text adjustsFontSizeToFit style={styles.name} numberOfLines={1}>{user}</Text>
                     </View>
-                    
                 </View>
 
                 <View style={styles.scrollContainer}>
@@ -52,11 +47,8 @@ const DisplayPostProfile = ({ route }) => {
                         <View style={styles.textContainer}>
                             <Text style={styles.text}>{text}</Text>
                         </View>
-
-
                     </ScrollView>
                 </View>
-               
             </View>
         </DismissKeyBoard>
 
@@ -77,7 +69,6 @@ const styles = StyleSheet.create({
 
     scrollContainer: {
         maxHeight: height * 0.45,
-        // borderWidth: 1,
     },
 
     backButton: {
@@ -125,20 +116,16 @@ const styles = StyleSheet.create({
         width: width * 0.09,
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        // borderWidth: 1,
-        // justifyContent: 'center',
     },
 
     sendCommentButton: {
-        // marginTop: height * 0.01,
         transform: [{ rotate: '45deg' }],
         marginRight: width * 0.01,
 
     },
 
     commentsContainer: {
-        height: height * 0.22, 
-        // borderWidth: 1,
+        height: height * 0.22,
     },
 
     userContainer: {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import {SafeAreaView, StatusBar, LayoutAnimation, Button, Keyboard, StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, TextInput, ActivityIndicator } from 'react-native'
+import { SafeAreaView, StatusBar, LayoutAnimation, Button, Keyboard, StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, TextInput, ActivityIndicator } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import PageBackButton from '../../components/PageBackButton';
 import { useNavigation } from '@react-navigation/native'
@@ -24,20 +24,10 @@ const MyProfile = () => {
     const ref_input1 = useRef();
     const ref_input2 = useRef();
     const [cursorPosition, setCursorPosition] = useState(null);
-
-    const [show, setShow] = useState(false);
-
-    const navToSettings = () => {
-        navigation.navigate("Settings");
-    }
-
-    // const showornoshow = () => {
-    //     setShow(!show);
-    // }
-
-    // const [editable, setEditable] = useState(false);
-    // const [editable2, setEditable2] = useState(false);
     const [editableField, setEditableField] = useState(null);
+    const [show, setShow] = useState(false);
+    const [text, setText] = useState('');
+    const [text2, setText2] = useState('');
 
     useEffect(() => {
         if (editableField === 'username') {
@@ -45,124 +35,108 @@ const MyProfile = () => {
         } else if (editableField === 'name') {
             ref_input2.current.focus();
         }
-      }, [editableField]);
-      
-      const handleEditPress = () => {
-        setEditableField('username');
-        setShow(true);
-      };
-      
-      const handleEditPress2 = () => {
-        setEditableField('name');
-        setShow(true);
-      };
+    }, [editableField]);
 
-    
-    // const handleEditPress = () => {
-    //     //setEditable(true);
-    //     setShow(true);
-    //     ref_input1.current.focus();
-    //     editPress1 = true;
-    // };
-
-    // const handleEditPress2 = () => {
-    //     //setEditable2(true);
-    //     setShow(true);
-    //     ref_input2.current.focus();
-    //     editPress2 = true;
-    // };
     useEffect(() => {
         const keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', () => {
             setShow(false);
             setEditableField(false);
-            //setEditable2(false);
         });
-    
+
         return () => {
             keyboardWillHideListener.remove();
         };
     }, []);
 
     useEffect(() => {
-        // const {name, username} = route.params;
-        // setUser({name,username})
         const userId = firebase.auth().currentUser.uid;
         const userRef = firebase.firestore().collection('Users').doc(userId);
         const unsubscribe1 = userRef.onSnapshot((doc) => {
-          if (doc.exists) {
-            const { name, username } = doc.data();
-            setUser({ name, username });
-          }
+            if (doc.exists) {
+                const { name, username } = doc.data();
+                setUser({ name, username });
+            }
         });
         return () => {
-          unsubscribe1();
+            unsubscribe1();
         };
 
-      }, []);
+    }, []);
 
-      const pressHandle = () => {
+    const handleEditPress = () => {
+        setEditableField('username');
+        setShow(true);
+    };
+
+    const handleEditPress2 = () => {
+        setEditableField('name');
+        setShow(true);
+    };
+
+    const navToSettings = () => {
+        navigation.navigate("Settings");
+    }
+
+    const pressHandle = () => {
         const userId = firebase.auth().currentUser.uid;
         firestore().collection('Users').doc(userId).update({
             username: text
         }).then(() => {
-            setShow(!show); 
-            Keyboard.dismiss(); 
-            Alert.alert('Saved!'); 
+            setShow(!show);
+            Keyboard.dismiss();
+            Alert.alert('Saved!');
             setEditableField(false)
         })
-      }
-
-    const [text, setText] = useState('');
-    const [text2,setText2] = useState('');
+    }
 
     return (
-        <View style = {styles.container}>
-            <View style={{marginRight: width * 0.78, marginTop: height * 0.08,}}>
-                <PageBackButton onPress={navToSettings}/>
+        <View style={styles.container}>
+            <View style={{ marginRight: width * 0.78, marginTop: height * 0.08, }}>
+                <PageBackButton onPress={navToSettings} />
             </View>
-            <View style = {styles.myProfileContainer}>
+            <View style={styles.myProfileContainer}>
                 <Text style={styles.myProfile}>My Profile</Text>
-                    <View style = {styles.UserNameInput}>
-                        <Text style={styles.names}>Username</Text>
-                        <View style={{ flexDirection: 'row'}}>
-                            <TextInput
-                                ref={ref_input1}
-                                defaultValue={user?.username}
-                                onChangeText={setText}
-                                editable={editableField === 'username'}
-                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Quicksand-Regular', color: '#785444', marginRight: width * 0.03}}
-                            />
-                            {/* <Feather
+                <View style={styles.UserNameInput}>
+                    <Text style={styles.names}>Username</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TextInput
+                            ref={ref_input1}
+                            defaultValue={user?.username}
+                            onChangeText={setText}
+                            editable={editableField === 'username'}
+                            style={{ width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Quicksand-Regular', color: '#785444', marginRight: width * 0.03 }}
+                        />
+                        {/* <Feather
                                 name="edit"
                                 size={23}
                                 color={'#785444'}
                                 onPress={handleEditPress}
                             /> */}
-                        </View>
-                        <View style={{height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
                     </View>
-                    <View style = {styles.NameInput}>
+                    <View style={{ height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
+                </View>
+                <View style={styles.NameInput}>
                     <Text style={styles.names}>Name</Text>
-                        <View style={{ flexDirection: 'row'}}>
-                        <TextInput 
-                                ref={ref_input2}
-                                defaultValue={user?.name}
-                                onChangeText={setText2}
-                                editable={editableField === 'name'}
-                                style={{width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Quicksand-Regular', color: '#785444', marginRight: width * 0.03}}
-                            />
-                            {/* <Feather
+                    <View style={{ flexDirection: 'row' }}>
+                        <TextInput
+                            ref={ref_input2}
+                            defaultValue={user?.name}
+                            onChangeText={setText2}
+                            editable={editableField === 'name'}
+                            style={{ width: width * 0.61, marginLeft: 3, fontSize: 18, fontFamily: 'Quicksand-Regular', color: '#785444', marginRight: width * 0.03 }}
+                        />
+                        {/* <Feather
                                 name="edit"
                                 size={23}
                                 color={'#785444'}
                                 onPress={handleEditPress2}
                             /> */}
-                        </View>
-                        <View style={{height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
                     </View>
+                    <View style={{ height: 1.5, backgroundColor: '#785444', marginTop: height * 0.009, marginBottom: height * 0.0288, fontWeight: '500' }} />
                 </View>
-                {
-                    show ? 
+            </View>
+            {
+                show ?
                     <View style={styles.buttonContainer}>
                         {/* <TouchableOpacity style={styles.button} onPress={pressHandle}>
                             <Text style={styles.buttonText}>SAVE CHANGES</Text>
@@ -170,8 +144,8 @@ const MyProfile = () => {
                     </View>
                     :
                     <View></View>
-                }
-            </View>
+            }
+        </View>
     )
 };
 
@@ -187,7 +161,7 @@ const styles = StyleSheet.create({
     myProfileContainer: {
         flex: 1,
         width: width * 0.7,
-        alignitems: 'center',          
+        alignitems: 'center',
         marginTop: height * 0.07,
         marginBottom: height * 0.07,
     },
@@ -222,7 +196,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 2,
         elevation: 2,
         shadowRadius: 10,
-        shadowOffset : { width: 1, height: 13},
+        shadowOffset: { width: 1, height: 13 },
     },
     buttonText: {
         color: 'white',

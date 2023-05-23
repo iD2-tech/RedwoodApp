@@ -5,9 +5,9 @@ import { firebase } from "@react-native-firebase/auth";
 import Feather from 'react-native-vector-icons/Feather'
 import EachRequest from '../../components/EachRequest';
 import { useNavigation } from '@react-navigation/native';
-const { width, height } = Dimensions.get('window')
-const Requests = () => {
+const { width, height } = Dimensions.get('window');
 
+const Requests = () => {
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
   const [requestUser, setRequestUser] = useState([]);
@@ -33,7 +33,6 @@ const Requests = () => {
         }
       }
     });
-
     return () => unsubscribe1();
   }
 
@@ -60,7 +59,6 @@ const Requests = () => {
       })
       return () => unsubscribe();
     } else {
-      console.log('hi')
     }
   }
 
@@ -103,7 +101,6 @@ const Requests = () => {
       return;
     }
 
-
     var unique = true;
     var userFromDatabase = '';
     var usernameCase = false;
@@ -136,7 +133,6 @@ const Requests = () => {
               id = doc.id
               name = doc.data().name;
             })
-
             firestore().collection('FriendRequests').doc(userId + '' + id).set({
               source: userId + '',
               sourceUsername: user.username + "",
@@ -146,10 +142,10 @@ const Requests = () => {
               targetName: name + '',
               status: '0'
             }).then(() => {
+              Alert.alert("Successfully requested!");
               unsubscribe();
             })
           })
-          // unsubscribe();
 
         } else if (unique && usernameCase) {
         } else {
@@ -176,23 +172,11 @@ const Requests = () => {
       ids: idArray,
     })
     firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
-      console.log(item);
-      // const reqSet = requestSent;
-      // const index = reqSet.indexOf(username);
-      // reqSet.splice(index, 1);
-      // setRequestSent(reqSet);
-      console.log('deleted');
     })
   }
 
   const reject = (item) => {
     firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
-      console.log(item);
-      // const reqSet = requestSent;
-      // const index = reqSet.indexOf(username);
-      // reqSet.splice(index, 1);
-      // setRequestSent(reqSet);
-      console.log('deleted');
     })
   }
 
@@ -254,7 +238,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECDCD1',
     alignItems: 'center',
     flexDirection: 'column',
-    // alignContent: 'center'
   },
 
   searchContainer: {
@@ -265,18 +248,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: height * 0.013,
     overflow: 'hidden',
-    // borderWidth: 1,
     backgroundColor:'#C3A699',
     padding:15,
     borderRadius: 10
   },
+
   textInputStyle: {
     color: '#FFE3D7',
     fontFamily: 'Quicksand-Bold',
     width: width * 0.63,
     height: height * 0.05,
-
   },
+
   backContainer: {
     justifyContent: 'flex-end',
     width: width * 0.89,
@@ -288,16 +271,6 @@ const styles = StyleSheet.create({
   myFriends: {
     width: width * 0.88,
     marginTop: height * 0.01
-  }
+  },
 
-  // friendsContainer: {
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   flexDirection: 'column',
-  // },
-
-  // text: {
-  //   fontFamily: 'Lato-Bold',
-  //   fontSize: 20
-  // }
 })

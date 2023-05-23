@@ -93,15 +93,11 @@ const CreatePost = () => {
       await fetch(`https://bible-api.com/${book}${chapter}:${verse}`)
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log(userId)
-          console.log("Test1")
           if (!responseJson) {
             fetchVerses();
             return;
           } else {
             setVerses(responseJson.text);
-            console.log("Test2")
-
             if (selected.value === 'public') {
               firestore().collection('Posts').doc(userId).collection('userPosts').add({
                 title: title,
@@ -118,7 +114,6 @@ const CreatePost = () => {
                 likes: [],
                 comments: [],
               }).then((docRef) => {
-                console.log("added" + docRef)
                 setTitle('');
                 setBook('');
                 setChapter('');
@@ -129,7 +124,6 @@ const CreatePost = () => {
                 setShowVerse(false);
                 navigation.navigate("ProfileStack")
               }).catch((error) => {
-                console.log(error);
               })
             } else if (selected.value === 'private') {
               firestore().collection('Posts').doc(userId).collection('userPosts').add({
@@ -147,7 +141,6 @@ const CreatePost = () => {
                 likes: [],
                 comments: [],
               }).then((docRef) => {
-                console.log("added" + docRef)
                 setTitle('');
                 setBook('');
                 setChapter('');
@@ -158,7 +151,6 @@ const CreatePost = () => {
                 setShowVerse(false);
                 navigation.navigate("ProfileStack")
               }).catch((error) => {
-                console.log(error);
               })
             } else {
               firestore().collection('Posts').doc(userId).collection('userPosts').add({
@@ -176,7 +168,6 @@ const CreatePost = () => {
                 likes: [],
                 comments: [],
               }).then((docRef) => {
-                console.log("added" + docRef)
                 setTitle('');
                 setBook('');
                 setChapter('');
@@ -187,16 +178,12 @@ const CreatePost = () => {
                 setShowVerse(false);
                 navigation.navigate("ProfileStack")
               }).catch((error) => {
-                console.log(error);
               })
             }
-
           }
-
         });
     } catch (error) {
       Alert.alert("Please enter valid bible verse(s)");
-      console.error(error);
     }
   };
 
@@ -245,13 +232,11 @@ const CreatePost = () => {
             } else {
               setVerseText(responseJson.text);
               setInvalidVerse(false);
-              // ref_input4.current.focus()
             }
           });
 
       } catch (error) {
         Alert.alert("Please enter valid bible verse(s)");
-        console.error(error);
       }
     }
   }
@@ -282,7 +267,6 @@ const CreatePost = () => {
           });
       } catch (error) {
         Alert.alert("Please enter valid bible verse(s)");
-        console.error(error);
       }
     } else if (isNaN(chapterRet) || chapterRet == '' || verseRet == '') {
       setInvalidVerse(true);
@@ -310,10 +294,6 @@ const CreatePost = () => {
       !isModalVisible
     )
     
-  }
-
-  const onPressScreen = () => {
-    console.log('hi')
   }
 
   return (
@@ -506,7 +486,10 @@ export default CreatePost
 const styles = StyleSheet.create({
 
   container: {
-    backgroundColor: '#ECDCD1',  justifyContent: 'center', alignItems: 'center', height: '100%'
+    backgroundColor: '#ECDCD1',  
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    height: '100%',
   },
 
   backButtonContainer: {
