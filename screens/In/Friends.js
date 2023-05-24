@@ -205,10 +205,12 @@ const Friends = ({ route }) => {
         <View style={{ height: height * 0.57 }}>
           <FlatList
             data={friendData}
+            
             renderItem={({ item }) =>
               <EachFriend name={item.name} username={item.username} showX={true} onPress={() => deleteFriend(item)} />
             }
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 20 }}
           />
         </View>
       </View>

@@ -47,6 +47,7 @@ const Profile = ({ route }) => {
   const [user, setUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selected, setSelected] = useState(DATA[0]);
+  const [requestExist, setRequestExist] = useState(false);
 
   useEffect(() => {
     const userId = firebase.auth().currentUser.uid;
@@ -57,6 +58,7 @@ const Profile = ({ route }) => {
         setUser({ name, username });
       }
     });
+
     const postCollection = firestore().collection('Posts').doc(userId).collection('userPosts');
     const postQuery = postCollection.orderBy('pinned', 'desc').orderBy('date', 'desc');
     const unsubscribe = postQuery.onSnapshot((querySnapshot) => {
@@ -79,11 +81,28 @@ const Profile = ({ route }) => {
       setPosts(postsData);
       setFiltered(postsData);
     })
+    requestRender();
     return () => {
       unsubscribe1();
       unsubscribe();
     };
-  }, []);
+  }, [requestExist]);
+
+  const requestRender = () => {
+    const friendCollection = firestore().collection('FriendRequests');
+    var userId = firebase.auth().currentUser.uid;
+    const requestQuery = friendCollection.where('target', '==', userId).where('status', '==', '0');
+    const unsubscribe2 = requestQuery.onSnapshot((querySnapshot) => {
+      
+       if (querySnapshot.docs.length != 0) {
+          setRequestExist(true);
+        } else {
+          setRequestExist(false);
+        }
+    
+    })
+    return () => unsubscribe2();
+  }
 
   const navToSettings = () => {
     navigation.navigate("Settings");
@@ -177,8 +196,28 @@ const Profile = ({ route }) => {
         <View style={styles.nameContainer}>
           <View style={styles.nameTop}>
             <TouchableOpacity onPress={navToFriends} style={styles.buttonContainer}>
-              <Feather name="users" size={25} color={'#785444'} style={styles.button} />
-              <View style={styles.touchableArea} />
+              {/* <Feather name="user-plus" size={25} color={'#785444'} style={styles.button} /> */}
+              {
+                requestExist ? 
+                <View style={{flexDirection: 'row'}}>
+                <Feather name="user-plus" size={25} color={'#785444'} style={styles.button} />
+                <View style={{
+                  width: 9,
+                  height: 9,
+                  position: 'absolute',
+                  marginLeft: width * 0.06,
+                  borderRadius:10,
+                  backgroundColor: '#FF5349'
+                }}>
+
+                </View>
+                </View>
+                :
+                <View>
+                <Feather name="user-plus" size={25} color={'#785444'} style={styles.button} />
+                <View style={styles.touchableArea} />
+                </View>
+              }
             </TouchableOpacity>
             <Text style={styles.nameText}>
               {user ? user.name : 'Loading...'}
@@ -199,7 +238,7 @@ const Profile = ({ route }) => {
             value={search}
             underlineColorAndroid="transparent"
             placeholderTextColor={'#FFE3D7'}
-            placeholder="Search"
+            placeholder="Search journal"
           />
           <TouchableOpacity onPress={handleModal}>
             <Feather name={selected.icon} size={27} color={'#785444'} marginRight={width * 0.04} />
@@ -361,5 +400,6 @@ const styles = StyleSheet.create({
     bottom: -height * 0.01,
     zIndex: 2,
     opacity: 0,
+    // backgroundColor: 'red'
   }
 })
