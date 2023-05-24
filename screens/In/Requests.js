@@ -5,6 +5,8 @@ import { firebase } from "@react-native-firebase/auth";
 import Feather from 'react-native-vector-icons/Feather'
 import EachRequest from '../../components/EachRequest';
 import { useNavigation } from '@react-navigation/native';
+import DismissKeyBoard from '../../components/DissmisskeyBoard';
+
 const { width, height } = Dimensions.get('window');
 
 const Requests = () => {
@@ -186,6 +188,7 @@ const Requests = () => {
 
 
   return (
+    <DismissKeyBoard>
     <View style={styles.container}>
       <View style={styles.backContainer}>
         <TouchableOpacity onPress={navBack}><Feather name="arrow-right" size={30} color={'black'} /></TouchableOpacity>
@@ -225,6 +228,7 @@ const Requests = () => {
         </View>
       </View>
     </View>
+    </DismissKeyBoard>
   )
 }
 

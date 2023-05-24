@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, TextInput, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ImageBackground, Animated, I18nManager, Alert, TextInput, ActivityIndicator, } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { firebase } from "@react-native-firebase/auth";
@@ -12,6 +12,7 @@ import SwipeableRow from '../../components/SwipeableRow';
 import Modal from "react-native-modal";
 import RadioGroup from 'react-native-radio-buttons-group';
 import DropDownMenu from '../../components/DropDownMenu';
+import DismissKeyBoard from '../../components/DissmisskeyBoard';
 
 const { width, height } = Dimensions.get('window')
 const DATA = [
@@ -182,7 +183,7 @@ const Profile = ({ route }) => {
 
   return (
 
-
+    <DismissKeyBoard>
     <View style={styles.container}>
       <ImageBackground source={require('../../FeatherLeft.png')} resizeMode="cover" style={{
         justifyContent: 'center',
@@ -245,14 +246,18 @@ const Profile = ({ route }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.listContainer}>
-          <FlatList
-            data={filtered}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => (
-              <SwipeableRow item={item} />
-            )}
-            showsVerticalScrollIndicator={false}
-          />
+          {posts.length === 0 ? <Text style={styles.noEntryText}>No posts yet</Text>
+        :
+        <FlatList
+        data={filtered}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => (
+          <SwipeableRow item={item} />
+        )}
+        showsVerticalScrollIndicator={false}
+      />
+        }
+         
         </View>
         {
           isModalVisible ?
@@ -270,6 +275,7 @@ const Profile = ({ route }) => {
         }
       </ImageBackground>
     </View>
+    </DismissKeyBoard>
   )
 }
 
@@ -364,6 +370,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#C3A699',
     marginTop: height * 0.05,
   },
+
+  noEntryText: {
+    textAlign: 'center',
+    color: '#785444',
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 18
+  },
+
 
   filterText: {
     fontSize: 27,
