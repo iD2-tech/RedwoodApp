@@ -7,6 +7,8 @@ import OnboardingScreen from '../Auth/OnboardingScreen';
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation } from '@react-navigation/native';
 import EachFriend from '../../components/EachFriend';
+import DismissKeyBoard from '../../components/DissmisskeyBoard';
+
 LogBox.ignoreAllLogs();
 
 const { width, height } = Dimensions.get('window')
@@ -166,11 +168,24 @@ const Friends = ({ route }) => {
   }
 
   const deleteFriend = (item) => {
-    firestore().collection('Friends').doc(item.id).delete().then(() => {
-    })
+    Alert.alert('Remove friend', 'Are you sure?', [
+      {
+          text: 'Cancel',
+          onPress: () => console.log('canceled'),
+          style: 'cancel'
+      },
+      {
+          text: 'Ok',
+          onPress: () => firestore().collection('Friends').doc(item.id).delete().then(() => {
+            console.log('Friend Removed')
+          }),
+      }
+  ])
+    
   }
 
   return (
+
     <View style={styles.container}>
       <View style={styles.backContainer}>
         <TouchableOpacity onPress={navBack} style={styles.buttonContainer}>
@@ -215,6 +230,7 @@ const Friends = ({ route }) => {
         </View>
       </View>
     </View>
+
   )
 }
 
