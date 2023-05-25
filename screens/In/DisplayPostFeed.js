@@ -90,13 +90,13 @@ const DisplayPostProfile = ({ route }) => {
                     showsVerticalScrollIndicator={false}
                 >
                     <View style={styles.verseContainer}>
-                        <TextInput style={styles.verse} editable={false} value={verse} />
+                        <TextInput style={styles.verse} editable={false} value={verse} scrollEnabled={false} />
                     </View>
                     <View style={styles.verseTextContainer}>
-                        <TextInput style={styles.verseText} editable={false} multiline value={"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""} />
+                        <TextInput style={styles.verseText} editable={false} scrollEnabled={false} multiline value={"\"" + verseText.replace(/(\r\n|\n|\r)/gm, "") + "\""} />
                     </View>
                     <View style={styles.textContainer}>
-                        <TextInput style={styles.text} editable={false} value={text} multiline />
+                        <TextInput style={styles.text} editable={false} value={text} multiline scrollEnabled={false}/>
                     </View>
                     <View style={styles.commentsContainer}>
                         <FlatList
@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     scrollContainer: {
         maxHeight: height * 0.6,
         height: height * 0.6,
+        flex: 1,
     },
 
     backButton: {
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
     },
 
     commentsContainer: {
-        marginTop: height * 0.025,
+        marginTop: height * 0.021,
     },
 
     userContainer: {
