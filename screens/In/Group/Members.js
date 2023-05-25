@@ -28,7 +28,7 @@ const Members = (props) => {
     requestRenderFromUser();
     console.log("test");
 
-  }, [user, friends, relationships]);
+  }, [user]);
 
   const onShare = async () => {
     try {

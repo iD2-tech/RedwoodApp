@@ -12,7 +12,6 @@ const EachMember = (props) => {
     const [reqID, setReqID] = useState(''); 
 
     useEffect(() => {
-        
         setFriendStatus(props.friendStatus);
         if (props.friendStatus == 2 || props.friendStatus == 3) {
             props.idArray.forEach(element => {
@@ -25,9 +24,7 @@ const EachMember = (props) => {
     }, [props.friendStatus])
     
 
-    useEffect(() => {
-
-    }, [friendStatus])
+    
 
     const sendRequest = () => {
         firestore().collection('FriendRequests').doc(userId + '' + props.memberId).set({
