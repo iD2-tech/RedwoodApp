@@ -6,7 +6,7 @@ import React from 'react'
 const { width, height } = Dimensions.get('window')
 const OnboardScreens = () => {
     const navigation = useNavigation();
-    const imageWidth = Dimensions.get('window').width * 1.25; // Adjust the desired width
+    const imageWidth = Dimensions.get('window').width * 1.2; // Adjust the desired width
     const imageHeight = imageWidth * 1.2;
   return (
     <Onboarding
@@ -16,17 +16,32 @@ onSkip={() => navigation.replace("Onboarding")}
 //To handle the navigation to the Homepage after Done is clicked
 onDone={() => navigation.replace("Onboarding")}
 imageContainerStyles = {styles.imageContainerStyle}
+bottomBarColor='#ECDCD1'
+bottomBarHighlight= {false}
 containerStyles={styles.containerStyles}
 titleStyles={{fontFamily: 'Quicksand-Bold', fontSize: height *0.034, color: '#785444', marginTop: height * 0.15}}
 subTitleStyles={{fontFamily: 'Quicksand-Regular', fontSize: height *0.018, color: '#785444', width: width * 0.7}}
     pages={[
+        {
+            backgroundColor: '#ECDCD1',
+            image: (
+                <View style={styles.imageContainerStyles}>
+                  <Image
+                    source={require('../../Welcome.png')}
+                    style={{ width: imageWidth, height: imageHeight, marginTop: height * 0.5, }}
+                  />
+                </View>
+              ),
+            title: '',
+            subtitle: '',
+            },
     {
     backgroundColor: '#ECDCD1',
     image: (
         <View style={styles.imageContainerStyles}>
           <Image
-            source={require('../../GroupOnboard.png')}
-            style={{ width: imageWidth, height: imageHeight, marginTop: height * 0.5, marginRight: width * 0.02}}
+            source={require('../../Journal.png')}
+            style={{ width: imageWidth, height: imageHeight, marginTop: height * 0.5, }}
           />
         </View>
       ),
@@ -37,23 +52,23 @@ subTitleStyles={{fontFamily: 'Quicksand-Regular', fontSize: height *0.018, color
         backgroundColor: '#ECDCD1',
         image: (<View style={styles.imageContainerStyles}>
         <Image
-          source={require('../../JournalOnboard.jpg')}
-          style={{ width: imageWidth, height: imageHeight }}
+          source={require('../../Friends.png')}
+          style={{ width: imageWidth, height: imageHeight * 1.1, marginTop: height * 0.5, }}
         />
       </View>),
-        title: 'Friends.',
-        subtitle: 'Add your friends and view/interact with their devotionals!',
+        title: '',
+        subtitle: '',
     },
     {
         backgroundColor: '#ECDCD1',
         image:(<View style={styles.imageContainerStyles}>
         <Image
-          source={require('../../JournalOnboard.jpg')}
-          style={{ width: imageWidth, height: imageHeight }}
+          source={require('../../Groups.png')}
+          style={{ width: imageWidth, height: imageHeight, marginTop: height * 0.5, }}
         />
       </View>),
-        title: 'Community.',
-        subtitle: 'Create/Join groups and keep each other accountable!',
+        title: '',
+        subtitle: '',
     },
     ]}
 />
@@ -72,7 +87,8 @@ const styles = StyleSheet.create({
 		marginTop: 0,
 		marginBottom: 0,
 		paddingBottom: 0,
-		paddingTop: 0
+		paddingTop: 0,
+       
 	},
 	imageContainerStyles: {
 		flex: 1,
