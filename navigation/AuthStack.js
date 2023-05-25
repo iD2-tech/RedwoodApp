@@ -27,15 +27,15 @@ const AuthStack = () => {
   }, []);
 
   return (
-    // firstLaunch != null && (
+    firstLaunch != null && (
       <Stack.Navigator  initialRouteName="Onboard">
-          {/* {firstLaunch && ( */}
+          {firstLaunch && (
             <Stack.Screen
               name="Onboard"
               component={OnboardScreens}
               options={{headerShown:false, animationEnabled: false,}}
             />
-          {/* )} */}
+          )} 
       <Stack.Screen
         name="Onboarding"
         component={OnboardingScreen}
@@ -59,7 +59,7 @@ const AuthStack = () => {
         </Stack.Navigator>
     )
 
-  // );
+  );
 };
 
 export default AuthStack;
