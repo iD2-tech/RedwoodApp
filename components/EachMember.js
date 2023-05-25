@@ -21,13 +21,17 @@ const EachMember = (props) => {
                 }
             });
         }
-        console.log("test1");
-    }, [props.friendStatus])
-    
+    }, [])
 
-    
+    useEffect(() => {
+
+    }, [friendStatus])
 
     const sendRequest = () => {
+        if (props.requests.has(props.name)) {
+            Alert.alert('They already requested you!');
+            return;
+        }
         firestore().collection('FriendRequests').doc(userId + '' + props.memberId).set({
             source: userId + '',
             sourceUsername: props.user.username + "",
@@ -37,7 +41,7 @@ const EachMember = (props) => {
             targetName: props.name + '',
             status: '0'
           }).then(() => {
-            // setFriendStatus(3);
+            setFriendStatus(3);
           })
         
     }
