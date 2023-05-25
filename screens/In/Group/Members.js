@@ -20,7 +20,6 @@ const Members = (props) => {
   const [relationships, setRelationships] = useState([]);
   const [requestsToUser, setRequestsToUser] = useState([]);
   const [requestsFromUser, setRequestsFromUser] = useState([]);
-  const [requests, setRequests] = useState([]);
   
   useEffect(() => {
 
@@ -63,12 +62,12 @@ const Members = (props) => {
         idArray.push(doc.data().sourceUsername + "|div|" + doc.id)
         requestUsers.add(doc.data().sourceUsername);
       })
-      setRequests(requestUsers);
       globalIDArray = idArray;
       globalRequestsToUser = requestUsers;
       if (JSON.stringify(requestsToUser) != JSON.stringify(requestUsers)) {
         setRequestsToUser(requestUsers);
       }
+      setFriendsInfo(requestsFromUser);
       
     })
     return () => unsubscribe();
@@ -178,7 +177,7 @@ const Members = (props) => {
           data={relationships}
           keyExtractor={item => item.id}
           renderItem={({ item }) =>
-            <EachMember name={item.member} friendStatus={item.friendStatus} memberId={item.memberId} user={user} idArray={requestIDs} memberName={item.memberName} requests={requests}/>
+            <EachMember name={item.member} friendStatus={item.friendStatus} memberId={item.memberId} user={user} idArray={requestIDs} memberName={item.memberName}/>
           }
           showsVerticalScrollIndicator={false}
         />
