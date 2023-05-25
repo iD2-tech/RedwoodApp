@@ -39,13 +39,16 @@ const CreateGroup = ({ route }) => {
         moderator.push(user.username)
         const memberIds = [];
         memberIds.push(userId)
+        const memberNames = [];
+        memberNames.push(user.name)
         firestore().collection('Groups').doc(code).set({
           name: name,
           description: description,
           moderators: moderator,
           members: moderator,
           numMembers: 1,
-          memberIds: memberIds
+          memberIds: memberIds,
+          memberNames: memberNames,
         }).then(() => {
           navigation.navigate('GroupMain')
         })

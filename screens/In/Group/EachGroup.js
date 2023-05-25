@@ -15,14 +15,15 @@ const EachGroup = (props) => {
   const [posts, setPosts] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [username, setUsername] = useState('');
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (username === '') {
+    if (user === null) {
       const userRef = firebase.firestore().collection('Users').doc(userId);
       const unsubscribe = userRef.onSnapshot((doc) => {
         if (doc.exists) {
-          const { username } = doc.data();
-          setUsername(username);
+          const { name, username } = doc.data();
+          setUser({name, username});
         }
       });
       return () => {
@@ -30,7 +31,7 @@ const EachGroup = (props) => {
       }
     }
     renderPosts();
-  }, [username])
+  }, [user])
 
   const navigation = useNavigation();
   const navBack = () => {
@@ -66,6 +67,9 @@ const EachGroup = (props) => {
       firestore().collection('Groups').doc(props.item.id).update({
         members: firebase.firestore.FieldValue.arrayRemove(props.item.currUser),
         memberIds: firebase.firestore.FieldValue.arrayRemove(userId),
+        memberNames: firebase.firestore.FieldValue.arrayRemove(user.username),
+        numMembers: firebase.firestore.FieldValue.increment(-1),
+
       }).then(() => {
         navigation.navigate("GroupMain")
       })
@@ -99,7 +103,7 @@ const EachGroup = (props) => {
               verse: verses,
               text: doc.data().text,
               postId: doc.id,
-              username: username,
+              username: user.username,
               likes: doc.data().likes,
             })
           } else {
@@ -112,7 +116,7 @@ const EachGroup = (props) => {
               verse: verses,
               text: doc.data().text,
               postId: doc.id,
-              username: username,
+              username: user.username,
               likes: doc.data().likes,
             })
           }

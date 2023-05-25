@@ -29,7 +29,7 @@ const Feed = () => {
     renderFriends();
     renderPosts();
 
-  }, [friends, username])
+  }, [friends, username, posts])
 
   const getUsername = () => {
     setDateTitle(dateUnrendered);
@@ -130,7 +130,10 @@ const Feed = () => {
         })
         unsubscribeFunctions.push(unsubscribe);
       }
-      setPosts(postArr);
+      if (JSON.stringify(posts) != JSON.stringify(postArr)) {
+        setPosts(postArr);
+      }
+      
       
       return () => {
         unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());

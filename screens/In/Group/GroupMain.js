@@ -45,7 +45,7 @@ const GroupMain = () => {
       const unsubscribe2 = groupQuery.onSnapshot((querySnapshot) => {
         const groupArr = [];
         querySnapshot.forEach((doc) => {
-          const { description, members, moderators, name, memberIds } = doc.data();
+          const { description, members, moderators, name, memberIds, memberNames } = doc.data();
           groupArr.push({
             id: doc.id,
             description: description,
@@ -55,6 +55,7 @@ const GroupMain = () => {
             moderators: moderators,
             currUser: user.username,
             memberIds: memberIds,
+            memberNames: memberNames,
           })
         })
         setGroups(groupArr);
@@ -62,6 +63,7 @@ const GroupMain = () => {
       return () => unsubscribe2();
     }
   }
+  
 
   const navToGroup = (item) => {
     navigation.navigate('EachGroup', { item: item, });
@@ -84,8 +86,10 @@ const GroupMain = () => {
       if (docSnapshot.exists) {
         groupRef.update({
           members: firebase.firestore.FieldValue.arrayUnion(user.username),
+          memberNames: firebase.firestore.FieldValue.arrayUnion(user.name),
           memberIds: firebase.firestore.FieldValue.arrayUnion(userId),
-          numMembers: firebase.firestore.FieldValue.increment(1)
+          numMembers: firebase.firestore.FieldValue.increment(1),
+          
         })
       } else {
         Alert.alert("Code doesn't exist!")

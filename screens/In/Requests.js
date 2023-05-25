@@ -169,7 +169,6 @@ const Requests = () => {
       ids: idArray,
       relationship: friendArray,
       names: nameArray,
-      ids: idArray,
     })
     firestore().collection('FriendRequests').doc(item.docID).delete().then(() => {
     })
