@@ -21,6 +21,7 @@ const EachMember = (props) => {
                 }
             });
         }
+        console.log("test1");
     }, [props.friendStatus])
     
 

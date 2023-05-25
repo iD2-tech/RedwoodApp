@@ -20,7 +20,7 @@ const Members = (props) => {
   const [relationships, setRelationships] = useState([]);
   const [requestsToUser, setRequestsToUser] = useState([]);
   const [requestsFromUser, setRequestsFromUser] = useState([]);
-  
+
   useEffect(() => {
 
     setUserInfo();
@@ -63,12 +63,9 @@ const Members = (props) => {
         requestUsers.add(doc.data().sourceUsername);
       })
       globalIDArray = idArray;
-      globalRequestsToUser = requestUsers;
-      if (JSON.stringify(requestsToUser) != JSON.stringify(requestUsers)) {
-        setRequestsToUser(requestUsers);
-      }
+      setRequestsToUser(requestUsers);
       setFriendsInfo(requestsFromUser);
-      
+      updateData(friends, requestUsers, requestsFromUser);
     })
     return () => unsubscribe();
   }
@@ -87,7 +84,7 @@ const Members = (props) => {
       setRequestsFromUser(requestUsers);
       const temp = globalIDArray.concat(idArray);
       setRequestIDs(temp);
-      setFriendsInfo(requestUsers);
+      updateData(friends, requestsToUser, requestUsers);
     })
     return () => unsubscribe();
   }
@@ -101,7 +98,7 @@ const Members = (props) => {
     }
   }
 
-  const setFriendsInfo = async (requestsFromUserParam) => {
+  const setFriendsInfo = async () => {
     if (user != null && requestsToUser != null) {
       const friendCollection = firestore().collection('Friends');
       const friend1Query = friendCollection.where('relationship', 'array-contains', user.username);
@@ -123,34 +120,40 @@ const Members = (props) => {
           setFriendsData(friendArr);
           setFriends(friendSet);
         }
-        let relArray = [];
-        let index = 0;
-        props.item.members.forEach(friend => {
-          // already friends
-          if (friendSet.has(friend) || user.username == friend) {
-            relArray.push({ member: friend, friendStatus: 1, id: index, memberId: props.item.memberIds[index], memberName: props.item.memberNames[index] });
-
-            // that member has requested current user
-          } else if (globalRequestsToUser.length != 0 && globalRequestsToUser.has(friend)) {
-            relArray.push({ member: friend, friendStatus: 2, id: index, memberId: props.item.memberIds[index], memberName: props.item.memberNames[index] });
-
-            // current user has requested that member
-          } else if (requestsFromUserParam.length != 0 && requestsFromUserParam.has(friend)) {
-            relArray.push({ member: friend, friendStatus: 3, id: index, memberId: props.item.memberIds[index], memberName: props.item.memberNames[index] });
-
-            // no requests between users
-          } else {
-            relArray.push({ member: friend, friendStatus: 0, id: index, memberId: props.item.memberIds[index], memberName: props.item.memberNames[index] });
-          }
-          index++;
-        });
-        if (JSON.stringify(relationships) != JSON.stringify(relArray)) {
-          setRelationships(relArray);
-        }
-
+        updateData(friendSet, requestsToUser, requestsFromUser);
       })
       return () => unsubscribe();
     }
+  }
+
+  const updateData = (friendsP, requestsToUserP, requestsFromUserP) => {
+    if (friendsP != null && requestsToUserP != null && requestsFromUserP != null) {
+      let relArray = [];
+      let index = 0;
+      props.item.members.forEach(friend => {
+        // already friends
+        if (friendsP.has(friend) || user.username == friend) {
+          relArray.push({ member: friend, friendStatus: 1, id: index, memberId: props.item.memberIds[index], memberName: props.item.memberNames[index] });
+
+          // that member has requested current user
+        } else if (requestsToUserP.length != 0 && requestsToUserP.has(friend)) {
+          relArray.push({ member: friend, friendStatus: 2, id: index, memberId: props.item.memberIds[index], memberName: props.item.memberNames[index] });
+
+          // current user has requested that member
+        } else if (requestsFromUserP.length != 0 && requestsFromUserP.has(friend)) {
+          relArray.push({ member: friend, friendStatus: 3, id: index, memberId: props.item.memberIds[index], memberName: props.item.memberNames[index] });
+
+          // no requests between users
+        } else {
+          relArray.push({ member: friend, friendStatus: 0, id: index, memberId: props.item.memberIds[index], memberName: props.item.memberNames[index] });
+        }
+        index++;
+      });
+      if (JSON.stringify(relationships) != JSON.stringify(relArray)) {
+        setRelationships(relArray);
+      }
+    }
+
   }
 
   const navBack = () => {
@@ -177,7 +180,7 @@ const Members = (props) => {
           data={relationships}
           keyExtractor={item => item.id}
           renderItem={({ item }) =>
-            <EachMember name={item.member} friendStatus={item.friendStatus} memberId={item.memberId} user={user} idArray={requestIDs} memberName={item.memberName}/>
+            <EachMember name={item.member} friendStatus={item.friendStatus} memberId={item.memberId} user={user} idArray={requestIDs} memberName={item.memberName} />
           }
           showsVerticalScrollIndicator={false}
         />
