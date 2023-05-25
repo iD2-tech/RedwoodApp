@@ -26,6 +26,7 @@ const Members = (props) => {
     setUserInfo();
     requestRender();
     requestRenderFromUser();
+    setFriendsInfo();
     console.log("test");
 
   }, [user]);

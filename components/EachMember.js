@@ -37,7 +37,7 @@ const EachMember = (props) => {
             targetName: props.name + '',
             status: '0'
           }).then(() => {
-            setFriendStatus(3);
+            // setFriendStatus(3);
           })
         
     }
