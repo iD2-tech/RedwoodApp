@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
@@ -9,18 +9,18 @@ const { width, height } = Dimensions.get('window')
 const EachMember = (props) => {
     const [friendStatus, setFriendStatus] = useState();
     const userId = firebase.auth().currentUser.uid;
-    let reqID = '';
+    const [reqID, setReqID] = useState(''); 
 
     useEffect(() => {
+        
         setFriendStatus(props.friendStatus);
         if (props.friendStatus == 2 || props.friendStatus == 3) {
             props.idArray.forEach(element => {
                 if (element.includes(props.name + "|div|")) {
                     let index = element.indexOf("|div|") + 5;
-                    reqID = element.substring(index);
+                    setReqID(element.substring(index));
                 }
             });
-            console.log(reqID);
         }
     }, [])
     
@@ -30,6 +30,10 @@ const EachMember = (props) => {
     }, [friendStatus])
 
     const sendRequest = () => {
+        if (props.requests.has(props.name)) {
+            Alert.alert('They already requested you!');
+            return;
+        }
         firestore().collection('FriendRequests').doc(userId + '' + props.memberId).set({
             source: userId + '',
             sourceUsername: props.user.username + "",
@@ -59,8 +63,11 @@ const EachMember = (props) => {
             relationship: friendArray,
             names: nameArray,
         })
-        firestore().collection('FriendRequests').doc(reqID).delete();
-        setFriendStatus(1);
+        firestore().collection('FriendRequests').doc(reqID).delete().then(() => {
+            console.log(reqID);
+            console.log("deleted");
+        });
+        // setFriendStatus(1);
     }
 
     if (friendStatus == 0) {

@@ -20,15 +20,15 @@ const Members = (props) => {
   const [relationships, setRelationships] = useState([]);
   const [requestsToUser, setRequestsToUser] = useState([]);
   const [requestsFromUser, setRequestsFromUser] = useState([]);
+  const [requests, setRequests] = useState([]);
   
   useEffect(() => {
-    setUserInfo().then(() => {
-      requestRender().then(() => {
-        requestRenderFromUser().then(() => {
-        })
 
-      })
-    });
+    setUserInfo();
+    requestRender();
+    requestRenderFromUser();
+    console.log("test");
+
   }, [user, friends, relationships]);
 
   const onShare = async () => {
@@ -63,9 +63,13 @@ const Members = (props) => {
         idArray.push(doc.data().sourceUsername + "|div|" + doc.id)
         requestUsers.add(doc.data().sourceUsername);
       })
+      setRequests(requestUsers);
       globalIDArray = idArray;
       globalRequestsToUser = requestUsers;
-      setRequestsToUser(requestUsers);
+      if (JSON.stringify(requestsToUser) != JSON.stringify(requestUsers)) {
+        setRequestsToUser(requestUsers);
+      }
+      
     })
     return () => unsubscribe();
   }
@@ -174,7 +178,7 @@ const Members = (props) => {
           data={relationships}
           keyExtractor={item => item.id}
           renderItem={({ item }) =>
-            <EachMember name={item.member} friendStatus={item.friendStatus} memberId={item.memberId} user={user} idArray={requestIDs} memberName={item.memberName} />
+            <EachMember name={item.member} friendStatus={item.friendStatus} memberId={item.memberId} user={user} idArray={requestIDs} memberName={item.memberName} requests={requests}/>
           }
           showsVerticalScrollIndicator={false}
         />
