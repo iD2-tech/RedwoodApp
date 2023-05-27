@@ -5,6 +5,8 @@ import PageBackButton from '../../components/PageBackButton';
 import { useNavigation } from '@react-navigation/native'
 import { AuthContext } from '../../navigation/AuthProvider';
 import * as StoreReview from 'react-native-store-review';
+import firestore from '@react-native-firebase/firestore';
+import { firebase } from "@react-native-firebase/auth";
 
 const { width, height } = Dimensions.get('window')
 const Settings = () => {
@@ -54,6 +56,36 @@ const Settings = () => {
     const navToFAQ = () => {
         navigation.navigate("FAQ");
     }
+
+    const deleteFunction = () => {
+        Alert.alert('Your account and all your data will be deleted', 'Are you sure?', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('canceled'),
+                style: 'cancel'
+            },
+            {
+                text: 'Ok',
+                onPress: deleteAcct,
+            }
+        ])
+    }
+
+    const deleteAcct = () => {
+        const user = firebase.auth().currentUser;
+        const userid = user.uid;
+        user.delete().then(() => {
+            firestore().collection('Posts').doc(userid).delete().then(() => {
+                console.log('Posts deleted');
+            })
+            firestore().collection('Users').doc(userid).delete().then(() => {
+                console.log('user info deleted');
+            })
+          }).catch((error) => {
+            console.log(error);
+        });
+    }
+
 
     return (
         <View style={styles.container}>
@@ -138,6 +170,13 @@ const Settings = () => {
                         >
                             <Feather name="log-out" size={28} color={'#C3A699'} />
                             <Text style={styles.text}>Log Out</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={deleteFunction}
+                            style={styles.buttonContainer}
+                        >
+                            <Feather name="x-square" size={28} color={'#C3A699'} />
+                            <Text style={styles.text}>Delete Account</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
