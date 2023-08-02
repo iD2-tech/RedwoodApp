@@ -32,3 +32,15 @@ OneSignal.setNotificationOpenedHandler(notification => {
 });
 
 AppRegistry.registerComponent(appName, () => App);
+
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCgZAawYARtcfrvdLVgCQ9iei50yWeIvsw",
+//   authDomain: "redwoodapp-dcf6d.firebaseapp.com",
+//   databaseURL: "https://redwoodapp-dcf6d-default-rtdb.firebaseio.com",
+//   projectId: "redwoodapp-dcf6d",
+//   storageBucket: "redwoodapp-dcf6d.appspot.com",
+//   messagingSenderId: "199999796805",
+//   appId: "1:199999796805:web:0417f38385c9e61697952c",
+//   measurementId: "G-Y8PLDYHSLS"
+// };
