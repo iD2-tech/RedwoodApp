@@ -12,6 +12,8 @@ import Feather from 'react-native-vector-icons/Feather';
 import Modal from "react-native-modal";
 import RadioGroup from 'react-native-radio-buttons-group';
 import DropDownMenu from '../../components/DropDownMenu';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost} from '../../redux/actions/postActions'
 
 
 const { width, height } = Dimensions.get('window')
@@ -19,6 +21,7 @@ const { width, height } = Dimensions.get('window')
 
 const CreatePost = () => {
   var userId = firebase.auth().currentUser.uid;
+  const dispatch = useDispatch();
 
   const navigation = useNavigation();
   const DATA = [
@@ -191,6 +194,17 @@ const CreatePost = () => {
   const navAndSend = () => {
     setBtnColor(false);
     fetchVerses();
+
+    const post = {
+      title: title,
+      book: book,
+      chapter: chapter,
+      verse: verse,
+      text: text,
+    }
+    
+    // dispatch(createPost(post));
+
   }
 
   // function for if user accepts autofill

@@ -4,6 +4,7 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import firestore from '@react-native-firebase/firestore';
+import { firebase,} from "@react-native-firebase/auth";
 
 export const AuthContext = createContext();
 
@@ -74,16 +75,23 @@ export const AuthProvider = ({children}) => {
         register: async (email, password, name, username) => {
           try {
             
-              const user = await auth().createUserWithEmailAndPassword(email, password);
+              auth().createUserWithEmailAndPassword(email, password)
+              .then((userCredentials)=>{
+                console.log(userCredentials)
+                if(userCredentials.user){
+                  userCredentials.user.updateProfile({
+                    displayName: name + "|" + username
+                   }).then((s)=> {
+                    console.log('done')
+                  })
+                }
+            })
+            .catch(function(error) {
+              console.log(error.message);
+            });
 
-              console.log(name + " " + username);
-
-              firestore().collection('Users').doc(auth().currentUser.uid).set({
-                name: name,
-                username: username
-              }).then(() => {
-                console.log('User Added!');
-              })
+              
+             
 
             } catch (e) {
               Alert.alert("Email address is already in use");
@@ -100,21 +108,18 @@ export const AuthProvider = ({children}) => {
 
         google: async (name, username) => {
            onGoogleButtonPress().then(() => 
-           firestore().collection('Users').doc(auth().currentUser.uid).set({
-            name: name,
-            username: username
-          }).then(() => {
-            console.log('User Added!');
-          }))
+           
+           firebase.auth().currentUser.updateProfile({displayName: name +"|"+username}).then(() => {
+            console.log('updated')
+          })
+          
+          )
         },
 
         apple: async (name, username) => {
            onAppleButtonPress().then(() => 
-           firestore().collection('Users').doc(auth().currentUser.uid).set({
-            name: name,
-            username: username
-          }).then(() => {
-            console.log('User Added!');
+           firebase.auth().currentUser.updateProfile({displayName: name +"|"+username}).then(() => {
+            console.log('updated')
           }))
         }
       }}>

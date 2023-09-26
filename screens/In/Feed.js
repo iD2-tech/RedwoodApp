@@ -6,6 +6,8 @@ import firestore from '@react-native-firebase/firestore';
 import { firebase } from "@react-native-firebase/auth";
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
+import { connect, useSelector } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase'
 
 const { width, height } = Dimensions.get('window');
 
@@ -21,6 +23,16 @@ const Feed = () => {
   const [postsExist, setPostsExist] = useState(false);
   let tempDate = new Date() + '';
   let dateUnrendered = tempDate.split(' ')[1] + ' ' + tempDate.split(' ')[2];
+  
+  // useFirestoreConnect([{
+  //   collection: 'Test'
+  // }]);
+  // const data = useSelector((state) => state.firestore.data.Test);
+  // console.log('DATA', data)
+
+  // const props = useSelector((store) => store);
+  // console.log(props.post.posts);
+
 
   useEffect(() => {
     if (username === '') {
@@ -182,6 +194,7 @@ const Feed = () => {
 }
 
 export default Feed;
+// export default Feed;
 
 const styles = StyleSheet.create({
   background: {

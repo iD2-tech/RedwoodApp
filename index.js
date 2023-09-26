@@ -6,6 +6,11 @@ import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 
+import { Provider } from 'react-redux';
+import createStore from './redux/reducers/rootReducer';
+import firebase from '@react-native-firebase/app';
+
+
 import OneSignal from 'react-native-onesignal';
 
 // OneSignal Initialization
@@ -30,6 +35,21 @@ OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent =
 OneSignal.setNotificationOpenedHandler(notification => {
   console.log("OneSignal: notification opened:", notification);
 });
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCgZAawYARtcfrvdLVgCQ9iei50yWeIvsw",
+  authDomain: "redwoodapp-dcf6d.firebaseapp.com",
+  databaseURL: "https://redwoodapp-dcf6d-default-rtdb.firebaseio.com",
+  projectId: "redwoodapp-dcf6d",
+  storageBucket: "redwoodapp-dcf6d.appspot.com",
+  messagingSenderId: "199999796805",
+  appId: "1:199999796805:web:0417f38385c9e61697952c",
+};
+
+firebase.initializeApp(firebaseConfig);
+firebase.firestore();
+
+
 
 AppRegistry.registerComponent(appName, () => App);
 

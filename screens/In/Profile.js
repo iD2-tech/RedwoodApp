@@ -13,6 +13,8 @@ import Modal from "react-native-modal";
 import RadioGroup from 'react-native-radio-buttons-group';
 import DropDownMenu from '../../components/DropDownMenu';
 import DismissKeyBoard from '../../components/DissmisskeyBoard';
+import { useSelector } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase';
 
 const { width, height } = Dimensions.get('window')
 const DATA = [
@@ -49,6 +51,31 @@ const Profile = ({ route }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selected, setSelected] = useState(DATA[0]);
   const [requestExist, setRequestExist] = useState(false);
+
+  const postQuery = {
+    collection: 'Posts',
+    doc: userId,
+    subcollections: [{ collection: 'userPosts' }],
+    // If you want to order by 'date' as well, you can add it to the array:
+    orderBy: [['pinned', 'desc'], ['date', 'desc']],
+    storeAs: 'userPosts', 
+  };
+
+  const series = (...funcs) => (args) => {
+    return funcs.reduce((prev, curr) => curr(prev), args);
+  };
+
+  const result = series(num => num * 10, num => num + 20, num => num / 2, num => num - 5)(4);
+  console.log(result)
+
+  useFirestoreConnect(postQuery);
+  const post = useSelector(
+    (state) => state.firestore.ordered.userPosts
+  );
+  console.log('POSTS', post) 
+  console.log(useSelector(
+    (state) => state.firebase.auth
+  ))
 
   useEffect(() => {
     const userId = firebase.auth().currentUser.uid;
